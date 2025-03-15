@@ -2,48 +2,90 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const AnimatedText = () => {
-  const textRef = useRef(null);
+  const textRef1 = useRef(null);
+  const textRef2 = useRef(null);
 
   useEffect(() => {
-    if (!textRef.current) return;
+    if (!textRef1.current || !textRef2.current) return;
 
-    gsap.to(textRef.current, {
-      opacity: 0.3,        // Fade to 30% opacity
-      duration: 1,         // Speed of fade
-      repeat: -1,          // Infinite loop
-      yoyo: true,          // Fade in after fading out
-      ease: "power1.inOut" // Smooth transition
+    const animationSettings = {
+      opacity: 0.8,
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut",
+    };
+
+    gsap.to([textRef1.current, textRef2.current], animationSettings);
+
+    gsap.to([textRef1.current, textRef2.current], {
+      textShadow: `
+        0 0 10px rgba(255, 223, 100, 0.8), 
+        0 0 20px rgba(255, 223, 100, 0.6), 
+        0 0 30px rgba(200, 150, 50, 0.5)
+      `,
+      duration: 2,
+      repeat: -1,
+      yoyo: true,
+      ease: "power2.inOut"
     });
   }, []);
 
   const containerStyle = {
     display: "flex",
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    height: "100vh",  // Full screen height
-    background: "radial-gradient(circle, rgba(0,0,0,0.8) 30%, rgba(0,0,0,1) 80%)",
-    textAlign: "center"
+    height: "100vh",
+    width: "100vw",
+    backgroundColor: "#000", // Full black background
+    textAlign: "center",
+    overflow: "hidden"
   };
 
-  const textStyle = {
-    fontSize: "2.5rem",
+  const textStyle1 = {
+    fontSize: "3rem", // Larger first text
     fontWeight: "bold",
-    color: "#0ff", // Neon cyan color
+    fontFamily: "Arial, sans-serif",
+    color: "#FFD700",
+    textAlign: "center",
+    padding: "10px",
     textShadow: `
-      0 0 5px #0ff, 
-      0 0 10px #0ff, 
-      0 0 15px #0ff, 
-      0 0 20px #08f, 
-      0 0 30px #08f, 
-      0 0 40px #08f
-    `,
-    whiteSpace: "nowrap"
+      0 0 5px rgba(255, 223, 100, 0.8), 
+      0 0 10px rgba(255, 223, 100, 0.6), 
+      0 0 15px rgba(200, 150, 50, 0.5)
+    `
+  };
+
+  const textStyle2 = {
+    fontSize: "1.5rem", // Smaller second text
+    fontWeight: "normal",
+    fontFamily: "Arial, sans-serif",
+    color: "#FFD700",
+    textAlign: "center",
+    padding: "10px",
+    textShadow: `
+      0 0 5px rgba(255, 223, 100, 0.8), 
+      0 0 10px rgba(255, 223, 100, 0.6), 
+      0 0 15px rgba(200, 150, 50, 0.5)
+    `
+  };
+
+  const separatorStyle = {
+    width: "60%",
+    height: "2px",
+    backgroundColor: "#FFD700", // Gold separator
+    margin: "15px 0"
   };
 
   return (
     <div style={containerStyle}>
-      <div ref={textRef} style={textStyle}>
-        🚀 Welcome to Stormmaze - WEBSITE IS UNDER MAINTENANCE 🚀
+      <div ref={textRef1} style={textStyle1}>
+        you are at stormmaze
+      </div>
+      <div style={separatorStyle}></div>
+      <div ref={textRef2} style={textStyle2}>
+        website is under maintenance
       </div>
     </div>
   );
