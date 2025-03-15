@@ -14,7 +14,8 @@ const AnimatedText = () => {
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1 ref={textRef}>🚀 Welcome to My Business Site</h1>
+      <h1 ref={textRef}>🚀 Welcome this is stormmaze</h1>
+      <h1 ref={textRef}>WEBSITE IS UNDER MAINTNANCE</h1>
     </div>
   );
 };
