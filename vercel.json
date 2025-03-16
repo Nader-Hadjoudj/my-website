@@ -5,6 +5,10 @@
       "destination": "/api/book-appointments.js"
     },
     {
+      "source": "/api/available-slots/(.*)",
+      "destination": "/api/available-slots.js"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }

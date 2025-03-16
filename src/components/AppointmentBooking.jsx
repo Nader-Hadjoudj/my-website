@@ -135,7 +135,28 @@ function AppointmentBooking() {
 
   // ✅ Generate Available Time Slots
   const availableSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
+  const [bookedSlots, setBookedSlots] = useState([]);
 
+  useEffect(() => {
+    const fetchAvailability = async () => {
+      try {
+        const formattedDate = selectedDate.toISOString().split("T")[0];
+        const response = await axios.get(`${BASE_URL}/api/available-slots?date=${formattedDate}`);
+  
+        if (response.data.success) {
+          setBookedSlots(response.data.bookedSlots);
+        }
+      } catch (error) {
+        console.error("❌ Error fetching availability:", error.message);
+      }
+    };
+  
+    fetchAvailability();
+  }, [selectedDate]);
+  
+  const filteredSlots = availableSlots.filter(slot => !bookedSlots.includes(slot));
+
+  
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
       try {
@@ -196,16 +217,16 @@ function AppointmentBooking() {
 
           <Label>Select a Time Slot:</Label>
           <div>
-            {availableSlots.map((slot) => (
-              <TimeSlotButton
-                key={slot}
-                onClick={() => setSelectedTime(slot)}
-                selected={selectedTime === slot}
-              >
-                {slot}
-              </TimeSlotButton>
-            ))}
-          </div>
+              {filteredSlots.map((slot) => (
+                <TimeSlotButton
+                  key={slot}
+                  onClick={() => setSelectedTime(slot)}
+                  selected={selectedTime === slot}
+                >
+                  {slot}
+                </TimeSlotButton>
+              ))}
+            </div>
 
           <Button onClick={handleBooking}>Confirm Appointment</Button>
           {confirmation && <Confirmation>{confirmation}</Confirmation>}
