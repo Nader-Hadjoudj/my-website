@@ -1,4 +1,3 @@
-// ✅ api/available-slots.js (Backend endpoint)
 import { google } from "googleapis";
 
 export default async function handler(req, res) {
@@ -33,8 +32,8 @@ export default async function handler(req, res) {
 
     const calendar = google.calendar({ version: "v3", auth });
 
-    const timeMin = new Date(`${date}T00:00:00Z`).toISOString();
-    const timeMax = new Date(`${date}T23:59:59Z`).toISOString();
+    const timeMin = new Date(`${date}T00:00:00+02:00`).toISOString(); // Europe/Paris offset
+    const timeMax = new Date(`${date}T23:59:59+02:00`).toISOString();
 
     const response = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID,
@@ -45,8 +44,9 @@ export default async function handler(req, res) {
     });
 
     const bookedSlots = response.data.items.map(event => {
-      const start = new Date(event.start.dateTime).getUTCHours();
-      return `${start}:00 - ${start + 1}:00`;
+      const start = new Date(event.start.dateTime);
+      const localHour = start.getHours(); // Get local hour in Europe/Paris
+      return `${localHour}:00 - ${localHour + 1}:00`;
     });
 
     res.json({ success: true, bookedSlots });

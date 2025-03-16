@@ -37,10 +37,10 @@ export default async function handler(req, res) {
     const calendar = google.calendar({ version: "v3", auth });
 
     const formattedDate = new Date(date).toISOString().split("T")[0];
-    let [hour, minutes] = time.split(":").map(Number);
-    if (isNaN(minutes)) minutes = 0;
+    const [hour] = time.split(" - ")[0].split(":").map(Number); // Extract start hour from "H:00 - H+1:00"
 
-    const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00Z`);
+    // Use local time for Europe/Paris without UTC offset
+    const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:00:00`);
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
 
     const event = {

@@ -214,7 +214,7 @@ function AppointmentBooking() {
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             minDate={new Date()}
-            dateFormat="MM/dd/yyyy"
+            dateFormat="dd/MM/yyyy"
           />
           <Label>Select a Time Slot:</Label>
           <div>
