@@ -156,7 +156,7 @@ function AppointmentBooking() {
     if (clientName && email && company && selectedDate && selectedTime) {
       const formattedDate = selectedDate.toISOString().split("T")[0];
       try {
-        const response = await axios.post(`${BASE_URL}/api/book-appointment`, {
+        const response = await axios.post(`${BASE_URL}/api/book-appointment/`, {
           name: clientName,
           email,
           company,
