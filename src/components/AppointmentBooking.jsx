@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // ✅ Adjust API URL based on Environment
 const BASE_URL = process.env.NODE_ENV === "development"
   ? "http://localhost:5000"
-  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app/"; // Replace with your actual deployed URL
+  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app"; // Replace with your actual deployed URL
 
 // 🔹 Page Layout
 const PageWrapper = styled.div`
