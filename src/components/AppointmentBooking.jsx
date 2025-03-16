@@ -80,6 +80,23 @@ const Input = styled.input`
   }
 `;
 
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ffd700;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    border-color: #ffea00;
+  }
+`;
+
 const Button = styled.button`
   width: 100%;
   padding: 12px;
@@ -173,12 +190,11 @@ function AppointmentBooking() {
           <Title>Select Date & Time</Title>
 
           <Label>Select a Date:</Label>
-          <DatePicker
+          <StyledDatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             minDate={new Date()}
             dateFormat="MM/dd/yyyy"
-            className="datepicker"
           />
 
           <Label>Select a Time Slot:</Label>
