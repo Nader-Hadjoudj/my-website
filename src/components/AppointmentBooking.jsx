@@ -152,48 +152,55 @@ function AppointmentBooking() {
 
   const filteredSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
 
+  const handleBooking = async () => {
+    if (clientName && email && company && selectedDate && selectedTime) {
+      const formattedDate = selectedDate.toISOString().split("T")[0];
+      try {
+        const response = await axios.post(`${BASE_URL}/api/book-appointment`, {
+          name: clientName,
+          email,
+          company,
+          date: formattedDate,
+          time: selectedTime,
+        });
+
+        if (response.data.success) {
+          setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${selectedTime}.`);
+          setBookedSlots(prev => [...prev, selectedTime]);
+          setSelectedTime("");
+        } else {
+          setConfirmation("❌ Failed to book the appointment.");
+        }
+      } catch (error) {
+        console.error("❌ Error booking appointment:", error.message);
+        setConfirmation("❌ Error booking appointment.");
+      }
+    } else {
+      setConfirmation("❌ Please fill all fields and select a time slot.");
+    }
+  };
+
   return (
     <PageWrapper>
       <Container>
         <LeftColumn>
           <Title>Client Information</Title>
-
           <Label>Name</Label>
           <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
-
           <Label>Email</Label>
           <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
           <Label>Company</Label>
           <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
         </LeftColumn>
-
         <Divider />
-
         <RightColumn>
           <Title>Select Date & Time</Title>
-
           <Label>Select a Date:</Label>
-          <StyledDatePicker
-            selected={selectedDate}
-            onChange={(date) => setSelectedDate(date)}
-            minDate={new Date()}
-            dateFormat="MM/dd/yyyy"
-          />
-
+          <StyledDatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} minDate={new Date()} dateFormat="MM/dd/yyyy" />
           <Label>Select a Time Slot:</Label>
-          <div>
-            {filteredSlots.map(slot => (
-              <TimeSlotButton
-                key={slot}
-                onClick={() => setSelectedTime(slot)}
-                selected={selectedTime === slot}
-              >
-                {slot}
-              </TimeSlotButton>
-            ))}
-          </div>
-
+          {filteredSlots.map(slot => (
+            <TimeSlotButton key={slot} selected={selectedTime === slot} onClick={() => setSelectedTime(slot)}>{slot}</TimeSlotButton>
+          ))}
           <Button onClick={handleBooking}>Confirm Appointment</Button>
           {confirmation && <Confirmation>{confirmation}</Confirmation>}
         </RightColumn>
