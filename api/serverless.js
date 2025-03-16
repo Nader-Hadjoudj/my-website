@@ -31,7 +31,7 @@ const auth = new google.auth.JWT(
 const calendar = google.calendar({ version: "v3", auth });
 
 // API Test Route
-app.get("/api/test", (req, res) => {
+app.get("/api/book-appointment/test", (req, res) => {
   res.json({ success: true, message: "API is working!" });
 });
 
