@@ -1,17 +1,16 @@
 import { google } from "googleapis";
-import dotenv from "dotenv";
 
-// ✅ Load environment variables
-dotenv.config();
-
-// ✅ CORS headers (required for Vercel API route)
 export default async function handler(req, res) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-  if (req.method === 'OPTIONS') {
+  
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
+  }
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ success: false, error: "Method Not Allowed" });
   }
 
   try {
@@ -33,16 +32,12 @@ export default async function handler(req, res) {
 
     const calendar = google.calendar({ version: "v3", auth });
 
-    const { name: clientName, email, date, time, company } = req.body;
     const formattedDate = new Date(date).toISOString().split("T")[0];
-
     let [hour, minutes] = time.split(":").map(Number);
     if (isNaN(minutes)) minutes = 0;
 
     const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00Z`);
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
-
-    const calendar = google.calendar({ version: "v3", auth });
 
     const event = {
       summary: `Meeting with ${company}`,
@@ -57,8 +52,9 @@ export default async function handler(req, res) {
     });
 
     res.json({ success: true, event: response.data });
+
   } catch (error) {
-    console.error("Error:", error.message);
+    console.error("❌ Error Adding Event:", error.message);
     res.status(500).json({ success: false, error: error.message });
   }
 }
