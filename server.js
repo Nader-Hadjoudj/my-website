@@ -9,7 +9,15 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(cors());
+
+// ✅ Fix CORS issue: Allow requests from the frontend
+app.use(
+  cors({
+    origin: ["https://www.stormmaze.com"], // Allow frontend domain
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
 app.use(express.json());
 
 // ✅ Load Google Service Account Key
