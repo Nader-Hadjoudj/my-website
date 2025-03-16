@@ -182,11 +182,29 @@ function AppointmentBooking() {
     <PageWrapper>
       <Container>
         <LeftColumn>
-          {/* Include form fields here */}
+          <Title>Client Information</Title>
+          <Label>Name</Label>
+          <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+          <Label>Email</Label>
+          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Label>Company</Label>
+          <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
         </LeftColumn>
+
         <Divider />
+
         <RightColumn>
-          {/* Include date picker, slots, and button here */}
+          <Title>Select Date & Time</Title>
+          <Label>Select a Date:</Label>
+          <StyledDatePicker selected={selectedDate} onChange={setSelectedDate} minDate={new Date()} dateFormat="MM/dd/yyyy" />
+          <Label>Select a Time Slot:</Label>
+          <div>
+            {filteredSlots.map(slot => (
+              <TimeSlotButton key={slot} onClick={() => setSelectedTime(slot)} selected={selectedTime === slot}>{slot}</TimeSlotButton>
+            ))}
+          </div>
+          <Button onClick={handleBooking}>Confirm Appointment</Button>
+          {confirmation && <Confirmation>{confirmation}</Confirmation>}
         </RightColumn>
       </Container>
     </PageWrapper>
