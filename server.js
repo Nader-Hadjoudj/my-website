@@ -14,7 +14,7 @@ app.use(express.json());
 // ✅ Fix CORS Configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://www.stormmaze.com"], // Allow frontend in dev & prod
+    origin: "*",// Allow frontend in dev & prod
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
