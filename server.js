@@ -11,25 +11,22 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-// ✅ CORS Configuration (Allows Frontend in Dev & Prod)
+// ✅ Fix CORS Configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://www.stormmaze.com"],
+    origin: ["http://localhost:5173", "https://www.stormmaze.com"], // Allow local & production frontend
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    credentials: true, // Allow credentials if needed
   })
 );
 
 // ✅ Load Google Service Account Key
 let serviceAccountKey;
 try {
-  if (!process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
-    throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY is missing in environment variables.");
-  }
   serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
 } catch (error) {
-  console.error("❌ Error loading service account key:", error.message);
+  console.error("❌ Error parsing service account key:", error.message);
   process.exit(1);
 }
 
