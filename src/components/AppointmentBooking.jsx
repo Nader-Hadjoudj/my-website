@@ -4,10 +4,10 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// ✅ Adjust API URL based on Environment
-const BASE_URL = process.env.NODE_ENV === "development"
+// ✅ Ensure API URL works in both development and production
+const BASE_URL = import.meta.env.MODE === "development"
   ? "http://localhost:5000"
-  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app"; // Replace with your actual deployed URL
+  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app"; // Replace with actual deployed URL
 
 // 🔹 Page Layout
 const PageWrapper = styled.div`
@@ -30,7 +30,6 @@ const Container = styled.div`
   align-items: stretch;
 `;
 
-// 🔹 Left & Right Sections
 const LeftColumn = styled.div`
   flex: 1;
   padding: 20px;
@@ -41,14 +40,12 @@ const RightColumn = styled.div`
   padding: 20px;
 `;
 
-// 🔹 Golden Divider
 const Divider = styled.div`
   width: 2px;
   background: linear-gradient(to bottom, #ffd700, #ffea00);
   margin: 0 15px;
 `;
 
-// 🔹 Styled Components
 const Title = styled.h2`
   text-align: center;
   color: #ffd700;
@@ -142,7 +139,7 @@ function AppointmentBooking() {
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
       try {
-        const formattedDate = selectedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
+        const formattedDate = selectedDate.toISOString().split("T")[0];
         const response = await axios.post(`${BASE_URL}/api/book-appointment`, {
           name: clientName,
           email,
@@ -157,7 +154,7 @@ function AppointmentBooking() {
           setConfirmation("❌ Failed to book the appointment.");
         }
       } catch (error) {
-        console.error(error);
+        console.error("❌ Error booking appointment:", error.response?.data || error.message);
         setConfirmation("❌ Error booking appointment.");
       }
     } else {

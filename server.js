@@ -2,35 +2,53 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { google } from "googleapis";
-import fs from "fs";
 
-// Load environment variables
+// ✅ Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ Set CORS Policy Before Any Routes
+app.use(express.json());
+
+// ✅ CORS Configuration (Allows Frontend in Dev & Prod)
 app.use(
   cors({
-    origin: ["https://www.stormmaze.com"], // Allow your frontend
-    methods: "GET,POST,OPTIONS",
+    origin: ["http://localhost:5173", "https://www.stormmaze.com"],
+    methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-app.use(express.json());
+// ✅ Load Google Service Account Key
+let serviceAccountKey;
+try {
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+    throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY is missing in environment variables.");
+  }
+  serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
+} catch (error) {
+  console.error("❌ Error loading service account key:", error.message);
+  process.exit(1);
+}
 
-// ✅ Check if CORS Middleware is Applied
-app.use((req, res, next) => {
-  console.log("CORS headers applied");
-  next();
-});
+// ✅ Fix Private Key Format
+const formattedPrivateKey = serviceAccountKey.private_key.replace(/\\n/g, "\n");
 
-// ✅ Sample Test Route
-app.get("/test", (req, res) => {
-  res.json({ success: true, message: "CORS is working!" });
+// ✅ Authenticate with Google API
+const auth = new google.auth.JWT(
+  serviceAccountKey.client_email,
+  null,
+  formattedPrivateKey,
+  ["https://www.googleapis.com/auth/calendar"]
+);
+
+const calendar = google.calendar({ version: "v3", auth });
+
+// ✅ Test Route
+app.get("/api/test", (req, res) => {
+  res.json({ success: true, message: "API is working!" });
 });
 
 // ✅ API to Book an Appointment
@@ -44,14 +62,15 @@ app.post("/api/book-appointment", async (req, res) => {
 
     console.log("🔹 Received Booking Request:", req.body);
 
-    // ✅ Format Date and Time
+    // ✅ Ensure Date Format is Correct
     const formattedDate = new Date(date).toISOString().split("T")[0];
 
+    // ✅ Format Time Properly
     let [hour, minutes] = time.split(":").map(Number);
     if (isNaN(minutes)) minutes = 0;
 
     const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00Z`);
-    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 1-hour meeting
 
     // ✅ Google Calendar Event Details
     const event = {
