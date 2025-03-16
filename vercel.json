@@ -15,5 +15,12 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "www.stormmaze.com",
+      "destination": "https://stormmaze.com",
+      "permanent": true
+    }
   ]
 }
