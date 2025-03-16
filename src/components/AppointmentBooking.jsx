@@ -4,10 +4,10 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// ✅ Set Backend URL (Auto-switch for local & deployed version)
+// ✅ Adjust API URL based on Environment
 const BASE_URL = process.env.NODE_ENV === "development"
   ? "http://localhost:5000"
-  : "https://www.stormmaze.com/api";
+  : "https://stormmaze.com"; // Replace with your actual deployed URL
 
 // 🔹 Page Layout
 const PageWrapper = styled.div`
@@ -21,50 +21,85 @@ const PageWrapper = styled.div`
 
 const Container = styled.div`
   width: 800px;
+  height: auto;
   padding: 20px;
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 1px 8px #ffd700;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
 `;
 
+// 🔹 Left & Right Sections
 const LeftColumn = styled.div`
-  width: 45%;
-  padding-right: 10px;
+  flex: 1;
+  padding: 20px;
 `;
 
 const RightColumn = styled.div`
-  width: 45%;
-  padding-left: 10px;
-  border-left: 2px solid #ffd700;
+  flex: 1;
+  padding: 20px;
 `;
 
+// 🔹 Golden Divider
+const Divider = styled.div`
+  width: 2px;
+  background: linear-gradient(to bottom, #ffd700, #ffea00);
+  margin: 0 15px;
+`;
+
+// 🔹 Styled Components
 const Title = styled.h2`
   text-align: center;
-  color: rgb(255, 255, 255);
+  color: #ffd700;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
 `;
 
 const Label = styled.label`
   display: block;
   font-weight: bold;
   margin: 10px 0 5px;
-  color: rgb(255, 255, 255);
+  color: white;
+  font-size: 14px;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
+  padding: 10px;
+  border: 1px solid #ffd700;
+  background: black;
+  color: white;
   border-radius: 5px;
   font-size: 14px;
   margin-bottom: 10px;
+  &:focus {
+    outline: none;
+    border-color: #ffea00;
+  }
+`;
+
+const StyledDatePicker = styled(DatePicker)`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ffd700;
+  background: black;
+  color: white;
+  border-radius: 5px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  &:focus {
+    outline: none;
+    border-color: #ffea00;
+  }
 `;
 
 const Button = styled.button`
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background: #007bff;
   color: white;
   border: none;
@@ -89,7 +124,8 @@ const Confirmation = styled.p`
 const TimeSlotButton = styled(Button)`
   width: auto;
   margin: 5px;
-  background: ${({ selected }) => (selected ? "#0056b3" : "#007bff")};
+  background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
+  color: ${({ selected }) => (selected ? "black" : "white")};
 `;
 
 function AppointmentBooking() {
@@ -100,20 +136,14 @@ function AppointmentBooking() {
   const [selectedTime, setSelectedTime] = useState("");
   const [confirmation, setConfirmation] = useState("");
 
-  // Generate available time slots
-  const generateTimeSlots = () => {
-    let slots = [];
-    for (let hour = 9; hour < 18; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
-    return slots;
-  };
-
-  const availableSlots = generateTimeSlots();
+  // ✅ Generate Available Time Slots
+  const availableSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
       try {
         const formattedDate = selectedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-        const response = await axios.post(`${BASE_URL}/book-appointment`, {
+        const response = await axios.post(`${BASE_URL}/api/book-appointment`, {
           name: clientName,
           email,
           company,
@@ -138,26 +168,47 @@ function AppointmentBooking() {
   return (
     <PageWrapper>
       <Container>
+        {/* 🔹 Left Side - Client Details */}
         <LeftColumn>
-          <Title>Book an Appointment</Title>
+          <Title>Client Information</Title>
+
           <Label>Name</Label>
           <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+
           <Label>Email</Label>
           <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+
           <Label>Company</Label>
           <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
         </LeftColumn>
 
+        {/* 🔹 Golden Divider */}
+        <Divider />
+
+        {/* 🔹 Right Side - Appointment Selection */}
         <RightColumn>
+          <Title>Select Date & Time</Title>
+
           <Label>Select a Date:</Label>
-          <DatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} minDate={new Date()} dateFormat="MM/dd/yyyy" className="datepicker" />
+          <StyledDatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+            dateFormat="MM/dd/yyyy"
+          />
 
           <Label>Select a Time Slot:</Label>
-          {availableSlots.map((slot) => (
-            <TimeSlotButton key={slot} onClick={() => setSelectedTime(slot)} selected={selectedTime === slot}>
-              {slot}
-            </TimeSlotButton>
-          ))}
+          <div>
+            {availableSlots.map((slot) => (
+              <TimeSlotButton
+                key={slot}
+                onClick={() => setSelectedTime(slot)}
+                selected={selectedTime === slot}
+              >
+                {slot}
+              </TimeSlotButton>
+            ))}
+          </div>
 
           <Button onClick={handleBooking}>Confirm Appointment</Button>
           {confirmation && <Confirmation>{confirmation}</Confirmation>}
