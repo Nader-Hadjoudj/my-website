@@ -1,51 +1,81 @@
 import express from "express";
-import axios from "axios";
 import cors from "cors";
 import dotenv from "dotenv";
+import { google } from "googleapis";
+import fs from "fs";
 
+// Load environment variables
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
 app.use(cors());
 app.use(express.json());
 
-const ZOHO_CALENDAR_API =
-  "https://calendar.zoho.eu/eventreq/your_calendar_id_here";
+// ✅ Load Google Service Account Key
+let serviceAccountKey;
+try {
+  serviceAccountKey = JSON.parse(fs.readFileSync(process.env.GOOGLE_SERVICE_ACCOUNT_KEY, "utf-8"));
+} catch (error) {
+  console.error("❌ Error loading service account key:", error.message);
+  process.exit(1);
+}
 
-// ✅ No Authentication Required for Booking
+// ✅ Fix Private Key Format
+const formattedPrivateKey = serviceAccountKey.private_key.replace(/\\n/g, "\n");
+
+// ✅ Authenticate with Google API
+const auth = new google.auth.JWT(
+  serviceAccountKey.client_email,
+  null,
+  formattedPrivateKey,
+  ["https://www.googleapis.com/auth/calendar"]
+);
+
+const calendar = google.calendar({ version: "v3", auth });
+
+// ✅ API to Book an Appointment
 app.post("/api/book-appointment", async (req, res) => {
   try {
     const { name, email, date, time, company } = req.body;
 
     if (!name || !email || !date || !time || !company) {
-      return res.status(400).json({ success: false, error: "Missing fields" });
+      return res.status(400).json({ success: false, error: "Missing required fields." });
     }
 
-    // Format date to MM/DD/YYYY
-    const formattedDate = date.split("-").reverse().join("/");
+    console.log("🔹 Received Booking Request:", req.body);
 
-    // Format time to 24-hour format
+    // ✅ Ensure Date Format is Correct
+    const formattedDate = new Date(date).toISOString().split("T")[0];
+
+    // ✅ Format Time Properly
     let [hour, minutes] = time.split(":").map(Number);
     if (isNaN(minutes)) minutes = 0;
-    const formattedTime = `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-    const endHour = hour + 1;
-    const formattedEndTime = `${endHour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
 
-    // Construct Zoho API request
-    const requestUrl = `${ZOHO_CALENDAR_API}?name=${encodeURIComponent(name)}&mailId=${encodeURIComponent(email)}&date=${formattedDate}&time=${formattedTime}&endTime=${formattedEndTime}&reason=Meeting%20with%20${encodeURIComponent(company)}`;
+    const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:00Z`);
+    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
 
-    console.log("🔹 Sending Request to Zoho:", requestUrl);
+    // ✅ Google Calendar Event Details
+    const event = {
+      summary: `Meeting with ${company}`,
+      description: `Scheduled by ${name} (${email})`,
+      start: { dateTime: startTime.toISOString(), timeZone: "Europe/Paris" },
+      end: { dateTime: endTime.toISOString(), timeZone: "Europe/Paris" },
+    };
 
-    const response = await axios.get(requestUrl);
-    console.log("✅ Zoho Response:", response.data);
+    // ✅ Add Event to Google Calendar
+    const response = await calendar.events.insert({
+      calendarId: process.env.GOOGLE_CALENDAR_ID,
+      resource: event,
+    });
 
-    res.json({ success: true, data: response.data });
+    console.log("✅ Appointment Added:", response.data);
+    res.json({ success: true, event: response.data });
   } catch (error) {
-    console.error("❌ Error booking appointment:", error.response?.data || error.message);
-    res.status(500).json({ success: false, error: error.message, details: error.response?.data });
+    console.error("❌ Error Adding Event:", error.message);
+    res.status(500).json({ success: false, error: error.message });
   }
 });
 
-app.listen(PORT, () => console.log(`✅ Backend Server Running on http://localhost:${PORT}`));
+// ✅ Start Server
+app.listen(PORT, () => console.log(`✅ Server Running on http://localhost:${PORT}`));
