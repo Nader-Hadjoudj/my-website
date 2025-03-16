@@ -180,8 +180,15 @@ function AppointmentBooking() {
 
   return (
     <PageWrapper>
-      {/* Existing container structure unchanged */}
-      {/* Replace slots mapping clearly with filteredSlots */}
+      <Container>
+        <LeftColumn>
+          {/* Include form fields here */}
+        </LeftColumn>
+        <Divider />
+        <RightColumn>
+          {/* Include date picker, slots, and button here */}
+        </RightColumn>
+      </Container>
     </PageWrapper>
   );
 }
