@@ -7,12 +7,12 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
-// Setup session (Needed for authentication persistence)
+// Middleware for sessions
 app.use(
   session({
-    secret: "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",
+    secret: "your-secret-key",
     resave: false,
     saveUninitialized: true,
   })
@@ -26,7 +26,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://my-test-lnzhhur6r-nader-hadjoudjs-projects.vercel.app/auth/google/callback",
+      callbackURL: "http://localhost:5000/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {
       return done(null, profile);
@@ -62,4 +62,4 @@ app.get("/dashboard", (req, res) => {
   res.send(`Welcome, ${req.user.displayName}`);
 });
 
-app.listen(PORT, () => console.log(`✅ Backend running on port ${PORT}`));
+app.listen(PORT, () => console.log(`✅ Server running on http://localhost:${PORT}`));
