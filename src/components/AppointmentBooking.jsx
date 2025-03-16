@@ -7,7 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 // ✅ Ensure API URL works in both development and production
 const BASE_URL = import.meta.env.MODE === "development"
   ? "http://localhost:5000"
-  : "https://stormmaze.com"; // Replace with actual deployed URL
+  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app"; // Replace with actual deployed URL
 
 // 🔹 Page Layout
 const PageWrapper = styled.div`
