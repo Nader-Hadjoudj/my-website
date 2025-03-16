@@ -14,26 +14,24 @@ app.use(express.json());
 // ✅ Fix CORS Configuration
 app.use(
   cors({
-    origin: "*", // ✅ Temporarily allowing all origins (for debugging)
+    origin: ["http://localhost:5173", "https://www.stormmaze.com"], // Allow frontend in dev & prod
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ Middleware to Manually Set CORS Headers
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Allow all origins (for now)
-  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// ✅ Middleware to Handle CORS Preflight Requests
+app.options("*", cors());
 
-// ✅ Load Google Service Account Key
+// ✅ Load Google Service Account Key (Fix for Vercel)
 let serviceAccountKey;
 try {
+  if (!process.env.GOOGLE_SERVICE_ACCOUNT_KEY) {
+    throw new Error("GOOGLE_SERVICE_ACCOUNT_KEY is missing in environment variables.");
+  }
   serviceAccountKey = JSON.parse(process.env.GOOGLE_SERVICE_ACCOUNT_KEY);
 } catch (error) {
-  console.error("❌ Error parsing service account key:", error.message);
+  console.error("❌ Error loading service account key:", error.message);
   process.exit(1);
 }
 
@@ -50,7 +48,7 @@ const auth = new google.auth.JWT(
 
 const calendar = google.calendar({ version: "v3", auth });
 
-// ✅ Test Route
+// ✅ Test Route (Check if API is Running)
 app.get("/api/test", (req, res) => {
   res.json({ success: true, message: "API is working!" });
 });
@@ -98,5 +96,8 @@ app.post("/api/book-appointment", async (req, res) => {
   }
 });
 
-// ✅ Start Server
-app.listen(PORT, () => console.log(`✅ Server Running on http://localhost:${PORT}`));
+// ✅ Start Server (Fix for Vercel)
+export default app;
+if (process.env.NODE_ENV !== "vercel") {
+  app.listen(PORT, () => console.log(`✅ Server Running on http://localhost:${PORT}`));
+}
