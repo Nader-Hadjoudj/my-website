@@ -3,10 +3,12 @@ import axios from "axios";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { format } from "date-fns";
 
-const ZOHO_CALENDAR_API = "https://calendar.zoho.eu/eventreq/zz080112301eff40afe368987f9d6c444b3ced22fd2b5cb88f771fda59c39210b0f4dbfa4e8e0e4b9f30745446279ebe5c16b2af60";
+const BASE_URL = process.env.NODE_ENV === "development"
+  ? "http://localhost:5000"
+  : "https://your-vercel-app.vercel.app";
 
+// 🔹 Page Layout
 const PageWrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -18,18 +20,18 @@ const PageWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 800px; /* Increased width */
+  width: 800px;
   height: auto;
   padding: 20px;
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 1px 8px #ffd700;
-  display: flex; /* Creates a row layout */
+  display: flex;
 `;
 
 const LeftColumn = styled.div`
   flex: 1;
-  padding-right: 20px; /* Spacing between left and right sections */
+  padding-right: 20px;
 `;
 
 const RightColumn = styled.div`
@@ -100,8 +102,7 @@ function AppointmentBooking() {
   // Generate available time slots
   const generateTimeSlots = () => {
     let slots = [];
-    for (let hour = 5; hour < 11; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
-    for (let hour = 11; hour < 19; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
+    for (let hour = 5; hour < 19; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
     return slots;
   };
 
@@ -110,28 +111,20 @@ function AppointmentBooking() {
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
       try {
-        // ✅ Ensure `selectedTime` always has `HH:mm` format
+        // ✅ Ensure time is formatted correctly
         let [hour, minutes] = selectedTime.split(":").map(Number);
-  
-        // ✅ If minutes are NaN, set them to "00"
-        if (isNaN(minutes)) {
-          console.warn("⚠ Warning: Minutes are NaN, setting to 00");
-          minutes = 0;
-        }
-  
+        if (isNaN(minutes)) minutes = 0;
         const formattedTime = `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
-  
-        // ✅ Ensure `date` is formatted correctly
-        const formattedDate = selectedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
-  
-        const response = await axios.post("http://localhost:5000/api/book-appointment", {
+        const formattedDate = selectedDate.toISOString().split("T")[0];
+
+        const response = await axios.post(`${BASE_URL}/api/book-appointment`, {
           name: clientName,
           email,
           company,
           date: formattedDate,
-          time: formattedTime, // ✅ Now always in "HH:mm" format
+          time: formattedTime,
         });
-  
+
         if (response.data.success) {
           setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${formattedTime}.`);
         } else {
@@ -145,29 +138,20 @@ function AppointmentBooking() {
       setConfirmation("❌ Please fill all fields and select a time slot.");
     }
   };
-  
-  
-  
-  
 
   return (
     <PageWrapper>
       <Container>
-        {/* Left Side - Input Fields */}
         <LeftColumn>
           <Title>Book an Appointment</Title>
-
           <Label>Name</Label>
           <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
-
           <Label>Email</Label>
           <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-
           <Label>Company</Label>
           <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
         </LeftColumn>
 
-        {/* Right Side - Date & Time Selection */}
         <RightColumn>
           <Label>Select a Date:</Label>
           <DatePicker
