@@ -110,15 +110,30 @@ function AppointmentBooking() {
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
       try {
-        const formattedDate = format(selectedDate, "MM/dd/yyyy");
-        const formattedTime = selectedTime.split(" - ")[0];
-
-        const requestUrl = `${ZOHO_CALENDAR_API}?name=${clientName}&mailId=${email}&date=${formattedDate}&time=${formattedTime}&reason=Meeting%20with%20${company}`;
-
-        const response = await axios.get(requestUrl);
-
-        if (response.status === 200) {
-          setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${formattedTime}. Confirmation sent to ${email}.`);
+        // ✅ Ensure `selectedTime` always has `HH:mm` format
+        let [hour, minutes] = selectedTime.split(":").map(Number);
+  
+        // ✅ If minutes are NaN, set them to "00"
+        if (isNaN(minutes)) {
+          console.warn("⚠ Warning: Minutes are NaN, setting to 00");
+          minutes = 0;
+        }
+  
+        const formattedTime = `${hour.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}`;
+  
+        // ✅ Ensure `date` is formatted correctly
+        const formattedDate = selectedDate.toISOString().split("T")[0]; // Format YYYY-MM-DD
+  
+        const response = await axios.post("http://localhost:5000/api/book-appointment", {
+          name: clientName,
+          email,
+          company,
+          date: formattedDate,
+          time: formattedTime, // ✅ Now always in "HH:mm" format
+        });
+  
+        if (response.data.success) {
+          setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${formattedTime}.`);
         } else {
           setConfirmation("❌ Failed to book the appointment.");
         }
@@ -130,6 +145,10 @@ function AppointmentBooking() {
       setConfirmation("❌ Please fill all fields and select a time slot.");
     }
   };
+  
+  
+  
+  
 
   return (
     <PageWrapper>
