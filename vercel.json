@@ -1,7 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/api/book-appointments/(.*)",
+      "source": "/api/book-appointment/(.*)",
       "destination": "/api/book-appointments.js"
     },
     {
