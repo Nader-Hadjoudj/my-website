@@ -1,9 +1,5 @@
 {
     "rewrites": [
-      {
-        "src": "/api/(.*)",
-        "dest": "/server.js"
-      },
   
       {
         "source": "/(.*)",
