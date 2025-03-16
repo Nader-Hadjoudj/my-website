@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"; // Added useEffect
 import axios from "axios";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
@@ -8,6 +8,7 @@ const BASE_URL = import.meta.env.MODE === "development"
   ? "http://localhost:5000"
   : "https://stormmaze-nader-hadjoudjs-projects.vercel.app";
 
+// Styled components remain unchanged
 const PageWrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -130,32 +131,40 @@ function AppointmentBooking() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [confirmation, setConfirmation] = useState("");
-  const [bookedSlots, setBookedSlots] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]); // State for free slots
 
+  // All possible time slots from 5:00 to 18:00
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
+  // Fetch available slots when date changes
   useEffect(() => {
-    const fetchAvailability = async () => {
-      const formattedDate = selectedDate.toISOString().split("T")[0];
+    const fetchAvailableSlots = async () => {
       try {
-        const response = await axios.get(`${BASE_URL}/api/available-slots?date=${formattedDate}`);
-        if (response.data.success) {
-          setBookedSlots(response.data.bookedSlots);
+        const formattedDate = selectedDate.toISOString().split("T")[0];
+        const response = await axios.get(`${BASE_URL}/api/available-slots`, {
+          params: { date: formattedDate },
+        });
+        const bookedSlots = response.data.bookedSlots || [];
+        // Filter out booked slots from all possible slots
+        const freeSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+        setAvailableSlots(freeSlots);
+        // Reset selected time if it's no longer available
+        if (selectedTime && !freeSlots.includes(selectedTime)) {
+          setSelectedTime("");
         }
       } catch (error) {
-        console.error("❌ Error fetching availability:", error.message);
+        console.error("Error fetching available slots:", error);
+        setAvailableSlots(allSlots); // Fallback to all slots if fetch fails
       }
     };
 
-    fetchAvailability();
+    fetchAvailableSlots();
   }, [selectedDate]);
-
-  const filteredSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
 
   const handleBooking = async () => {
     if (clientName && email && company && selectedDate && selectedTime) {
-      const formattedDate = selectedDate.toISOString().split("T")[0];
       try {
+        const formattedDate = selectedDate.toISOString().split("T")[0];
         const response = await axios.post(`${BASE_URL}/api/book-appointment/`, {
           name: clientName,
           email,
@@ -166,13 +175,18 @@ function AppointmentBooking() {
 
         if (response.data.success) {
           setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${selectedTime}.`);
-          setBookedSlots(prev => [...prev, selectedTime]);
-          setSelectedTime("");
+          // Refresh available slots after booking
+          const bookedSlots = (await axios.get(`${BASE_URL}/api/available-slots`, {
+            params: { date: formattedDate },
+          })).data.bookedSlots || [];
+          const freeSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+          setAvailableSlots(freeSlots);
+          setSelectedTime(""); // Reset selected time
         } else {
           setConfirmation("❌ Failed to book the appointment.");
         }
       } catch (error) {
-        console.error("❌ Error booking appointment:", error.message);
+        console.error("❌ Error booking appointment:", error.response?.data || error.message);
         setConfirmation("❌ Error booking appointment.");
       }
     } else {
@@ -196,11 +210,24 @@ function AppointmentBooking() {
         <RightColumn>
           <Title>Select Date & Time</Title>
           <Label>Select a Date:</Label>
-          <StyledDatePicker selected={selectedDate} onChange={(date) => setSelectedDate(date)} minDate={new Date()} dateFormat="MM/dd/yyyy" />
+          <StyledDatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+            dateFormat="MM/dd/yyyy"
+          />
           <Label>Select a Time Slot:</Label>
-          {filteredSlots.map(slot => (
-            <TimeSlotButton key={slot} selected={selectedTime === slot} onClick={() => setSelectedTime(slot)}>{slot}</TimeSlotButton>
-          ))}
+          <div>
+            {availableSlots.map((slot) => (
+              <TimeSlotButton
+                key={slot}
+                onClick={() => setSelectedTime(slot)}
+                selected={selectedTime === slot}
+              >
+                {slot}
+              </TimeSlotButton>
+            ))}
+          </div>
           <Button onClick={handleBooking}>Confirm Appointment</Button>
           {confirmation && <Confirmation>{confirmation}</Confirmation>}
         </RightColumn>
