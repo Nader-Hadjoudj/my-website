@@ -1,34 +1,62 @@
 import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format } from "date-fns";
+
+const ZOHO_CALENDAR_API = "https://calendar.zoho.eu/eventreq/zz080112301eff40afe368987f9d6c444b3ced22fd2b5cb88f771fda59c39210b0f4dbfa4e8e0e4b9f30745446279ebe5c16b2af60";
+
+const PageWrapper = styled.div`
+  height: 100vh;
+  width: 100vw;
+  background: rgb(0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 50px;
+`;
 
 const Container = styled.div`
-  max-width: 400px;
-  margin: 50px auto;
+  width: 800px; /* Increased width */
+  height: auto;
   padding: 20px;
-  background:rgb(0, 0, 0);
+  background: rgb(13, 13, 13);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 8px #ffd700;
+  display: flex; /* Creates a row layout */
+`;
+
+const LeftColumn = styled.div`
+  flex: 1;
+  padding-right: 20px; /* Spacing between left and right sections */
+`;
+
+const RightColumn = styled.div`
+  flex: 1;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+  padding-left: 20px;
 `;
 
 const Title = styled.h2`
   text-align: center;
-  color: #333;
+  color: rgb(255, 255, 255);
 `;
 
 const Label = styled.label`
   display: block;
   font-weight: bold;
   margin: 10px 0 5px;
-  color: #555;
+  color: rgb(255, 255, 255);
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: 14px;
+  margin-bottom: 10px;
 `;
 
 const Button = styled.button`
@@ -41,7 +69,8 @@ const Button = styled.button`
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
-  
+  margin-top: 10px;
+
   &:hover {
     background: #0056b3;
   }
@@ -51,47 +80,103 @@ const Confirmation = styled.p`
   text-align: center;
   color: green;
   font-weight: bold;
-  margin-top: 15px;
+  margin-top: 10px;
+`;
+
+const TimeSlotButton = styled(Button)`
+  width: auto;
+  margin: 5px;
+  background: ${({ selected }) => (selected ? "#0056b3" : "#007bff")};
 `;
 
 function AppointmentBooking() {
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [company, setCompany] = useState("");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [selectedTime, setSelectedTime] = useState("");
   const [confirmation, setConfirmation] = useState("");
 
-  const handleBooking = () => {
-    if (clientName && email && date && time) {
-      setConfirmation(`✅ Appointment booked for ${clientName} on ${date} at ${time}`);
-      setClientName("");
-      setEmail("");
-      setDate("");
-      setTime("");
+  // Generate available time slots
+  const generateTimeSlots = () => {
+    let slots = [];
+    for (let hour = 5; hour < 11; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
+    for (let hour = 11; hour < 19; hour++) slots.push(`${hour}:00 - ${hour + 1}:00`);
+    return slots;
+  };
+
+  const availableSlots = generateTimeSlots();
+
+  const handleBooking = async () => {
+    if (clientName && email && company && selectedDate && selectedTime) {
+      try {
+        const formattedDate = format(selectedDate, "MM/dd/yyyy");
+        const formattedTime = selectedTime.split(" - ")[0];
+
+        const requestUrl = `${ZOHO_CALENDAR_API}?name=${clientName}&mailId=${email}&date=${formattedDate}&time=${formattedTime}&reason=Meeting%20with%20${company}`;
+
+        const response = await axios.get(requestUrl);
+
+        if (response.status === 200) {
+          setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${formattedTime}. Confirmation sent to ${email}.`);
+        } else {
+          setConfirmation("❌ Failed to book the appointment.");
+        }
+      } catch (error) {
+        console.error(error);
+        setConfirmation("❌ Error booking appointment.");
+      }
     } else {
-      setConfirmation("❌ Please fill all fields.");
+      setConfirmation("❌ Please fill all fields and select a time slot.");
     }
   };
 
   return (
-    <Container>
-      <Title>Book an Appointment</Title>
-      <Label>Name</Label>
-      <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} placeholder="Enter your name" />
+    <PageWrapper>
+      <Container>
+        {/* Left Side - Input Fields */}
+        <LeftColumn>
+          <Title>Book an Appointment</Title>
 
-      <Label>Email</Label>
-      <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Enter your email" />
+          <Label>Name</Label>
+          <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
 
-      <Label>Date</Label>
-      <Input type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+          <Label>Email</Label>
+          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
 
-      <Label>Time</Label>
-      <Input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+          <Label>Company</Label>
+          <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+        </LeftColumn>
 
-      <Button onClick={handleBooking}>Confirm Appointment</Button>
+        {/* Right Side - Date & Time Selection */}
+        <RightColumn>
+          <Label>Select a Date:</Label>
+          <DatePicker
+            selected={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={new Date()}
+            dateFormat="MM/dd/yyyy"
+            className="datepicker"
+          />
 
-      {confirmation && <Confirmation>{confirmation}</Confirmation>}
-    </Container>
+          <Label>Select a Time Slot:</Label>
+          <div>
+            {availableSlots.map((slot) => (
+              <TimeSlotButton
+                key={slot}
+                onClick={() => setSelectedTime(slot)}
+                selected={selectedTime === slot}
+              >
+                {slot}
+              </TimeSlotButton>
+            ))}
+          </div>
+
+          <Button onClick={handleBooking}>Confirm Appointment</Button>
+          {confirmation && <Confirmation>{confirmation}</Confirmation>}
+        </RightColumn>
+      </Container>
+    </PageWrapper>
   );
 }
 
