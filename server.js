@@ -9,30 +9,29 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-app.use(cors());
-app.use(express.json());
 
-// ✅ Load Google Service Account Key
-let serviceAccountKey;
-try {
-  serviceAccountKey = JSON.parse(fs.readFileSync(process.env.GOOGLE_SERVICE_ACCOUNT_KEY, "utf-8"));
-} catch (error) {
-  console.error("❌ Error loading service account key:", error.message);
-  process.exit(1);
-}
-
-// ✅ Fix Private Key Format
-const formattedPrivateKey = serviceAccountKey.private_key.replace(/\\n/g, "\n");
-
-// ✅ Authenticate with Google API
-const auth = new google.auth.JWT(
-  serviceAccountKey.client_email,
-  null,
-  formattedPrivateKey,
-  ["https://www.googleapis.com/auth/calendar"]
+// ✅ Set CORS Policy Before Any Routes
+app.use(
+  cors({
+    origin: ["https://www.stormmaze.com"], // Allow your frontend
+    methods: "GET,POST,OPTIONS",
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
 );
 
-const calendar = google.calendar({ version: "v3", auth });
+app.use(express.json());
+
+// ✅ Check if CORS Middleware is Applied
+app.use((req, res, next) => {
+  console.log("CORS headers applied");
+  next();
+});
+
+// ✅ Sample Test Route
+app.get("/test", (req, res) => {
+  res.json({ success: true, message: "CORS is working!" });
+});
 
 // ✅ API to Book an Appointment
 app.post("/api/book-appointment", async (req, res) => {
@@ -45,10 +44,9 @@ app.post("/api/book-appointment", async (req, res) => {
 
     console.log("🔹 Received Booking Request:", req.body);
 
-    // ✅ Ensure Date Format is Correct
+    // ✅ Format Date and Time
     const formattedDate = new Date(date).toISOString().split("T")[0];
 
-    // ✅ Format Time Properly
     let [hour, minutes] = time.split(":").map(Number);
     if (isNaN(minutes)) minutes = 0;
 
