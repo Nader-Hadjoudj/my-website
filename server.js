@@ -14,12 +14,19 @@ app.use(express.json());
 // ✅ Fix CORS Configuration
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://www.stormmaze.com"], // Allow local & production frontend
+    origin: "*", // ✅ Temporarily allowing all origins (for debugging)
     methods: ["GET", "POST", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Allow credentials if needed
   })
 );
+
+// ✅ Middleware to Manually Set CORS Headers
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // Allow all origins (for now)
+  res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  next();
+});
 
 // ✅ Load Google Service Account Key
 let serviceAccountKey;
