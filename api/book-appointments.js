@@ -33,16 +33,23 @@ export default async function handler(req, res) {
     const calendar = google.calendar({ version: "v3", auth });
 
     const formattedDate = new Date(date).toISOString().split("T")[0];
-    const [hour] = time.split(" - ")[0].split(":").map(Number);
+    const [startHour] = time.split(" - ")[0].split(":").map(Number);
 
-    const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:00:00`);
-    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
+    // Construct time in Europe/Paris explicitly
+    const startTime = new Date(`${formattedDate}T${startHour.toString().padStart(2, "0")}:00:00`);
+    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 1 hour later
 
     const event = {
       summary: `Meeting with ${company}`,
       description: `Scheduled by ${name} (${email})`,
-      start: { dateTime: startTime.toISOString(), timeZone: "Europe/Paris" },
-      end: { dateTime: endTime.toISOString(), timeZone: "Europe/Paris" },
+      start: {
+        dateTime: startTime.toISOString(),
+        timeZone: "Europe/Paris",
+      },
+      end: {
+        dateTime: endTime.toISOString(),
+        timeZone: "Europe/Paris",
+      },
     };
 
     const response = await calendar.events.insert({
@@ -50,7 +57,9 @@ export default async function handler(req, res) {
       resource: event,
     });
 
-    res.json({ success: true, event: response.data });
+    // Return the booked slot in the same format as available slots
+    const bookedSlot = `${startHour}:00 - ${startHour + 1}:00`;
+    res.json({ success: true, event: response.data, bookedSlot });
   } catch (error) {
     console.error("❌ Error Adding Event:", error.message);
     res.status(500).json({ success: false, error: error.message });

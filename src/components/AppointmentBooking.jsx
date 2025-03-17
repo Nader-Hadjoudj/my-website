@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react"; // Added useEffect
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const BASE_URL = import.meta.env.MODE === "development"
-  ? "http://localhost:5000"
-  : "https://stormmaze-nader-hadjoudjs-projects.vercel.app";
+const BASE_URL =
+  import.meta.env.MODE === "development"
+    ? "http://localhost:5000"
+    : "https://stormmaze-nader-hadjoudjs-projects.vercel.app";
 
-// Styled components remain unchanged
+// Styled components (unchanged)
 const PageWrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -131,12 +132,10 @@ function AppointmentBooking() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
   const [confirmation, setConfirmation] = useState("");
-  const [availableSlots, setAvailableSlots] = useState([]); // State for free slots
+  const [availableSlots, setAvailableSlots] = useState([]);
 
-  // All possible time slots from 5:00 to 18:00
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
-  // Fetch available slots when date changes
   useEffect(() => {
     const fetchAvailableSlots = async () => {
       try {
@@ -145,16 +144,16 @@ function AppointmentBooking() {
           params: { date: formattedDate },
         });
         const bookedSlots = response.data.bookedSlots || [];
-        // Filter out booked slots from all possible slots
-        const freeSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+        console.log("Booked slots:", bookedSlots); // Debug
+        const freeSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
+        console.log("Free slots:", freeSlots); // Debug
         setAvailableSlots(freeSlots);
-        // Reset selected time if it's no longer available
         if (selectedTime && !freeSlots.includes(selectedTime)) {
           setSelectedTime("");
         }
       } catch (error) {
         console.error("Error fetching available slots:", error);
-        setAvailableSlots(allSlots); // Fallback to all slots if fetch fails
+        setAvailableSlots(allSlots); // Fallback
       }
     };
 
@@ -174,14 +173,19 @@ function AppointmentBooking() {
         });
 
         if (response.data.success) {
-          setConfirmation(`✅ Appointment booked for ${clientName} on ${formattedDate} at ${selectedTime}.`);
-          // Refresh available slots after booking
-          const bookedSlots = (await axios.get(`${BASE_URL}/api/available-slots`, {
-            params: { date: formattedDate },
-          })).data.bookedSlots || [];
-          const freeSlots = allSlots.filter(slot => !bookedSlots.includes(slot));
+          setConfirmation(
+            `✅ Appointment booked for ${clientName} on ${formattedDate} at ${selectedTime}.`
+          );
+          const bookedSlots = (
+            await axios.get(`${BASE_URL}/api/available-slots`, {
+              params: { date: formattedDate },
+            })
+          ).data.bookedSlots || [];
+          const freeSlots = allSlots.filter(
+            (slot) => !bookedSlots.includes(slot)
+          );
           setAvailableSlots(freeSlots);
-          setSelectedTime(""); // Reset selected time
+          setSelectedTime("");
         } else {
           setConfirmation("❌ Failed to book the appointment.");
         }
@@ -200,11 +204,23 @@ function AppointmentBooking() {
         <LeftColumn>
           <Title>Client Information</Title>
           <Label>Name</Label>
-          <Input type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+          <Input
+            type="text"
+            value={clientName}
+            onChange={(e) => setClientName(e.target.value)}
+          />
           <Label>Email</Label>
-          <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <Input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
           <Label>Company</Label>
-          <Input type="text" value={company} onChange={(e) => setCompany(e.target.value)} />
+          <Input
+            type="text"
+            value={company}
+            onChange={(e) => setCompany(e.target.value)}
+          />
         </LeftColumn>
         <Divider />
         <RightColumn>
