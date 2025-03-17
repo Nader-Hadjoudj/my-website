@@ -32,20 +32,21 @@ export default async function handler(req, res) {
 
     const calendar = google.calendar({ version: "v3", auth });
 
-    const timeMin = new Date(`${date}T00:00:00+02:00`).toISOString(); // Europe/Paris offset
-    const timeMax = new Date(`${date}T23:59:59+02:00`).toISOString();
+    const timeMin = new Date(`${date}T00:00:00`).toISOString(); // No hardcoded offset
+    const timeMax = new Date(`${date}T23:59:59`).toISOString();
 
     const response = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID,
       timeMin,
       timeMax,
+      timeZone: "Europe/Paris", // Explicitly set timezone
       singleEvents: true,
       orderBy: "startTime",
     });
 
     const bookedSlots = response.data.items.map(event => {
       const start = new Date(event.start.dateTime);
-      const localHour = start.getHours(); // Get local hour in Europe/Paris
+      const localHour = start.getHours(); // Local hour in Europe/Paris
       return `${localHour}:00 - ${localHour + 1}:00`;
     });
 

@@ -9,10 +9,6 @@ export default async function handler(req, res) {
     return res.status(200).end();
   }
 
-  if (req.method === "GET" && req.url === "/api/book-appointments/test") {
-    return res.status(200).json({ success: true, message: "API test route is working!" });
-  }
-
   if (req.method !== "POST") {
     return res.status(405).json({ success: false, error: "Method Not Allowed" });
   }
@@ -37,9 +33,8 @@ export default async function handler(req, res) {
     const calendar = google.calendar({ version: "v3", auth });
 
     const formattedDate = new Date(date).toISOString().split("T")[0];
-    const [hour] = time.split(" - ")[0].split(":").map(Number); // Extract start hour from "H:00 - H+1:00"
+    const [hour] = time.split(" - ")[0].split(":").map(Number);
 
-    // Use local time for Europe/Paris without UTC offset
     const startTime = new Date(`${formattedDate}T${hour.toString().padStart(2, "0")}:00:00`);
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000);
 
@@ -56,7 +51,6 @@ export default async function handler(req, res) {
     });
 
     res.json({ success: true, event: response.data });
-
   } catch (error) {
     console.error("❌ Error Adding Event:", error.message);
     res.status(500).json({ success: false, error: error.message });
