@@ -9,7 +9,7 @@ function Home() {
     <div>
       <AnimatedText />
       <AppointmentBooking />
-      <AppWithVideoBackground />
+      <FarmingHeroSection />
     </div>
   );
 }
