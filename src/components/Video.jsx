@@ -1,156 +1,248 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
-import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register the SplitText plugin
+// Register the ScrollTrigger plugin
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(SplitText);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const HeroSection = styled.div`
+const ShowcaseSection = styled.section`
+  background-color: #0a0a0a;
+  padding: 6rem 2rem;
   position: relative;
-  width: 100%;
-  height: 100vh;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
-const VideoBackground = styled.video`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 1;
-`;
-
-const Overlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 2;
-`;
-
-const Content = styled.div`
-  position: relative;
-  z-index: 3;
+const SectionTitle = styled.h2`
+  font-size: 3rem;
+  color: #ffd700;
   text-align: center;
-  max-width: 80%;
+  margin-bottom: 4rem;
+  font-weight: bold;
+  
+  &:after {
+    content: "";
+    display: block;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #fff700, #ffd700);
+    margin: 1rem auto 0;
+  }
 `;
 
-const Title = styled.h1`
-  font-size: 5rem;
-  font-weight: 800;
-  margin-bottom: 2rem;
-  color: transparent;
-  background: linear-gradient(45deg, #ffd700, #ffcc00, #ffd700, #ffea00);
-  -webkit-background-clip: text;
-  background-clip: text;
-  text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.3);
+const ProductsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+`;
+
+const ProductCard = styled.div`
+  background-color: #141414;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
+  transform: translateY(50px);
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+  }
 `;
 
-const Subtitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 600;
-  color: #ffea00;
-  opacity: 0;
+const ProductImage = styled.div`
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+  }
 `;
 
-const FarmingHeroSection = () => {
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
+const ProductInfo = styled.div`
+  padding: 1.5rem;
+`;
+
+const ProductName = styled.h3`
+  color: #ffd700;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const ProductDescription = styled.p`
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+`;
+
+const ProductStats = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  border-top: 1px solid rgba(255, 215, 0, 0.2);
+  padding-top: 1rem;
+`;
+
+const StatItem = styled.div`
+  text-align: center;
+`;
+
+const StatValue = styled.div`
+  color: #ffd700;
+  font-size: 1.2rem;
+  font-weight: bold;
+`;
+
+const StatLabel = styled.div`
+  color: #a0a0a0;
+  font-size: 0.8rem;
+`;
+
+const products = [
+  {
+    id: 1,
+    name: "Premium Tomatoes",
+    description: "Our vine-ripened tomatoes are grown with care in our specialized greenhouses.",
+    image: "/images/tomatoes.jpg",
+    quality: "A+",
+    origin: "Spain",
+    season: "Year-round"
+  },
+  {
+    id: 2,
+    name: "Organic Peppers",
+    description: "Sweet and colorful peppers grown using organic methods without pesticides.",
+    image: "/images/peppers.jpg",
+    quality: "A",
+    origin: "Morocco",
+    season: "Jun-Oct"
+  },
+  {
+    id: 3,
+    name: "Fresh Lettuce",
+    description: "Crisp and nutritious lettuce varieties, harvested at peak freshness.",
+    image: "/images/lettuce.jpg",
+    quality: "A+",
+    origin: "France",
+    season: "Mar-Nov"
+  },
+  {
+    id: 4,
+    name: "Exotic Eggplants",
+    description: "Glossy purple eggplants with tender flesh and minimal seeds.",
+    image: "/images/eggplants.jpg",
+    quality: "A",
+    origin: "Italy",
+    season: "May-Sep"
+  },
+  {
+    id: 5,
+    name: "Sweet Corn",
+    description: "Golden corn with perfect sweetness, ideal for grilling or boiling.",
+    image: "/images/corn.jpg",
+    quality: "A+",
+    origin: "USA",
+    season: "Jun-Aug"
+  },
+  {
+    id: 6,
+    name: "Fresh Asparagus",
+    description: "Tender green asparagus spears with excellent flavor and texture.",
+    image: "/images/asparagus.jpg",
+    quality: "A",
+    origin: "Peru",
+    season: "Feb-Jun"
+  }
+];
+
+const FarmingProductsShowcase = () => {
+  const cardsRef = useRef([]);
+  const sectionRef = useRef(null);
 
   useEffect(() => {
-    // Animation for the title
-    const title = titleRef.current;
-    let splitTitle;
+    const cards = cardsRef.current;
     
-    if (title && typeof SplitText !== "undefined") {
-      splitTitle = new SplitText(title, { type: "chars, words" });
-      
-      gsap.fromTo(
-        splitTitle.chars,
-        { 
-          opacity: 0,
-          y: 100,
-          rotationX: -90,
-        },
-        { 
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-          stagger: 0.05,
-          duration: 1,
-          ease: "power4.out",
-          onComplete: () => {
-            // Add a shimmering effect
-            gsap.to(splitTitle.chars, {
-              textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
-              duration: 1.5,
-              repeat: -1,
-              yoyo: true,
-              ease: "sine.inOut",
-              stagger: {
-                each: 0.1,
-                from: "random",
-              }
-            });
-          }
-        }
-      );
-    } else {
-      gsap.to(title, {
-        opacity: 1,
-        duration: 1.5,
-        ease: "power2.out"
-      });
-    }
-
-    // Animation for the subtitle
-    gsap.fromTo(
-      subtitleRef.current,
-      { 
-        opacity: 0,
-        y: 30 
+    gsap.from(sectionRef.current.querySelector("h2"), {
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 80%",
       },
-      { 
-        opacity: 1,
+      y: 50,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+    
+    cards.forEach((card, index) => {
+      gsap.to(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 85%",
+        },
         y: 0,
-        duration: 1.5,
-        delay: 1.5,
-        ease: "back.out" 
-      }
-    );
-
+        opacity: 1,
+        duration: 0.8,
+        delay: index * 0.15,
+        ease: "power3.out"
+      });
+    });
+    
     return () => {
-      // Cleanup if needed
-      if (splitTitle) {
-        splitTitle.revert();
-      }
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
     };
   }, []);
 
+  // Use a placeholder image URL if the real image is not available
+  const getImageUrl = (path) => {
+    return path || `/api/placeholder/400/200`;
+  };
+
   return (
-    <HeroSection>
-      <VideoBackground autoPlay muted loop playsInline>
-        <source src="/videos/farming-background.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </VideoBackground>
-      <Overlay />
-      <Content>
-        <Title ref={titleRef}>STORMMAZE</Title>
-        <Subtitle ref={subtitleRef}>The Best Import Export Vegetable Company Ever</Subtitle>
-      </Content>
-    </HeroSection>
+    <ShowcaseSection ref={sectionRef}>
+      <SectionTitle>Our Premium Products</SectionTitle>
+      <ProductsGrid>
+        {products.map((product, index) => (
+          <ProductCard 
+            key={product.id}
+            ref={el => cardsRef.current[index] = el}
+          >
+            <ProductImage style={{ backgroundImage: `url(${getImageUrl(product.image)})` }} />
+            <ProductInfo>
+              <ProductName>{product.name}</ProductName>
+              <ProductDescription>{product.description}</ProductDescription>
+              <ProductStats>
+                <StatItem>
+                  <StatValue>{product.quality}</StatValue>
+                  <StatLabel>Quality</StatLabel>
+                </StatItem>
+                <StatItem>
+                  <StatValue>{product.origin}</StatValue>
+                  <StatLabel>Origin</StatLabel>
+                </StatItem>
+                <StatItem>
+                  <StatValue>{product.season}</StatValue>
+                  <StatLabel>Season</StatLabel>
+                </StatItem>
+              </ProductStats>
+            </ProductInfo>
+          </ProductCard>
+        ))}
+      </ProductsGrid>
+    </ShowcaseSection>
   );
 };
 
-export default FarmingHeroSection;
+export default FarmingProductsShowcase;
