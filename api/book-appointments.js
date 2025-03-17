@@ -35,8 +35,15 @@ export default async function handler(req, res) {
     const formattedDate = new Date(date).toISOString().split("T")[0];
     const [startHour] = time.split(" - ")[0].split(":").map(Number);
 
-    // Construct time in Europe/Paris explicitly
-    const startTime = new Date(`${formattedDate}T${startHour.toString().padStart(2, "0")}:00:00`);
+    // Create startTime in UTC, adjusted for Europe/Paris
+    const startTime = new Date(Date.UTC(
+      new Date(date).getUTCFullYear(),
+      new Date(date).getUTCMonth(),
+      new Date(date).getUTCDate(),
+      startHour,
+      0,
+      0
+    ));
     const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 1 hour later
 
     const event = {
@@ -57,7 +64,6 @@ export default async function handler(req, res) {
       resource: event,
     });
 
-    // Return the booked slot in the same format as available slots
     const bookedSlot = `${startHour}:00 - ${startHour + 1}:00`;
     res.json({ success: true, event: response.data, bookedSlot });
   } catch (error) {
