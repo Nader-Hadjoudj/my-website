@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import AnimatedText from "../components/AnimatedText";
 import FarmingHeroSection from "../components/FarmingHeroSection";
 import AppointmentBooking from "../components/AppointmentBooking";
+import FarmingProductsShowcase from "../components/FarmingProductsShowcase";
 
 function Home() {
   return (
@@ -10,6 +11,7 @@ function Home() {
       <AnimatedText />
       <AppointmentBooking />
       <FarmingHeroSection />
+      <FarmingProductsShowcase />
     </div>
   );
 }
