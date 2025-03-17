@@ -32,8 +32,9 @@ export default async function handler(req, res) {
 
     const calendar = google.calendar({ version: "v3", auth });
 
-    const timeMin = new Date(`${date}T00:00:00`).toISOString();
-    const timeMax = new Date(`${date}T23:59:59`).toISOString();
+    // Fix: Use proper RFC3339 timestamp format with the timezone offset
+    const timeMin = `${date}T00:00:00+01:00`;
+    const timeMax = `${date}T23:59:59+01:00`;
 
     const response = await calendar.events.list({
       calendarId: process.env.GOOGLE_CALENDAR_ID,
@@ -45,8 +46,11 @@ export default async function handler(req, res) {
     });
 
     const bookedSlots = response.data.items.map((event) => {
-      const start = new Date(event.start.dateTime);
-      const localHour = start.getHours();
+      // Parse the start time directly from the event data
+      // The Google Calendar API returns dateTime in the correct timezone
+      const startDateTime = event.start.dateTime;
+      // Extract hours from the ISO string (format: "2023-04-10T09:00:00+01:00")
+      const localHour = parseInt(startDateTime.split("T")[1].split(":")[0], 10);
       return `${localHour}:00 - ${localHour + 1}:00`;
     });
 
