@@ -128,6 +128,7 @@ const TimeSlotButton = styled(Button)`
 function AppointmentBooking() {
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState(""); // New state for phone number
   const [company, setCompany] = useState("");
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState("");
@@ -167,6 +168,7 @@ function AppointmentBooking() {
         const response = await axios.post(`${BASE_URL}/api/book-appointment/`, {
           name: clientName,
           email,
+          phone, // Include phone number in the request
           company,
           date: formattedDate,
           time: selectedTime,
@@ -214,6 +216,13 @@ function AppointmentBooking() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+          />
+          <Label>Phone Number</Label>
+          <Input
+            type="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="+33 1 23 45 67 89"
           />
           <Label>Company</Label>
           <Input

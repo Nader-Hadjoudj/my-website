@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { name, email, date, time, company } = req.body;
+    const { name, email, phone, date, time, company } = req.body;
 
     if (!name || !email || !date || !time || !company) {
       return res.status(400).json({ success: false, error: "Missing required fields." });
@@ -35,10 +35,13 @@ export default async function handler(req, res) {
     const formattedDate = new Date(date).toISOString().split("T")[0];
     const [startHour] = time.split(" - ")[0].split(":").map(Number);
 
+    // Include phone number in the description if provided
+    const contactInfo = phone ? `${name} (${email}, ${phone})` : `${name} (${email})`;
+
     // Fix: Use proper RFC3339 timestamp format with the specified time zone
     const event = {
       summary: `Meeting with ${company}`,
-      description: `Scheduled by ${name} (${email})`,
+      description: `Scheduled by ${contactInfo}`,
       start: {
         // Format: YYYY-MM-DDThh:mm:ss+TZ
         dateTime: `${formattedDate}T${startHour.toString().padStart(2, "0")}:00:00+01:00`,
