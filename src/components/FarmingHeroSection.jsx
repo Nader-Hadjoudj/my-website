@@ -1,12 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
-import { SplitText } from "gsap/SplitText";
-
-// Register the SplitText plugin
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(SplitText);
-}
+import Splitting from "splitting";
+import "splitting/dist/splitting.css";
+import "splitting/dist/splitting-cells.css";
 
 const HeroSection = styled.div`
   position: relative;
@@ -69,72 +66,47 @@ const FarmingHeroSection = () => {
   const subtitleRef = useRef(null);
 
   useEffect(() => {
-    // Animation for the title
     const title = titleRef.current;
-    let splitTitle;
-    
-    if (title && typeof SplitText !== "undefined") {
-      splitTitle = new SplitText(title, { type: "chars, words" });
-      
-      gsap.fromTo(
-        splitTitle.chars,
-        { 
-          opacity: 0,
-          y: 100,
-          rotationX: -90,
-        },
-        { 
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-          stagger: 0.05,
-          duration: 1,
-          ease: "power4.out",
-          onComplete: () => {
-            // Add a shimmering effect
-            gsap.to(splitTitle.chars, {
-              textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
-              duration: 1.5,
-              repeat: -1,
-              yoyo: true,
-              ease: "sine.inOut",
-              stagger: {
-                each: 0.1,
-                from: "random",
-              }
-            });
-          }
-        }
-      );
-    } else {
-      gsap.to(title, {
-        opacity: 1,
-        duration: 1.5,
-        ease: "power2.out"
-      });
-    }
 
-    // Animation for the subtitle
+    const split = Splitting({ target: title, by: "chars" });
+
+    gsap.fromTo(
+      split[0].chars,
+      { opacity: 0, y: 100, rotationX: -90 },
+      {
+        opacity: 1,
+        y: 0,
+        rotationX: 0,
+        stagger: 0.05,
+        duration: 1,
+        ease: "power4.out",
+        onComplete: () => {
+          gsap.to(split[0].chars, {
+            textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
+            duration: 1.5,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            stagger: { each: 0.1, from: "random" },
+          });
+        },
+      }
+    );
+
     gsap.fromTo(
       subtitleRef.current,
-      { 
-        opacity: 0,
-        y: 30 
-      },
-      { 
+      { opacity: 0, y: 30 },
+      {
         opacity: 1,
         y: 0,
         duration: 1.5,
         delay: 1.5,
-        ease: "back.out" 
+        ease: "back.out",
       }
     );
 
     return () => {
-      // Cleanup if needed
-      if (splitTitle) {
-        splitTitle.revert();
-      }
+      Splitting.revert(title);
     };
   }, []);
 
@@ -147,7 +119,9 @@ const FarmingHeroSection = () => {
       <Overlay />
       <Content>
         <Title ref={titleRef}>STORMMAZE</Title>
-        <Subtitle ref={subtitleRef}>The Best Import Export Vegetable Company Ever</Subtitle>
+        <Subtitle ref={subtitleRef}>
+          The Best Import Export Vegetable Company Ever
+        </Subtitle>
       </Content>
     </HeroSection>
   );
