@@ -8,7 +8,7 @@ function Home() {
     <div>
       <AnimatedText />
       <AppointmentBooking />
-      <Navbar />
+      <AppWithVideoBackground />
     </div>
   );
 }
