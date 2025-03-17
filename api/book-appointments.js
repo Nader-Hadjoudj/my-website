@@ -35,26 +35,18 @@ export default async function handler(req, res) {
     const formattedDate = new Date(date).toISOString().split("T")[0];
     const [startHour] = time.split(" - ")[0].split(":").map(Number);
 
-    // Create startTime in UTC, adjusted for Europe/Paris
-    const startTime = new Date(Date.UTC(
-      new Date(date).getUTCFullYear(),
-      new Date(date).getUTCMonth(),
-      new Date(date).getUTCDate(),
-      startHour,
-      0,
-      0
-    ));
-    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // 1 hour later
-
+    // Fix: Use proper RFC3339 timestamp format with the specified time zone
     const event = {
       summary: `Meeting with ${company}`,
       description: `Scheduled by ${name} (${email})`,
       start: {
-        dateTime: startTime.toISOString(),
+        // Format: YYYY-MM-DDThh:mm:ss+TZ
+        dateTime: `${formattedDate}T${startHour.toString().padStart(2, "0")}:00:00+01:00`,
         timeZone: "Europe/Paris",
       },
       end: {
-        dateTime: endTime.toISOString(),
+        // Add one hour for end time
+        dateTime: `${formattedDate}T${(startHour + 1).toString().padStart(2, "0")}:00:00+01:00`,
         timeZone: "Europe/Paris",
       },
     };
@@ -64,6 +56,7 @@ export default async function handler(req, res) {
       resource: event,
     });
 
+    // Return the booked slot in the same format as available slots
     const bookedSlot = `${startHour}:00 - ${startHour + 1}:00`;
     res.json({ success: true, event: response.data, bookedSlot });
   } catch (error) {
