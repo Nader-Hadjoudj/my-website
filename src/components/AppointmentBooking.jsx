@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -8,6 +8,23 @@ const BASE_URL =
   import.meta.env.MODE === "development"
     ? "http://localhost:5000"
     : "https://stormmaze-nader-hadjoudjs-projects.vercel.app";
+
+// Animations
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`;
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+`;
+
+const scaleIn = keyframes`
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+`;
 
 // Styled components
 const PageWrapper = styled.div`
@@ -130,28 +147,127 @@ const TimeSlotButton = styled(Button)`
   color: ${({ selected }) => (selected ? "black" : "white")};
 `;
 
-const LoadingContainer = styled.div`
+// Animation components
+const AnimationContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 150px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CalendarBase = styled.div`
+  width: 100px;
+  height: 120px;
+  background-color: white;
+  border-radius: 8px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: ${fadeIn} 0.5s ease-out;
+`;
+
+const CalendarHeader = styled.div`
+  width: 100%;
+  height: 30px;
+  background-color: #ff4757;
+  border-radius: 8px 8px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+`;
+
+const CalendarBody = styled.div`
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  justify-content: center;
 `;
 
-const LoadingImage = styled.img`
-  width: 80px;
-  height: 80px;
-  animation: ${({ isSpinning }) => isSpinning ? 'spin 2s linear infinite' : 'none'};
+const CalendarDate = styled.div`
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin-top: 5px;
+`;
+
+const CalendarTime = styled.div`
+  font-size: 14px;
+  color: #666;
+  margin-top: 5px;
+`;
+
+const CheckIcon = styled.div`
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  background-color: #28a745;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  animation: ${scaleIn} 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  &:before {
+    content: "✓";
   }
 `;
 
-const LoadingText = styled.p`
+const ErrorIcon = styled.div`
+  position: absolute;
+  top: -15px;
+  right: -15px;
+  width: 40px;
+  height: 40px;
+  background-color: #dc3545;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: white;
+  font-size: 20px;
+  font-weight: bold;
+  animation: ${scaleIn} 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  
+  &:before {
+    content: "✕";
+  }
+`;
+
+const LoadingDots = styled.div`
+  display: flex;
+  justify-content: center;
   margin-top: 10px;
-  font-size: 14px;
+  
+  span {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: inline-block;
+    animation: ${pulse} 1.4s infinite ease-in-out both;
+    
+    &:nth-child(1) {
+      animation-delay: -0.32s;
+    }
+    
+    &:nth-child(2) {
+      animation-delay: -0.16s;
+    }
+  }
 `;
 
 function AppointmentBooking() {
@@ -241,32 +357,16 @@ function AppointmentBooking() {
     }
   };
 
-  // Function to get the appropriate loading image based on status
-  const getStatusImage = () => {
-    switch (bookingStatus) {
-      case "loading":
-        return "../../public/loading-orange.png"; // Replace with your loading orange image
-      case "success":
-        return "success-apple.png"; // Replace with your success apple image
-      case "error":
-        return "../../public/error-strawberry.svg"; // Replace with your error strawberry image
-      default:
-        return "";
-    }
+  // Format date for display
+  const getFormattedDate = () => {
+    const day = selectedDate.getDate();
+    return day;
   };
 
-  // Function to get the appropriate loading text based on status
-  const getStatusText = () => {
-    switch (bookingStatus) {
-      case "loading":
-        return "Processing your appointment...";
-      case "success":
-        return "Appointment successfully booked!";
-      case "error":
-        return "Error booking appointment";
-      default:
-        return "";
-    }
+  // Get month name
+  const getMonthName = () => {
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    return monthNames[selectedDate.getMonth()];
   };
 
   return (
@@ -333,14 +433,25 @@ function AppointmentBooking() {
           </Button>
           
           {bookingStatus !== "idle" && (
-            <LoadingContainer>
-              <LoadingImage 
-                src={getStatusImage()} 
-                alt={bookingStatus} 
-                isSpinning={bookingStatus === "loading"}
-              />
-              <LoadingText>{getStatusText()}</LoadingText>
-            </LoadingContainer>
+            <AnimationContainer>
+              <CalendarBase>
+                <CalendarHeader>{getMonthName()}</CalendarHeader>
+                <CalendarBody>
+                  <CalendarDate>{getFormattedDate()}</CalendarDate>
+                  {selectedTime && <CalendarTime>{selectedTime}</CalendarTime>}
+                  
+                  {bookingStatus === "loading" && (
+                    <LoadingDots>
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </LoadingDots>
+                  )}
+                </CalendarBody>
+                {bookingStatus === "success" && <CheckIcon />}
+                {bookingStatus === "error" && <ErrorIcon />}
+              </CalendarBase>
+            </AnimationContainer>
           )}
           
           {confirmation && <Confirmation>{confirmation}</Confirmation>}
