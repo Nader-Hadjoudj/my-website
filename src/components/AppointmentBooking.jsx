@@ -247,7 +247,7 @@ function AppointmentBooking() {
       case "loading":
         return "../../public/loading-orange.png"; // Replace with your loading orange image
       case "success":
-        return "../../public/success-apple.png"; // Replace with your success apple image
+        return "success-apple.png"; // Replace with your success apple image
       case "error":
         return "../../public/error-strawberry.svg"; // Replace with your error strawberry image
       default:
