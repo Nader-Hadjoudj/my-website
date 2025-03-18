@@ -39,7 +39,7 @@ const PageWrapper = styled.div`
 `;
 
 const Container = styled.div`
-  width: 100vw;
+  width: 100%;
   max-width: 800px;
   height: auto;
   padding: 20px;
@@ -101,7 +101,7 @@ const Label = styled.label`
 `;
 
 const Input = styled.input`
-  width: 100vw;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ffd700;
   background: black;
@@ -116,7 +116,7 @@ const Input = styled.input`
 `;
 
 const StyledDatePicker = styled(DatePicker)`
-  width: 100vw;
+  width: 100%;
   padding: 10px;
   border: 1px solid #ffd700;
   background: black;
@@ -133,7 +133,7 @@ const StyledDatePicker = styled(DatePicker)`
 `;
 
 const Button = styled.button`
-  width: 100vw;
+  width: 100%;
   padding: 12px;
   background: #007bff;
   color: white;
@@ -180,7 +180,7 @@ const TimeSlotButton = styled(Button)`
 // Animation components
 const AnimationContainer = styled.div`
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 150px;
   margin-top: 20px;
   display: flex;
@@ -199,7 +199,7 @@ const CalendarBase = styled.div`
 `;
 
 const CalendarHeader = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 30px;
   background-color: #ff4757;
   border-radius: 8px 8px 0 0;
