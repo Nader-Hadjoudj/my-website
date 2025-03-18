@@ -8,7 +8,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  width: 100%;
+  width: 100vw;
   background-color: #000;
   text-align: center;
   overflow: hidden;
