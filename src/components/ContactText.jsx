@@ -33,7 +33,7 @@ const Separator = styled.div`
   margin: 15px 0;
 `;
 
-const AnimatedText = () => {
+const ContactText = () => {
   const textRef1 = useRef(null);
   const textRef2 = useRef(null);
 
@@ -74,4 +74,4 @@ const AnimatedText = () => {
   );
 };
 
-export default AnimatedText;
+export default ContactText;
