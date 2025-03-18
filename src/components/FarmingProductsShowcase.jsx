@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { motion } from "framer-motion";
 
 // Register ScrollTrigger
 if (typeof window !== "undefined") {
@@ -15,7 +16,7 @@ const ShowcaseSection = styled.section`
   overflow: hidden;
 `;
 
-const SectionTitle = styled.h2`
+const SectionTitle = styled(motion.h2)`
   font-size: 3rem;
   color: #ffd700;
   text-align: center;
@@ -40,22 +41,19 @@ const ProductsGrid = styled.div`
   margin: 0 auto;
 `;
 
-const ProductCard = styled.div`
+const ProductCard = styled(motion.div)`
   background-color: #141414;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  transform: translateY(50px);
+  transition: box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-10px);
     box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
   }
 `;
 
-const ProductImage = styled.div`
+const ProductImage = styled(motion.div)`
   height: 200px;
   background-size: cover;
   background-position: center;
@@ -76,19 +74,19 @@ const ProductInfo = styled.div`
   padding: 1.5rem;
 `;
 
-const ProductName = styled.h3`
+const ProductName = styled(motion.h3)`
   color: #ffd700;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
 `;
 
-const ProductDescription = styled.p`
+const ProductDescription = styled(motion.p)`
   color: #e0e0e0;
   font-size: 0.9rem;
   line-height: 1.5;
 `;
 
-const ProductStats = styled.div`
+const ProductStats = styled(motion.div)`
   display: flex;
   justify-content: space-between;
   margin-top: 1rem;
@@ -96,7 +94,7 @@ const ProductStats = styled.div`
   padding-top: 1rem;
 `;
 
-const StatItem = styled.div`
+const StatItem = styled(motion.div)`
   text-align: center;
 `;
 
@@ -109,6 +107,38 @@ const StatValue = styled.div`
 const StatLabel = styled.div`
   color: #a0a0a0;
   font-size: 0.8rem;
+`;
+
+const FilterContainer = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+`;
+
+const FilterButton = styled(motion.button)`
+  background-color: #1a1a1a;
+  color: #a0a0a0;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.active {
+    background-color: #ffd700;
+    color: #0a0a0a;
+  }
+
+  &:hover {
+    border-color: #ffd700;
+    color: #ffd700;
+  }
+
+  &.active:hover {
+    color: #0a0a0a;
+  }
 `;
 
 const products = [
@@ -168,47 +198,208 @@ const products = [
   }
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring", 
+      stiffness: 100,
+      damping: 15
+    }
+  },
+  hover: { 
+    y: -10,
+    transition: { 
+      type: "spring", 
+      stiffness: 400,
+      damping: 10
+    }
+  }
+};
+
+const imageVariants = {
+  hover: { 
+    scale: 1.05,
+    transition: { duration: 0.3 }
+  }
+};
+
+const textVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      duration: 0.5,
+      delay: 0.2
+    }
+  }
+};
+
+const statsVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { 
+      staggerChildren: 0.1,
+      delayChildren: 0.3
+    }
+  }
+};
+
+const statItemVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring", 
+      stiffness: 100
+    }
+  }
+};
+
+const filterContainerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { 
+      type: "spring", 
+      stiffness: 100,
+      damping: 15,
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const filterButtonVariants = {
+  hidden: { opacity: 0, scale: 0.8 },
+  visible: { 
+    opacity: 1, 
+    scale: 1,
+    transition: { 
+      type: "spring", 
+      stiffness: 200
+    }
+  },
+  tap: { scale: 0.95 }
+};
+
 const FarmingProductsShowcase = () => {
-  const cardsRef = useRef([]);
   const sectionRef = useRef(null);
+  const [activeFilter, setActiveFilter] = React.useState("all");
+  const [filteredProducts, setFilteredProducts] = React.useState(products);
+  const [isInView, setIsInView] = React.useState(false);
+
+  const origins = [...new Set(products.map(product => product.origin))];
 
   useEffect(() => {
-    gsap.from(sectionRef.current.querySelector("h2"), {
-      scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      y: 50,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out"
-    });
+    if (activeFilter === "all") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(products.filter(product => product.origin === activeFilter));
+    }
+  }, [activeFilter]);
 
-    cardsRef.current.forEach((card, index) => {
-      gsap.to(card, {
-        scrollTrigger: { trigger: card, start: "top 85%" },
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        delay: index * 0.15,
-        ease: "power3.out"
-      });
-    });
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = sectionRef.current;
+      if (section) {
+        const sectionTop = section.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (sectionTop < windowHeight * 0.75) {
+          setIsInView(true);
+        }
+      }
+    };
 
-    return () => ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check on mount
+    
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <ShowcaseSection ref={sectionRef}>
-      <SectionTitle>Our Premium Products</SectionTitle>
+      <SectionTitle
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={{
+          hidden: { opacity: 0, y: 50 },
+          visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.8, ease: "easeOut" }
+          }
+        }}
+      >
+        Our Premium Products
+      </SectionTitle>
+
+      <FilterContainer
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={filterContainerVariants}
+      >
+        <FilterButton
+          variants={filterButtonVariants}
+          whileTap="tap"
+          className={activeFilter === "all" ? "active" : ""}
+          onClick={() => setActiveFilter("all")}
+        >
+          All Products
+        </FilterButton>
+        {origins.map(origin => (
+          <FilterButton
+            key={origin}
+            variants={filterButtonVariants}
+            whileTap="tap"
+            className={activeFilter === origin ? "active" : ""}
+            onClick={() => setActiveFilter(origin)}
+          >
+            {origin}
+          </FilterButton>
+        ))}
+      </FilterContainer>
+
       <ProductsGrid>
-        {products.map((product, i) => (
-          <ProductCard key={product.id} ref={el => cardsRef.current[i] = el}>
-            <ProductImage style={{ backgroundImage: `url(${product.image || 'https://via.placeholder.com/400x200'})` }} />
+        {filteredProducts.map((product, index) => (
+          <ProductCard
+            key={product.id}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            whileHover="hover"
+            variants={cardVariants}
+            transition={{ delay: index * 0.1 }}
+          >
+            <ProductImage 
+              variants={imageVariants}
+              style={{ backgroundImage: `url(${product.image || 'https://via.placeholder.com/400x200'})` }} 
+            />
             <ProductInfo>
-              <ProductName>{product.name}</ProductName>
-              <ProductDescription>{product.description}</ProductDescription>
-              <ProductStats>
-                <StatItem><StatValue>{product.quality}</StatValue><StatLabel>Quality</StatLabel></StatItem>
-                <StatItem><StatValue>{product.origin}</StatValue><StatLabel>Origin</StatLabel></StatItem>
-                <StatItem><StatValue>{product.season}</StatValue><StatLabel>Season</StatLabel></StatItem>
+              <ProductName variants={textVariants}>
+                {product.name}
+              </ProductName>
+              <ProductDescription variants={textVariants}>
+                {product.description}
+              </ProductDescription>
+              <ProductStats variants={statsVariants}>
+                <StatItem variants={statItemVariants}>
+                  <StatValue>{product.quality}</StatValue>
+                  <StatLabel>Quality</StatLabel>
+                </StatItem>
+                <StatItem variants={statItemVariants}>
+                  <StatValue>{product.origin}</StatValue>
+                  <StatLabel>Origin</StatLabel>
+                </StatItem>
+                <StatItem variants={statItemVariants}>
+                  <StatValue>{product.season}</StatValue>
+                  <StatLabel>Season</StatLabel>
+                </StatItem>
               </ProductStats>
             </ProductInfo>
           </ProductCard>
