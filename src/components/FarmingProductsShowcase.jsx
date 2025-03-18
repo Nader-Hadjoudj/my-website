@@ -144,56 +144,56 @@ const FilterButton = styled(motion.button)`
 const products = [
   {
     id: 1,
-    name: "Premium Tomatoes",
+    name: "Green Haricots",
     description: "Our vine-ripened tomatoes are grown with care in our specialized greenhouses.",
-    image: "/error-strawberry.png",
+    image: "/Green_Haricots.png",
     quality: "A+",
-    origin: "Spain",
+    origin: "Algeria",
     season: "Year-round"
   },
   {
     id: 2,
-    name: "Organic Peppers",
+    name: "Red Haricots",
     description: "Sweet and colorful peppers grown using organic methods without pesticides.",
-    image: "/images/peppers.jpg",
+    image: "/Red_Haricots.png",
     quality: "A",
-    origin: "Morocco",
+    origin: "Algeria",
     season: "Jun-Oct"
   },
   {
     id: 3,
-    name: "Fresh Lettuce",
+    name: "beetroot",
     description: "Crisp and nutritious lettuce varieties, harvested at peak freshness.",
-    image: "/images/lettuce.jpg",
+    image: "/beetroot.png",
     quality: "A+",
-    origin: "France",
+    origin: "Algeria",
     season: "Mar-Nov"
   },
   {
     id: 4,
-    name: "Exotic Eggplants",
+    name: "fennel",
     description: "Glossy purple eggplants with tender flesh and minimal seeds.",
-    image: "/images/eggplants.jpg",
+    image: "/fennel.png",
     quality: "A",
-    origin: "Italy",
+    origin: "Algeria",
     season: "May-Sep"
   },
   {
     id: 5,
-    name: "Sweet Corn",
+    name: "purple artichoke",
     description: "Golden corn with perfect sweetness, ideal for grilling or boiling.",
-    image: "/images/corn.jpg",
+    image: "/artichoke.png",
     quality: "A+",
-    origin: "USA",
+    origin: "Algeria",
     season: "Jun-Aug"
   },
   {
     id: 6,
     name: "Fresh Asparagus",
     description: "Tender green asparagus spears with excellent flavor and texture.",
-    image: "/images/asparagus.jpg",
+    image: "/asparagus.png",
     quality: "A",
-    origin: "Peru",
+    origin: "Algeria",
     season: "Feb-Jun"
   }
 ];
