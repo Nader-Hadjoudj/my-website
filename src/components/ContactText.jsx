@@ -21,8 +21,10 @@ const Container = styled.div`
     min-height: 100vh;
     /* Fix for iOS Safari */
     min-height: -webkit-fill-available;
+    height: auto;
     margin: 0;
     padding: 5vw;
+    overflow-x: hidden;
   }
 `;
 
@@ -99,11 +101,13 @@ const ContactText = () => {
       ease: "power2.inOut",
     });
     
-    // Fix for ensuring the container takes full width
+    // Fix for ensuring the container takes full width but doesn't cause overflow
     if (containerRef.current) {
       const updateContainerSize = () => {
         const windowWidth = window.innerWidth;
-        containerRef.current.style.width = `${windowWidth}px`;
+        containerRef.current.style.width = `100%`;
+        // Ensure no horizontal scrolling
+        document.body.style.overflowX = 'hidden';
       };
       
       // Initial call and event listener
