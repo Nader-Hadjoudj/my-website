@@ -12,10 +12,17 @@ const Container = styled.div`
   background-color: #000;
   text-align: center;
   overflow: hidden;
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
 const Text = styled.div`
-  font-size: ${({ size }) => size || "2rem"};
+  font-size: ${({ size, mobileSize }) => {
+    if (mobileSize) {
+      return `clamp(${mobileSize}, 5vw, ${size})`;
+    }
+    return `clamp(1rem, 5vw, ${size})`;
+  }};
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
   font-family: Arial, sans-serif;
   color: #ffd700;
@@ -27,7 +34,8 @@ const Text = styled.div`
 `;
 
 const Separator = styled.div`
-  width: 60%;
+  width: 80%;
+  max-width: 300px;
   height: 2px;
   background-color: #ffd700;
   margin: 15px 0;
@@ -63,11 +71,11 @@ const ContactText = () => {
 
   return (
     <Container>
-      <Text ref={textRef1} size="3rem" bold>
+      <Text ref={textRef1} size="3rem" mobileSize="1.8rem" bold>
         You are visiting stormmaze
       </Text>
       <Separator />
-      <Text ref={textRef2} size="1.5rem">
+      <Text ref={textRef2} size="1.5rem" mobileSize="1rem">
         Website is under maintenance
       </Text>
     </Container>
