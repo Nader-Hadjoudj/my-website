@@ -17,13 +17,11 @@ function App() {
   return (
     <Router>
       <Navbar /> {/* Navbar remains visible on all pages */}
-      <MainContent>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-      </MainContent>
       <Footer /> {/* Add Footer Here */}
     </Router>
   );
