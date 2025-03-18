@@ -7,24 +7,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  height: 100vh;
   width: 100vw;
   background-color: #000;
   text-align: center;
   overflow: hidden;
-  padding: 20px;
-  box-sizing: border-box;
-  position: relative;
-  
-  /* Fix for mobile viewport inconsistencies */
-  @media (max-width: 768px) {
-    min-height: 100vh;
-    /* Fix for iOS Safari */
-    min-height: -webkit-fill-available;
-    height: auto;
-    margin: 0;
-    padding: 5vw;
-    overflow-x: hidden;
   }
 `;
 
