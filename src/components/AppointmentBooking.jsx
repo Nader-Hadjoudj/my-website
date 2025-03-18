@@ -34,21 +34,15 @@ const PageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5%;
+  padding: 20px;
   box-sizing: border-box;
-  overflow-x: hidden;
-  
-  @media (max-width: 768px) {
-    padding: 3%;
-    min-height: 100vh; /* Simplified for consistency */
-  }
 `;
 
 const Container = styled.div`
   width: 100%;
   max-width: 800px;
   height: auto;
-  padding: 2.5%;
+  padding: 20px;
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 1px 8px #ffd700;
@@ -57,31 +51,18 @@ const Container = styled.div`
   
   @media (min-width: 768px) {
     flex-direction: row;
-    padding: 20px;
-  }
-  
-  @media (max-width: 768px) {
-    padding: 15px;
-    box-shadow: 0 1px 4px #ffd700;
+    align-items: stretch;
   }
 `;
 
 const LeftColumn = styled.div`
   flex: 1;
-  padding: 2%;
-  
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
+  padding: 20px;
 `;
 
 const RightColumn = styled.div`
   flex: 1;
-  padding: 2%;
-  
-  @media (max-width: 768px) {
-    padding: 10px;
-  }
+  padding: 20px;
 `;
 
 const Divider = styled.div`
@@ -101,7 +82,12 @@ const Divider = styled.div`
 const Title = styled.h2`
   text-align: center;
   color: #ffd700;
-  font-size: clamp(18px, 5vw, 22px);
+  font-size: 20px;
+  
+  @media (min-width: 768px) {
+    font-size: 22px;
+  }
+  
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -111,19 +97,18 @@ const Label = styled.label`
   font-weight: bold;
   margin: 10px 0 5px;
   color: white;
-  font-size: clamp(12px, 4vw, 14px);
+  font-size: 14px;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: clamp(8px, 2vw, 10px);
+  padding: 10px;
   border: 1px solid #ffd700;
   background: black;
   color: white;
   border-radius: 5px;
-  font-size: clamp(12px, 4vw, 14px);
+  font-size: 14px;
   margin-bottom: 10px;
-  box-sizing: border-box;
   &:focus {
     outline: none;
     border-color: #ffea00;
@@ -132,16 +117,15 @@ const Input = styled.input`
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
-  padding: clamp(8px, 2vw, 10px);
+  padding: 10px;
   border: 1px solid #ffd700;
   background: black;
   color: white;
   border-radius: 5px;
-  font-size: clamp(12px, 4vw, 14px);
+  font-size: 14px;
   text-align: center;
   margin-bottom: 10px;
   cursor: pointer;
-  box-sizing: border-box;
   &:focus {
     outline: none;
     border-color: #ffea00;
@@ -150,12 +134,12 @@ const StyledDatePicker = styled(DatePicker)`
 
 const Button = styled.button`
   width: 100%;
-  padding: clamp(10px, 3vw, 12px);
+  padding: 12px;
   background: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: clamp(14px, 4vw, 16px);
+  font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
   margin-top: 10px;
@@ -175,7 +159,6 @@ const Confirmation = styled.p`
   color: green;
   font-weight: bold;
   margin-top: 10px;
-  font-size: clamp(12px, 4vw, 14px);
 `;
 
 const TimeSlotContainer = styled.div`
@@ -187,14 +170,14 @@ const TimeSlotContainer = styled.div`
 
 const TimeSlotButton = styled(Button)`
   width: auto;
-  padding: clamp(6px, 2vw, 8px) clamp(10px, 3vw, 12px);
+  padding: 8px 12px;
   margin: 3px;
-  font-size: clamp(12px, 4vw, 14px);
+  font-size: 14px;
   background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
   color: ${({ selected }) => (selected ? "black" : "white")};
 `;
 
-// Animation components (unchanged)
+// Animation components
 const AnimationContainer = styled.div`
   position: relative;
   width: 100%;
@@ -327,7 +310,7 @@ function AppointmentBooking() {
   const [confirmation, setConfirmation] = useState("");
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [bookingStatus, setBookingStatus] = useState("idle");
+  const [bookingStatus, setBookingStatus] = useState("idle"); // idle, loading, success, error
 
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
@@ -339,7 +322,9 @@ function AppointmentBooking() {
           params: { date: formattedDate },
         });
         const bookedSlots = response.data.bookedSlots || [];
+        console.log("Booked slots:", bookedSlots);
         const freeSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
+        console.log("Free slots:", freeSlots);
         setAvailableSlots(freeSlots);
         if (selectedTime && !freeSlots.includes(selectedTime)) {
           setSelectedTime("");
@@ -402,11 +387,13 @@ function AppointmentBooking() {
     }
   };
 
+  // Format date for display
   const getFormattedDate = () => {
     const day = selectedDate.getDate();
     return day;
   };
 
+  // Get month name
   const getMonthName = () => {
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     return monthNames[selectedDate.getMonth()];
@@ -482,6 +469,7 @@ function AppointmentBooking() {
                 <CalendarBody>
                   <CalendarDate>{getFormattedDate()}</CalendarDate>
                   {selectedTime && <CalendarTime>{selectedTime}</CalendarTime>}
+                  
                   {bookingStatus === "loading" && (
                     <LoadingDots>
                       <span></span>

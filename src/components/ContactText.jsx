@@ -11,21 +11,29 @@ const Container = styled.div`
   width: 100%;
   background-color: #000;
   text-align: center;
-  padding: 5%;
+  overflow: hidden;
+  padding: 20px;
   box-sizing: border-box;
+  position: relative;
   
+  /* Fix for mobile viewport inconsistencies */
   @media (max-width: 768px) {
-    padding: 3%;
     min-height: 100vh;
+    /* Fix for iOS Safari */
+    min-height: -webkit-fill-available;
+    height: auto;
+    margin: 0;
+    padding: 5vw;
+    overflow-x: hidden;
   }
 `;
 
 const Text = styled.div`
   font-size: ${({ size, mobileSize }) => {
     if (mobileSize) {
-      return `clamp(${mobileSize}, 4vw, ${size})`;
+      return `clamp(${mobileSize}, 5vw, ${size})`;
     }
-    return `clamp(1rem, 4vw, ${size})`;
+    return `clamp(1rem, 5vw, ${size})`;
   }};
   font-weight: ${({ bold }) => (bold ? "bold" : "normal")};
   font-family: Arial, sans-serif;
@@ -72,6 +80,7 @@ const ContactText = () => {
   useEffect(() => {
     if (!textRef1.current || !textRef2.current) return;
 
+    // Animation for the text elements
     gsap.to([textRef1.current, textRef2.current], {
       opacity: 0.8,
       duration: 1.5,
@@ -92,15 +101,20 @@ const ContactText = () => {
       ease: "power2.inOut",
     });
     
+    // Fix for ensuring the container takes full width but doesn't cause overflow
     if (containerRef.current) {
       const updateContainerSize = () => {
+        const windowWidth = window.innerWidth;
         containerRef.current.style.width = `100%`;
+        // Ensure no horizontal scrolling
         document.body.style.overflowX = 'hidden';
       };
       
+      // Initial call and event listener
       updateContainerSize();
       window.addEventListener('resize', updateContainerSize);
       
+      // Cleanup
       return () => window.removeEventListener('resize', updateContainerSize);
     }
   }, []);
@@ -108,7 +122,7 @@ const ContactText = () => {
   return (
     <Container ref={containerRef}>
       <ContentWrapper>
-        <Text ref={textRef1} size="3rem" mobileSize="1.5rem" bold>
+        <Text ref={textRef1} size="3rem" mobileSize="1.8rem" bold>
           You are visiting stormmaze
         </Text>
         <Separator />
