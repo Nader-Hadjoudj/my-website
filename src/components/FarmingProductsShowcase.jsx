@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -11,53 +11,34 @@ if (typeof window !== "undefined") {
 
 const ShowcaseSection = styled.section`
   background-color: #0a0a0a;
-  padding: 4rem 1rem;
+  padding: 6rem 2rem;
   position: relative;
   overflow: hidden;
-  
-  @media (min-width: 768px) {
-    padding: 6rem 2rem;
-  }
 `;
 
 const SectionTitle = styled(motion.h2)`
-  font-size: 2rem;
+  font-size: 3rem;
   color: #ffd700;
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 4rem;
   font-weight: bold;
-
-  @media (min-width: 768px) {
-    font-size: 3rem;
-    margin-bottom: 4rem;
-  }
 
   &:after {
     content: "";
     display: block;
-    width: 80px;
+    width: 100px;
     height: 3px;
     background: linear-gradient(90deg, #fff700, #ffd700);
-    margin: 0.8rem auto 0;
-    
-    @media (min-width: 768px) {
-      width: 100px;
-      margin: 1rem auto 0;
-    }
+    margin: 1rem auto 0;
   }
 `;
 
 const ProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 2rem;
-  }
 `;
 
 const ProductCard = styled(motion.div)`
@@ -66,9 +47,6 @@ const ProductCard = styled(motion.div)`
   overflow: hidden;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
   transition: box-shadow 0.3s ease;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 
   &:hover {
     box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
@@ -76,14 +54,10 @@ const ProductCard = styled(motion.div)`
 `;
 
 const ProductImage = styled(motion.div)`
-  height: 160px;
+  height: 200px;
   background-size: cover;
   background-position: center;
   position: relative;
-  
-  @media (min-width: 768px) {
-    height: 200px;
-  }
 
   &:after {
     content: "";
@@ -97,36 +71,19 @@ const ProductImage = styled(motion.div)`
 `;
 
 const ProductInfo = styled.div`
-  padding: 1.25rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  
-  @media (min-width: 768px) {
-    padding: 1.5rem;
-  }
+  padding: 1.5rem;
 `;
 
 const ProductName = styled(motion.h3)`
   color: #ffd700;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  
-  @media (min-width: 768px) {
-    font-size: 1.5rem;
-  }
 `;
 
 const ProductDescription = styled(motion.p)`
   color: #e0e0e0;
-  font-size: 0.85rem;
-  line-height: 1.4;
-  margin-bottom: auto;
-  
-  @media (min-width: 768px) {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
+  font-size: 0.9rem;
+  line-height: 1.5;
 `;
 
 const ProductStats = styled(motion.div)`
@@ -143,51 +100,31 @@ const StatItem = styled(motion.div)`
 
 const StatValue = styled.div`
   color: #ffd700;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  
-  @media (min-width: 768px) {
-    font-size: 1.2rem;
-  }
 `;
 
 const StatLabel = styled.div`
   color: #a0a0a0;
-  font-size: 0.75rem;
-  
-  @media (min-width: 768px) {
-    font-size: 0.8rem;
-  }
+  font-size: 0.8rem;
 `;
 
 const FilterContainer = styled(motion.div)`
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 0.75rem;
+  gap: 1rem;
   margin-bottom: 2rem;
-  
-  @media (min-width: 768px) {
-    gap: 1rem;
-  }
 `;
 
 const FilterButton = styled(motion.button)`
   background-color: #1a1a1a;
   color: #a0a0a0;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 0.4rem 0.8rem;
+  padding: 0.5rem 1rem;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-bottom: 0.5rem;
-  
-  @media (min-width: 768px) {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    margin-bottom: 0;
-  }
 
   &.active {
     background-color: #ffd700;
@@ -261,43 +198,43 @@ const products = [
   }
 ];
 
-// Animation variants optimized for mobile
+
 const cardVariants = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 50 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: { 
       type: "spring", 
-      stiffness: 80,
+      stiffness: 100,
       damping: 15
     }
   },
-  hover: (isMobile) => ({ 
-    y: isMobile ? -5 : -10,
+  hover: { 
+    y: -10,
     transition: { 
       type: "spring", 
-      stiffness: isMobile ? 300 : 400,
+      stiffness: 400,
       damping: 10
     }
-  })
+  }
 };
 
 const imageVariants = {
   hover: { 
-    scale: 1.03,
+    scale: 1.05,
     transition: { duration: 0.3 }
   }
 };
 
 const textVariants = {
-  hidden: { opacity: 0, y: 15 },
+  hidden: { opacity: 0, y: 20 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: { 
-      duration: 0.4,
-      delay: 0.1
+      duration: 0.5,
+      delay: 0.2
     }
   }
 };
@@ -307,14 +244,14 @@ const statsVariants = {
   visible: { 
     opacity: 1,
     transition: { 
-      staggerChildren: 0.08,
-      delayChildren: 0.2
+      staggerChildren: 0.1,
+      delayChildren: 0.3
     }
   }
 };
 
 const statItemVariants = {
-  hidden: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, y: 10 },
   visible: { 
     opacity: 1, 
     y: 0,
@@ -326,27 +263,27 @@ const statItemVariants = {
 };
 
 const filterContainerVariants = {
-  hidden: { opacity: 0, y: -15 },
+  hidden: { opacity: 0, y: -20 },
   visible: { 
     opacity: 1, 
     y: 0,
     transition: { 
       type: "spring", 
-      stiffness: 90,
+      stiffness: 100,
       damping: 15,
-      staggerChildren: 0.08
+      staggerChildren: 0.1
     }
   }
 };
 
 const filterButtonVariants = {
-  hidden: { opacity: 0, scale: 0.85 },
+  hidden: { opacity: 0, scale: 0.8 },
   visible: { 
     opacity: 1, 
     scale: 1,
     transition: { 
       type: "spring", 
-      stiffness: 180
+      stiffness: 200
     }
   },
   tap: { scale: 0.95 }
@@ -354,14 +291,12 @@ const filterButtonVariants = {
 
 const FarmingProductsShowcase = () => {
   const sectionRef = useRef(null);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [filteredProducts, setFilteredProducts] = useState(products);
-  const [isInView, setIsInView] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [activeFilter, setActiveFilter] = React.useState("all");
+  const [filteredProducts, setFilteredProducts] = React.useState(products);
+  const [isInView, setIsInView] = React.useState(false);
 
   const origins = [...new Set(products.map(product => product.origin))];
 
-  // Filter products based on selected origin
   useEffect(() => {
     if (activeFilter === "all") {
       setFilteredProducts(products);
@@ -370,7 +305,6 @@ const FarmingProductsShowcase = () => {
     }
   }, [activeFilter]);
 
-  // Check if section is in view
   useEffect(() => {
     const handleScroll = () => {
       const section = sectionRef.current;
@@ -378,7 +312,7 @@ const FarmingProductsShowcase = () => {
         const sectionTop = section.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
         
-        if (sectionTop < windowHeight * 0.8) {
+        if (sectionTop < windowHeight * 0.75) {
           setIsInView(true);
         }
       }
@@ -390,29 +324,17 @@ const FarmingProductsShowcase = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Detect mobile devices
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
   return (
     <ShowcaseSection ref={sectionRef}>
       <SectionTitle
         initial="hidden"
         animate={isInView ? "visible" : "hidden"}
         variants={{
-          hidden: { opacity: 0, y: 30 },
+          hidden: { opacity: 0, y: 50 },
           visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.7, ease: "easeOut" }
+            transition: { duration: 0.8, ease: "easeOut" }
           }
         }}
       >
@@ -453,8 +375,7 @@ const FarmingProductsShowcase = () => {
             animate={isInView ? "visible" : "hidden"}
             whileHover="hover"
             variants={cardVariants}
-            custom={isMobile}
-            transition={{ delay: Math.min(index * 0.1, 0.5) }} // Limit max delay for mobile
+            transition={{ delay: index * 0.1 }}
           >
             <ProductImage 
               variants={imageVariants}

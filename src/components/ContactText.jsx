@@ -7,13 +7,23 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
   background-color: #000;
   text-align: center;
   overflow: hidden;
   padding: 20px;
   box-sizing: border-box;
+  position: relative;
+  
+  /* Fix for mobile viewport inconsistencies */
+  @media (max-width: 768px) {
+    min-height: 100vh;
+    /* Fix for iOS Safari */
+    min-height: -webkit-fill-available;
+    margin: 0;
+    padding: 5vw;
+  }
 `;
 
 const Text = styled.div`
@@ -31,6 +41,12 @@ const Text = styled.div`
     0 0 5px rgba(255, 223, 100, 0.8),
     0 0 10px rgba(255, 223, 100, 0.6),
     0 0 15px rgba(200, 150, 50, 0.5);
+  max-width: 100%;
+  width: 100%;
+  
+  @media (max-width: 768px) {
+    padding: 8px;
+  }
 `;
 
 const Separator = styled.div`
@@ -39,15 +55,30 @@ const Separator = styled.div`
   height: 2px;
   background-color: #ffd700;
   margin: 15px 0;
+  
+  @media (max-width: 768px) {
+    margin: 12px 0;
+    width: 90%;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ContactText = () => {
   const textRef1 = useRef(null);
   const textRef2 = useRef(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
     if (!textRef1.current || !textRef2.current) return;
 
+    // Animation for the text elements
     gsap.to([textRef1.current, textRef2.current], {
       opacity: 0.8,
       duration: 1.5,
@@ -67,17 +98,34 @@ const ContactText = () => {
       yoyo: true,
       ease: "power2.inOut",
     });
+    
+    // Fix for ensuring the container takes full width
+    if (containerRef.current) {
+      const updateContainerSize = () => {
+        const windowWidth = window.innerWidth;
+        containerRef.current.style.width = `${windowWidth}px`;
+      };
+      
+      // Initial call and event listener
+      updateContainerSize();
+      window.addEventListener('resize', updateContainerSize);
+      
+      // Cleanup
+      return () => window.removeEventListener('resize', updateContainerSize);
+    }
   }, []);
 
   return (
-    <Container>
-      <Text ref={textRef1} size="3rem" mobileSize="1.8rem" bold>
-        You are visiting stormmaze
-      </Text>
-      <Separator />
-      <Text ref={textRef2} size="1.5rem" mobileSize="1rem">
-        Website is under maintenance
-      </Text>
+    <Container ref={containerRef}>
+      <ContentWrapper>
+        <Text ref={textRef1} size="3rem" mobileSize="1.8rem" bold>
+          You are visiting stormmaze
+        </Text>
+        <Separator />
+        <Text ref={textRef2} size="1.5rem" mobileSize="1rem">
+          Website is under maintenance
+        </Text>
+      </ContentWrapper>
     </Container>
   );
 };
