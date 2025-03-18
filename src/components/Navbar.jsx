@@ -20,7 +20,7 @@ const Nav = styled.nav`
   position: fixed; 
   top: 0; /* Position at the top */
   left: 0;
-  width: 100%; /* Full width */
+  width: 100vw; /* Full width */
   height: 60px; /* Adjust height as needed */
   z-index: 1000; /* Keep navbar above other elements */
   transform: translateX(100%); /* Start off-screen */

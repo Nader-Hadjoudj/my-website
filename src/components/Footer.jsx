@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const FooterContainer = styled.footer`
   background: rgb(0, 0, 0);
+  width: 100vw;
   color: white;
   text-align: center;
   padding: 20px 10px;
