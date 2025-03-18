@@ -34,14 +34,13 @@ const PageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 5%;
   box-sizing: border-box;
-  overflow-x: hidden; /* Prevent horizontal scrolling */
-  touch-action: manipulation; /* Prevents default touch behaviors */
+  overflow-x: hidden;
   
   @media (max-width: 768px) {
-    padding: 10px;
-    min-height: -webkit-fill-available;
+    padding: 3%;
+    min-height: 100vh; /* Simplified for consistency */
   }
 `;
 
@@ -49,7 +48,7 @@ const Container = styled.div`
   width: 100%;
   max-width: 800px;
   height: auto;
-  padding: 20px;
+  padding: 2.5%;
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 1px 8px #ffd700;
@@ -58,7 +57,7 @@ const Container = styled.div`
   
   @media (min-width: 768px) {
     flex-direction: row;
-    align-items: stretch;
+    padding: 20px;
   }
   
   @media (max-width: 768px) {
@@ -69,7 +68,7 @@ const Container = styled.div`
 
 const LeftColumn = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 2%;
   
   @media (max-width: 768px) {
     padding: 10px;
@@ -78,7 +77,7 @@ const LeftColumn = styled.div`
 
 const RightColumn = styled.div`
   flex: 1;
-  padding: 20px;
+  padding: 2%;
   
   @media (max-width: 768px) {
     padding: 10px;
@@ -102,12 +101,7 @@ const Divider = styled.div`
 const Title = styled.h2`
   text-align: center;
   color: #ffd700;
-  font-size: 20px;
-  
-  @media (min-width: 768px) {
-    font-size: 22px;
-  }
-  
+  font-size: clamp(18px, 5vw, 22px);
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -117,18 +111,19 @@ const Label = styled.label`
   font-weight: bold;
   margin: 10px 0 5px;
   color: white;
-  font-size: 14px;
+  font-size: clamp(12px, 4vw, 14px);
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
+  padding: clamp(8px, 2vw, 10px);
   border: 1px solid #ffd700;
   background: black;
   color: white;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: clamp(12px, 4vw, 14px);
   margin-bottom: 10px;
+  box-sizing: border-box;
   &:focus {
     outline: none;
     border-color: #ffea00;
@@ -137,15 +132,16 @@ const Input = styled.input`
 
 const StyledDatePicker = styled(DatePicker)`
   width: 100%;
-  padding: 10px;
+  padding: clamp(8px, 2vw, 10px);
   border: 1px solid #ffd700;
   background: black;
   color: white;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: clamp(12px, 4vw, 14px);
   text-align: center;
   margin-bottom: 10px;
   cursor: pointer;
+  box-sizing: border-box;
   &:focus {
     outline: none;
     border-color: #ffea00;
@@ -154,12 +150,12 @@ const StyledDatePicker = styled(DatePicker)`
 
 const Button = styled.button`
   width: 100%;
-  padding: 12px;
+  padding: clamp(10px, 3vw, 12px);
   background: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 16px;
+  font-size: clamp(14px, 4vw, 16px);
   cursor: pointer;
   transition: 0.3s;
   margin-top: 10px;
@@ -179,6 +175,7 @@ const Confirmation = styled.p`
   color: green;
   font-weight: bold;
   margin-top: 10px;
+  font-size: clamp(12px, 4vw, 14px);
 `;
 
 const TimeSlotContainer = styled.div`
@@ -190,19 +187,14 @@ const TimeSlotContainer = styled.div`
 
 const TimeSlotButton = styled(Button)`
   width: auto;
-  padding: 8px 12px;
+  padding: clamp(6px, 2vw, 8px) clamp(10px, 3vw, 12px);
   margin: 3px;
-  font-size: 14px;
+  font-size: clamp(12px, 4vw, 14px);
   background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
   color: ${({ selected }) => (selected ? "black" : "white")};
-  
-  @media (max-width: 768px) {
-    padding: 6px 10px;
-    font-size: 12px;
-  }
 `;
 
-// Animation components
+// Animation components (unchanged)
 const AnimationContainer = styled.div`
   position: relative;
   width: 100%;
@@ -335,28 +327,11 @@ function AppointmentBooking() {
   const [confirmation, setConfirmation] = useState("");
   const [availableSlots, setAvailableSlots] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [bookingStatus, setBookingStatus] = useState("idle"); // idle, loading, success, error
+  const [bookingStatus, setBookingStatus] = useState("idle");
 
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
   useEffect(() => {
-    // Prevent page zooming on double-tap in iOS
-    document.addEventListener('touchstart', function(event) {
-      if (event.touches.length > 1) {
-        event.preventDefault();
-      }
-    }, { passive: false });
-    
-    // Prevent page zooming on double-tap in iOS (alternative method)
-    let lastTouchEnd = 0;
-    document.addEventListener('touchend', function(event) {
-      const now = (new Date()).getTime();
-      if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-      }
-      lastTouchEnd = now;
-    }, { passive: false });
-    
     const fetchAvailableSlots = async () => {
       try {
         const formattedDate = selectedDate.toISOString().split("T")[0];
@@ -364,9 +339,7 @@ function AppointmentBooking() {
           params: { date: formattedDate },
         });
         const bookedSlots = response.data.bookedSlots || [];
-        console.log("Booked slots:", bookedSlots);
         const freeSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
-        console.log("Free slots:", freeSlots);
         setAvailableSlots(freeSlots);
         if (selectedTime && !freeSlots.includes(selectedTime)) {
           setSelectedTime("");
@@ -429,13 +402,11 @@ function AppointmentBooking() {
     }
   };
 
-  // Format date for display
   const getFormattedDate = () => {
     const day = selectedDate.getDate();
     return day;
   };
 
-  // Get month name
   const getMonthName = () => {
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     return monthNames[selectedDate.getMonth()];
@@ -511,7 +482,6 @@ function AppointmentBooking() {
                 <CalendarBody>
                   <CalendarDate>{getFormattedDate()}</CalendarDate>
                   {selectedTime && <CalendarTime>{selectedTime}</CalendarTime>}
-                  
                   {bookingStatus === "loading" && (
                     <LoadingDots>
                       <span></span>
