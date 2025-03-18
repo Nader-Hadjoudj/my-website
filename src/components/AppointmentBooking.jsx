@@ -36,6 +36,13 @@ const PageWrapper = styled.div`
   justify-content: center;
   padding: 20px;
   box-sizing: border-box;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+  touch-action: manipulation; /* Prevents default touch behaviors */
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+    min-height: -webkit-fill-available;
+  }
 `;
 
 const Container = styled.div`
@@ -53,16 +60,29 @@ const Container = styled.div`
     flex-direction: row;
     align-items: stretch;
   }
+  
+  @media (max-width: 768px) {
+    padding: 15px;
+    box-shadow: 0 1px 4px #ffd700;
+  }
 `;
 
 const LeftColumn = styled.div`
   flex: 1;
   padding: 20px;
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const RightColumn = styled.div`
   flex: 1;
   padding: 20px;
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+  }
 `;
 
 const Divider = styled.div`
@@ -175,6 +195,11 @@ const TimeSlotButton = styled(Button)`
   font-size: 14px;
   background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
   color: ${({ selected }) => (selected ? "black" : "white")};
+  
+  @media (max-width: 768px) {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
 `;
 
 // Animation components
@@ -315,6 +340,23 @@ function AppointmentBooking() {
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
 
   useEffect(() => {
+    // Prevent page zooming on double-tap in iOS
+    document.addEventListener('touchstart', function(event) {
+      if (event.touches.length > 1) {
+        event.preventDefault();
+      }
+    }, { passive: false });
+    
+    // Prevent page zooming on double-tap in iOS (alternative method)
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(event) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        event.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+    
     const fetchAvailableSlots = async () => {
       try {
         const formattedDate = selectedDate.toISOString().split("T")[0];
