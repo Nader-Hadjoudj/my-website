@@ -168,7 +168,7 @@ const FarmingHeroSection = () => {
           Importation de Produits Agricoles Premium
         </Subtitle>
         <DownloadButton 
-          href="/catalogue.pdf" 
+          href="files/catalogue.pdf" 
           download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
