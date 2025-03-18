@@ -11,7 +11,6 @@ if (typeof window !== "undefined") {
 
 const ShowcaseSection = styled.section`
   background-color: #0a0a0a;
-  padding: 6rem 2rem;
   position: relative;
   overflow: hidden;
   width: 100vw;
@@ -37,14 +36,30 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
+// Updated ProductsGrid to use specific grid columns based on screen size
 const ProductsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  
+  /* Desktop: auto-fill with minimum 280px width */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  
+  /* Mobile: 3 columns with equal width */
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+  }
+  
+  /* Very small screens: 2 columns */
+  @media (max-width: 480px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.8rem;
+  }
 `;
 
+// Make product cards more compact on mobile
 const ProductCard = styled(motion.div)`
   background-color: #141414;
   border-radius: 10px;
@@ -54,6 +69,10 @@ const ProductCard = styled(motion.div)`
 
   &:hover {
     box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
+  }
+  
+  @media (max-width: 768px) {
+    border-radius: 8px;
   }
 `;
 
@@ -72,22 +91,45 @@ const ProductImage = styled(motion.div)`
     height: 30%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   }
+  
+  @media (max-width: 768px) {
+    height: 120px;
+  }
 `;
 
 const ProductInfo = styled.div`
   padding: 1.5rem;
+  
+  @media (max-width: 768px) {
+    padding: 0.8rem;
+  }
 `;
 
 const ProductName = styled(motion.h3)`
   color: #ffd700;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+  }
 `;
 
 const ProductDescription = styled(motion.p)`
   color: #e0e0e0;
   font-size: 0.9rem;
   line-height: 1.5;
+  
+  @media (max-width: 768px) {
+    font-size: 0.7rem;
+    line-height: 1.3;
+    /* Hide overflowing text or only show 2 lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 `;
 
 const ProductStats = styled(motion.div)`
@@ -96,6 +138,11 @@ const ProductStats = styled(motion.div)`
   margin-top: 1rem;
   border-top: 1px solid rgba(255, 215, 0, 0.2);
   padding-top: 1rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
+  }
 `;
 
 const StatItem = styled(motion.div)`
@@ -106,11 +153,19 @@ const StatValue = styled.div`
   color: #ffd700;
   font-size: 1.2rem;
   font-weight: bold;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const StatLabel = styled.div`
   color: #a0a0a0;
   font-size: 0.8rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.6rem;
+  }
 `;
 
 const FilterContainer = styled(motion.div)`
@@ -118,6 +173,7 @@ const FilterContainer = styled(motion.div)`
   justify-content: center;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
 `;
 
 const FilterButton = styled(motion.button)`
@@ -142,6 +198,12 @@ const FilterButton = styled(motion.button)`
 
   &.active:hover {
     color: #0a0a0a;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+    border-radius: 15px;
   }
 `;
 
