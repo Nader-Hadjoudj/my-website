@@ -28,23 +28,31 @@ const scaleIn = keyframes`
 
 // Styled components
 const PageWrapper = styled.div`
-  height: 100vh;
-  width: 100vw;
+  min-height: 100vh;
+  width: 100%;
   background: rgb(0, 0, 0);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
 `;
 
 const Container = styled.div`
-  width: 800px;
+  width: 100%;
+  max-width: 800px;
   height: auto;
   padding: 20px;
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 1px 8px #ffd700;
   display: flex;
-  align-items: stretch;
+  flex-direction: column;
+  
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: stretch;
+  }
 `;
 
 const LeftColumn = styled.div`
@@ -58,15 +66,28 @@ const RightColumn = styled.div`
 `;
 
 const Divider = styled.div`
-  width: 2px;
-  background: linear-gradient(to bottom, #ffd700, #ffea00);
-  margin: 0 15px;
+  height: 2px;
+  width: 90%;
+  margin: 10px auto;
+  background: linear-gradient(to right, #ffd700, #ffea00);
+  
+  @media (min-width: 768px) {
+    width: 2px;
+    height: auto;
+    margin: 0 15px;
+    background: linear-gradient(to bottom, #ffd700, #ffea00);
+  }
 `;
 
 const Title = styled.h2`
   text-align: center;
   color: #ffd700;
-  font-size: 22px;
+  font-size: 20px;
+  
+  @media (min-width: 768px) {
+    font-size: 22px;
+  }
+  
   font-weight: bold;
   margin-bottom: 15px;
 `;
@@ -140,9 +161,18 @@ const Confirmation = styled.p`
   margin-top: 10px;
 `;
 
+const TimeSlotContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+`;
+
 const TimeSlotButton = styled(Button)`
   width: auto;
-  margin: 5px;
+  padding: 8px 12px;
+  margin: 3px;
+  font-size: 14px;
   background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
   color: ${({ selected }) => (selected ? "black" : "white")};
 `;
@@ -416,7 +446,7 @@ function AppointmentBooking() {
             disabled={loading}
           />
           <Label>Select a Time Slot:</Label>
-          <div>
+          <TimeSlotContainer>
             {availableSlots.map((slot) => (
               <TimeSlotButton
                 key={slot}
@@ -427,7 +457,7 @@ function AppointmentBooking() {
                 {slot}
               </TimeSlotButton>
             ))}
-          </div>
+          </TimeSlotContainer>
           <Button onClick={handleBooking} disabled={loading}>
             {loading ? "Processing..." : "Confirm Appointment"}
           </Button>
