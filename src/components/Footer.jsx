@@ -9,6 +9,7 @@ const FooterContainer = styled.footer`
   text-align: center;
   padding: 20px 10px;
   margin-top: 0px;
+  box-sizing: border-box;
 `;
 
 const FooterText = styled.p`

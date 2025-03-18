@@ -25,6 +25,7 @@ const Nav = styled.nav`
   z-index: 1000; /* Keep navbar above other elements */
   transform: translateX(100%); /* Start off-screen */
   opacity: 0; /* Initially hidden */
+  box-sizing: border-box;
 `;
 
 const NavItem = styled.a`
