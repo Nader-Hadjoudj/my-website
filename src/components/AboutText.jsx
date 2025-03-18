@@ -33,7 +33,7 @@ const Separator = styled.div`
   margin: 15px 0;
 `;
 
-const AnimatedText = () => {
+const AboutText = () => {
   const textRef1 = useRef(null);
   const textRef2 = useRef(null);
 

@@ -61,7 +61,7 @@ const Subtitle = styled.h2`
   opacity: 0;
 `;
 
-const FarmingHeroSection = () => {
+const AboutUsVideo = () => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
 

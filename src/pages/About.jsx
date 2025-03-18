@@ -5,7 +5,7 @@ import FarmingHeroSection from "../components/FarmingHeroSection";
 import AboutUsVideo from "../components/AboutUsVideo";
 import AboutText from "../components/AboutText";
 
-function Home() {
+function About() {
   return (
     <div>
       <AboutText />
