@@ -64,7 +64,7 @@ const ProductImage = styled(motion.div)`
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 30%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   }
