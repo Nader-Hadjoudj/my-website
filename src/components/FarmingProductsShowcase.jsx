@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { Link } from "react-scroll"; // Import react-scroll for smooth scrolling
 
 // Register ScrollTrigger
 if (typeof window !== "undefined") {
@@ -60,7 +59,7 @@ const ProductsGrid = styled.div`
   }
 `;
 
-// Modified to be a styled Link component from react-scroll
+// Modified to be a clickable link
 const ProductCard = styled(motion.div)`
   background-color: #141414;
   border-radius: 10px;
@@ -208,23 +207,6 @@ const FilterButton = styled(motion.button)`
     border-radius: 15px;
   }
 `;
-
-// Create a wrapper component that works with framer-motion and react-scroll
-const AnimatedCardWrapper = ({ children, productId, ...props }) => {
-  const handleClick = () => {
-    // Fallback method using native browser APIs
-    const heroSection = document.getElementById("FarmingHeroSection");
-    if (heroSection) {
-      heroSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
-    <ProductCard onClick={handleClick} {...props}>
-      {children}
-    </ProductCard>
-  );
-};
 
 const products = [
   {
@@ -382,6 +364,14 @@ const FarmingProductsShowcase = () => {
 
   const origins = [...new Set(products.map(product => product.origin))];
 
+  // Function to scroll to the hero section
+  const scrollToHeroSection = () => {
+    const heroSection = document.getElementById("FarmingHeroSection");
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     if (activeFilter === "all") {
       setFilteredProducts(products);
@@ -454,14 +444,14 @@ const FarmingProductsShowcase = () => {
 
       <ProductsGrid>
         {filteredProducts.map((product, index) => (
-          <AnimatedCardWrapper
+          <ProductCard
             key={product.id}
-            productId={product.id}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             whileHover="hover"
             variants={cardVariants}
             transition={{ delay: index * 0.1 }}
+            onClick={scrollToHeroSection}
           >
             <ProductImage 
               variants={imageVariants}
@@ -489,7 +479,7 @@ const FarmingProductsShowcase = () => {
                 </StatItem>
               </ProductStats>
             </ProductInfo>
-          </AnimatedCardWrapper>
+          </ProductCard>
         ))}
       </ProductsGrid>
     </ShowcaseSection>
