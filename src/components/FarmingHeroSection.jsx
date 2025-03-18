@@ -158,7 +158,7 @@ const FarmingHeroSection = () => {
   }, []);
 
   return (
-    <HeroSectionid id ="FarmingHeroSection">
+    <HeroSection id="FarmingHeroSection">
       <VideoBackground autoPlay muted loop playsInline>
         <source src="/videos/farming-background.mp4" type="video/mp4" />
         Your browser does not support the video tag.
