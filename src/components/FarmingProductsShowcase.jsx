@@ -145,7 +145,7 @@ const products = [
   {
     id: 1,
     name: "Green Haricots",
-    description: "Our vine-ripened tomatoes are grown with care in our specialized greenhouses.",
+    description: "Fresh and tender green beans, rich in fiber and vitamins.",
     image: "/Green_Haricots.png",
     quality: "A+",
     origin: "Algeria",
@@ -154,49 +154,50 @@ const products = [
   {
     id: 2,
     name: "Red Haricots",
-    description: "Sweet and colorful peppers grown using organic methods without pesticides.",
+    description: "Nutritious and flavorful red beans, perfect for soups and stews.",
     image: "/Red_Haricots.png",
     quality: "A",
     origin: "Algeria",
-    season: "Jun-Oct"
+    season: "Mar-Oct"
   },
   {
     id: 3,
-    name: "beetroot",
-    description: "Crisp and nutritious lettuce varieties, harvested at peak freshness.",
+    name: "Beetroot",
+    description: "Sweet and earthy beetroot, packed with antioxidants and essential nutrients.",
     image: "/beetroot.png",
     quality: "A+",
     origin: "Algeria",
-    season: "Mar-Nov"
+    season: "Year-round"
   },
   {
     id: 4,
-    name: "fennel",
-    description: "Glossy purple eggplants with tender flesh and minimal seeds.",
+    name: "Fennel",
+    description: "Crisp and aromatic fennel bulbs, excellent for salads and cooking.",
     image: "/fennel.png",
     quality: "A",
     origin: "Algeria",
-    season: "May-Sep"
+    season: "Oct-May"
   },
   {
     id: 5,
-    name: "purple artichoke",
-    description: "Golden corn with perfect sweetness, ideal for grilling or boiling.",
+    name: "Artichoke",
+    description: "Delicious and tender artichokes, rich in fiber and antioxidants.",
     image: "/artichoke.png",
     quality: "A+",
     origin: "Algeria",
-    season: "Jun-Aug"
+    season: "Oct-May"
   },
   {
     id: 6,
     name: "Fresh Asparagus",
-    description: "Tender green asparagus spears with excellent flavor and texture.",
+    description: "Tender and flavorful green asparagus, ideal for grilling and steaming.",
     image: "/asparagus.png",
     quality: "A",
     origin: "Algeria",
     season: "Feb-Jun"
   }
 ];
+
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
