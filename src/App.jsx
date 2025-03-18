@@ -3,8 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Navbar from "./components/Navbar"; // Ensure navbar is always visible
+import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import styled from "styled-components";
+
+// Create a container to hold the main content with padding
+const MainContent = styled.div`
+  padding-top: 90px; /* Adjust this value based on your navbar height (60px + padding) */
+  min-height: calc(100vh - 60px); /* Ensures content takes up full height minus navbar */
+`;
 
 function App() {
   return (
@@ -16,7 +23,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
         </Routes>
-        </MainContent>
+      </MainContent>
       <Footer /> {/* Add Footer Here */}
     </Router>
   );
