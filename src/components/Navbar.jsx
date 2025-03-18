@@ -61,9 +61,10 @@ function Navbar() {
         </a>
         <NavList>
           <NavItem href="/">Home</NavItem>
+          <NavItem href="/catalogue">Catalogue</NavItem>
           <NavItem href="/about">About</NavItem>
           <NavItem href="/contact">Contact</NavItem>
-          <NavItem href="/catalogue">Catalogue</NavItem>
+          
         </NavList>
       </Nav>
     );
