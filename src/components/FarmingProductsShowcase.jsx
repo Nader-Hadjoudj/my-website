@@ -116,7 +116,7 @@ const products = [
     id: 1,
     name: "Premium Tomatoes",
     description: "Our vine-ripened tomatoes are grown with care in our specialized greenhouses.",
-    image: "/images/tomatoes.jpg",
+    image: "/error-strawberry.png",
     quality: "A+",
     origin: "Spain",
     season: "Year-round"
