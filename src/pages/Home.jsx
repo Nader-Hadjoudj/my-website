@@ -9,7 +9,6 @@ function Home() {
   return (
     <div>
       <AnimatedText />
-      <AppointmentBooking />
       <FarmingHeroSection />
       <FarmingProductsShowcase />
     </div>

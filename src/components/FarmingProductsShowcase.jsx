@@ -59,13 +59,14 @@ const ProductsGrid = styled.div`
   }
 `;
 
-// Make product cards more compact on mobile
+// Modified to be a clickable link
 const ProductCard = styled(motion.div)`
   background-color: #141414;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
   transition: box-shadow 0.3s ease;
+  cursor: pointer;
 
   &:hover {
     box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
@@ -363,6 +364,14 @@ const FarmingProductsShowcase = () => {
 
   const origins = [...new Set(products.map(product => product.origin))];
 
+  // Function to scroll to the hero section
+  const scrollToHeroSection = () => {
+    const heroSection = document.getElementById("FarmingHeroSection");
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     if (activeFilter === "all") {
       setFilteredProducts(products);
@@ -442,6 +451,7 @@ const FarmingProductsShowcase = () => {
             whileHover="hover"
             variants={cardVariants}
             transition={{ delay: index * 0.1 }}
+            onClick={scrollToHeroSection}
           >
             <ProductImage 
               variants={imageVariants}
