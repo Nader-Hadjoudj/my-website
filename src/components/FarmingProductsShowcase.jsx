@@ -17,10 +17,6 @@ const ShowcaseSection = styled.section`
   width: 100vw;
   margin: 0;
   padding: 6rem 2rem;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
   box-sizing: border-box;
 `;
 
