@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
+import { get } from "react-scroll/modules/mixins/scroller";
 
 // Register ScrollTrigger
 if (typeof window !== "undefined") {
@@ -369,6 +370,9 @@ const FarmingProductsShowcase = () => {
     const heroSection = document.getElementById("FarmingHeroSection");
     if (heroSection) {
       heroSection.scrollIntoView({ behavior: "smooth" });
+    }else{
+      window.location.href = "/catalogue";
+      
     }
   };
 
