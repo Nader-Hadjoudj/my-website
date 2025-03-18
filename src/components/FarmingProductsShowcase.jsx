@@ -11,6 +11,7 @@ if (typeof window !== "undefined") {
 
 const ShowcaseSection = styled.section`
   background-color: #0a0a0a;
+  width: 100vw;
   padding: 6rem 2rem;
   position: relative;
   overflow: hidden;
