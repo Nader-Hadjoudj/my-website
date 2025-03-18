@@ -14,7 +14,7 @@ const ShowcaseSection = styled.section`
   padding: 6rem 2rem;
   position: relative;
   overflow: hidden;
-  width: 100%;
+  width: 100vw;
   margin: 0;
   padding: 6rem 2rem;
   box-sizing: border-box;
