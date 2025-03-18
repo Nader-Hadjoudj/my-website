@@ -11,10 +11,17 @@ if (typeof window !== "undefined") {
 
 const ShowcaseSection = styled.section`
   background-color: #0a0a0a;
-  width: 100vw;
   padding: 6rem 2rem;
   position: relative;
   overflow: hidden;
+  width: 100vw;
+  margin: 0;
+  padding: 6rem 2rem;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  box-sizing: border-box;
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -65,7 +72,7 @@ const ProductImage = styled(motion.div)`
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 100vw;
+    width: 100%;
     height: 30%;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
   }

@@ -13,6 +13,12 @@ const HeroSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
+  padding: 0;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
 `;
 
 const VideoBackground = styled.video`
