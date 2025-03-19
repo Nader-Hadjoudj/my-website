@@ -167,13 +167,13 @@ const FarmingHeroSection = () => {
       <Overlay />
       <Content>
         <Title ref={titleRef}>{t('home.video')}</Title>
-        <Subtitle ref={subtitleRef}>{t('home.button')}</Subtitle>
+        <Subtitle ref={subtitleRef}>{t('home.subVideo')}</Subtitle>
         <DownloadButton 
           href="files/catalogue.pdf" 
           download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
-          {t('hero.downloadButton')}
+          {t('home.button')}
         </DownloadButton>
       </Content>
     </HeroSection>

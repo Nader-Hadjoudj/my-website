@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { motion } from "framer-motion";
-import { get } from "react-scroll/modules/mixins/scroller";
+import { useTranslation } from "react-i18next";
 
 // Register ScrollTrigger
 if (typeof window !== "undefined") {
@@ -37,30 +37,24 @@ const SectionTitle = styled(motion.h2)`
   }
 `;
 
-// Updated ProductsGrid to use specific grid columns based on screen size
 const ProductsGrid = styled.div`
   display: grid;
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
-  
-  /* Desktop: auto-fill with minimum 280px width */
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   
-  /* Mobile: 3 columns with equal width */
   @media (max-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
   
-  /* Very small screens: 2 columns */
   @media (max-width: 480px) {
     grid-template-columns: repeat(2, 1fr);
     gap: 0.8rem;
   }
 `;
 
-// Modified to be a clickable link
 const ProductCard = styled(motion.div)`
   background-color: #141414;
   border-radius: 10px;
@@ -126,7 +120,6 @@ const ProductDescription = styled(motion.p)`
   @media (max-width: 768px) {
     font-size: 0.7rem;
     line-height: 1.3;
-    /* Hide overflowing text or only show 2 lines */
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -212,60 +205,59 @@ const FilterButton = styled(motion.button)`
 const products = [
   {
     id: 1,
-    name: "Green Haricots",
-    description: "Fresh and tender green beans, rich in fiber and vitamins.",
+    nameKey: "products.greenHaricots.name",
+    descriptionKey: "products.greenHaricots.description",
     image: "/Green_Haricots.png",
     quality: "A+",
     origin: "Algeria",
-    season: "Year-round"
+    season: "Year-round",
   },
   {
     id: 2,
-    name: "Red Haricots",
-    description: "Nutritious and flavorful red beans, perfect for soups and stews.",
+    nameKey: "products.redHaricots.name",
+    descriptionKey: "products.redHaricots.description",
     image: "/Red_Haricots.png",
     quality: "A",
     origin: "Algeria",
-    season: "Mar-Oct"
+    season: "Mar-Oct",
   },
   {
     id: 3,
-    name: "Beetroot",
-    description: "Sweet and earthy beetroot, packed with antioxidants and essential nutrients.",
+    nameKey: "products.beetroot.name",
+    descriptionKey: "products.beetroot.description",
     image: "/beetroot.png",
     quality: "A+",
     origin: "Algeria",
-    season: "Year-round"
+    season: "Year-round",
   },
   {
     id: 4,
-    name: "Fennel",
-    description: "Crisp and aromatic fennel bulbs, excellent for salads and cooking.",
+    nameKey: "products.fennel.name",
+    descriptionKey: "products.fennel.description",
     image: "/fennel.png",
     quality: "A",
     origin: "Algeria",
-    season: "Oct-May"
+    season: "Oct-May",
   },
   {
     id: 5,
-    name: "Artichoke",
-    description: "Delicious and tender artichokes, rich in fiber and antioxidants.",
+    nameKey: "products.artichoke.name",
+    descriptionKey: "products.artichoke.description",
     image: "/artichoke.png",
     quality: "A+",
     origin: "Algeria",
-    season: "Oct-May"
+    season: "Oct-May",
   },
   {
     id: 6,
-    name: "Fresh Asparagus",
-    description: "Tender and flavorful green asparagus, ideal for grilling and steaming.",
+    nameKey: "products.asparagus.name",
+    descriptionKey: "products.asparagus.description",
     image: "/asparagus.png",
     quality: "A",
     origin: "Algeria",
-    season: "Feb-Jun"
-  }
+    season: "Feb-Jun",
+  },
 ];
-
 
 const cardVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -275,24 +267,24 @@ const cardVariants = {
     transition: { 
       type: "spring", 
       stiffness: 100,
-      damping: 15
-    }
+      damping: 15,
+    },
   },
   hover: { 
     y: -10,
     transition: { 
       type: "spring", 
       stiffness: 400,
-      damping: 10
-    }
-  }
+      damping: 10,
+    },
+  },
 };
 
 const imageVariants = {
   hover: { 
     scale: 1.05,
-    transition: { duration: 0.3 }
-  }
+    transition: { duration: 0.3 },
+  },
 };
 
 const textVariants = {
@@ -302,9 +294,9 @@ const textVariants = {
     y: 0,
     transition: { 
       duration: 0.5,
-      delay: 0.2
-    }
-  }
+      delay: 0.2,
+    },
+  },
 };
 
 const statsVariants = {
@@ -313,9 +305,9 @@ const statsVariants = {
     opacity: 1,
     transition: { 
       staggerChildren: 0.1,
-      delayChildren: 0.3
-    }
-  }
+      delayChildren: 0.3,
+    },
+  },
 };
 
 const statItemVariants = {
@@ -325,9 +317,9 @@ const statItemVariants = {
     y: 0,
     transition: { 
       type: "spring", 
-      stiffness: 100
-    }
-  }
+      stiffness: 100,
+    },
+  },
 };
 
 const filterContainerVariants = {
@@ -339,9 +331,9 @@ const filterContainerVariants = {
       type: "spring", 
       stiffness: 100,
       damping: 15,
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const filterButtonVariants = {
@@ -351,10 +343,10 @@ const filterButtonVariants = {
     scale: 1,
     transition: { 
       type: "spring", 
-      stiffness: 200
-    }
+      stiffness: 200,
+    },
   },
-  tap: { scale: 0.95 }
+  tap: { scale: 0.95 },
 };
 
 const FarmingProductsShowcase = () => {
@@ -362,17 +354,16 @@ const FarmingProductsShowcase = () => {
   const [activeFilter, setActiveFilter] = React.useState("all");
   const [filteredProducts, setFilteredProducts] = React.useState(products);
   const [isInView, setIsInView] = React.useState(false);
+  const { t } = useTranslation();
 
-  const origins = [...new Set(products.map(product => product.origin))];
+  const origins = [...new Set(products.map((product) => product.origin))];
 
-  // Function to scroll to the hero section
   const scrollToHeroSection = () => {
     const heroSection = document.getElementById("FarmingHeroSection");
     if (heroSection) {
       heroSection.scrollIntoView({ behavior: "smooth" });
-    }else{
+    } else {
       window.location.href = "/catalogue";
-      
     }
   };
 
@@ -380,7 +371,9 @@ const FarmingProductsShowcase = () => {
     if (activeFilter === "all") {
       setFilteredProducts(products);
     } else {
-      setFilteredProducts(products.filter(product => product.origin === activeFilter));
+      setFilteredProducts(
+        products.filter((product) => product.origin === activeFilter)
+      );
     }
   }, [activeFilter]);
 
@@ -390,17 +383,15 @@ const FarmingProductsShowcase = () => {
       if (section) {
         const sectionTop = section.getBoundingClientRect().top;
         const windowHeight = window.innerHeight;
-        
         if (sectionTop < windowHeight * 0.75) {
           setIsInView(true);
         }
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Check on mount
-    
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -413,11 +404,11 @@ const FarmingProductsShowcase = () => {
           visible: {
             opacity: 1,
             y: 0,
-            transition: { duration: 0.8, ease: "easeOut" }
-          }
+            transition: { duration: 0.8, ease: "easeOut" },
+          },
         }}
       >
-        Our Premium Products
+        {t("showcase.title")}
       </SectionTitle>
 
       <FilterContainer
@@ -431,9 +422,9 @@ const FarmingProductsShowcase = () => {
           className={activeFilter === "all" ? "active" : ""}
           onClick={() => setActiveFilter("all")}
         >
-          All Products
+          {t("showcase.filters.all")}
         </FilterButton>
-        {origins.map(origin => (
+        {origins.map((origin) => (
           <FilterButton
             key={origin}
             variants={filterButtonVariants}
@@ -441,7 +432,7 @@ const FarmingProductsShowcase = () => {
             className={activeFilter === origin ? "active" : ""}
             onClick={() => setActiveFilter(origin)}
           >
-            {origin}
+            {t(`showcase.filters.${origin.toLowerCase()}`)}
           </FilterButton>
         ))}
       </FilterContainer>
@@ -457,29 +448,33 @@ const FarmingProductsShowcase = () => {
             transition={{ delay: index * 0.1 }}
             onClick={scrollToHeroSection}
           >
-            <ProductImage 
+            <ProductImage
               variants={imageVariants}
-              style={{ backgroundImage: `url(${product.image || 'https://via.placeholder.com/400x200'})` }} 
+              style={{
+                backgroundImage: `url(${
+                  product.image || "https://via.placeholder.com/400x200"
+                })`,
+              }}
             />
             <ProductInfo>
               <ProductName variants={textVariants}>
-                {product.name}
+                {t(product.nameKey)}
               </ProductName>
               <ProductDescription variants={textVariants}>
-                {product.description}
+                {t(product.descriptionKey)}
               </ProductDescription>
               <ProductStats variants={statsVariants}>
                 <StatItem variants={statItemVariants}>
                   <StatValue>{product.quality}</StatValue>
-                  <StatLabel>Quality</StatLabel>
+                  <StatLabel>{t("showcase.stats.quality")}</StatLabel>
                 </StatItem>
                 <StatItem variants={statItemVariants}>
                   <StatValue>{product.origin}</StatValue>
-                  <StatLabel>Origin</StatLabel>
+                  <StatLabel>{t("showcase.stats.origin")}</StatLabel>
                 </StatItem>
                 <StatItem variants={statItemVariants}>
                   <StatValue>{product.season}</StatValue>
-                  <StatLabel>Season</StatLabel>
+                  <StatLabel>{t("showcase.stats.season")}</StatLabel>
                 </StatItem>
               </ProductStats>
             </ProductInfo>

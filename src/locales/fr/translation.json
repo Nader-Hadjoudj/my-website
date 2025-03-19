@@ -20,6 +20,7 @@
     "home": {
         "video": "Stormmaze adapte son catalogue à vos besoins chaque saison avec les meilleurs produits du marché.",
         "button": "Télechargez notre catalogue",
+        "subVideo": "",
         "paragraph2": "Nos relations profondes avec des cultivateurs et fournisseurs de confiance nous permettent d'offrir des produits exceptionnels à nos clients, alliant tradition et innovation. Avec un engagement envers l'excellence, Stormmaze se consacre à créer un pont harmonieux entre l'agriculture mondiale et la cuisine française.",
         "paragraph3": "Nous sommes guidés par une vision d'expansion des horizons, en recherchant des produits uniques et de haute qualité provenant de diverses régions pour répondre aux goûts évolutifs de nos clients. Stormmaze n'est pas seulement une question de produits ; c'est aussi une question de créer des liens, de célébrer les saveurs et de contribuer à un écosystème agricole florissant."
         
@@ -27,5 +28,45 @@
     "common": {
       "learnMore": "En savoir plus",
       "submit": "Soumettre"
-    }
+    },
+    
+    "showcase": {
+        "title": "Nos Produits Premium",
+        "filters": {
+        "all": "Tous les Produits",
+        "algeria": "Algérie"
+        },
+        "stats": {
+        "quality": "Qualité",
+        "origin": "Origine",
+        "season": "Saison"
+        }
+    },
+    "products": {
+        "greenHaricots": {
+        "name": "Haricots Verts",
+        "description": "Haricots verts frais et tendres, riches en fibres et vitamines."
+        },
+        "redHaricots": {
+        "name": "Haricots Rouges",
+        "description": "Haricots rouges nutritifs et savoureux, parfaits pour les soupes et ragoûts."
+        },
+        "beetroot": {
+        "name": "Betterave",
+        "description": "Betterave douce et terreuse, riche en antioxydants et nutriments essentiels."
+        },
+        "fennel": {
+        "name": "Fenouil",
+        "description": "Bulbes de fenouil croquants et aromatiques, excellents pour les salades et la cuisine."
+        },
+        "artichoke": {
+        "name": "Artichaut",
+        "description": "Artichauts délicieux et tendres, riches en fibres et antioxydants."
+        },
+        "asparagus": {
+        "name": "Asperges Fraîches",
+        "description": "Asperges vertes tendres et savoureuses, idéales pour le gril et la vapeur."
+        }
+    
+      }
   }
