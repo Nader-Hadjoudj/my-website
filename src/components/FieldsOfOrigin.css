@@ -1,112 +1,124 @@
+/* FieldsOfOrigin.css */
 .fields-section {
-  background: linear-gradient(135deg, #121212, #1a1a1a);
-  padding: 100px 20px;
-  color: #e0e0e0;
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  position: relative;
+  padding: 4rem 2rem;
+  background-color: #0a0a0a;
+  color: #fff;
   overflow: hidden;
+  position: relative;
 }
 
 .map-container {
   position: relative;
-  width: 320px;
-  height: 320px;
-  margin-bottom: 50px;
-  transition: transform 0.3s ease-in-out;
+  width: 100%;
+  max-width: 800px;
+  height: 500px;
+  margin-bottom: 4rem;
+  transition: transform 0.3s ease;
 }
 
-.glowing-map {
-  filter: drop-shadow(0px 0px 15px rgba(212, 175, 55, 0.5));
-  transition: transform 0.3s ease-in-out;
+.map {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
 }
 
-.glowing-map:hover {
-  transform: scale(1.05);
-  filter: drop-shadow(0px 0px 25px rgba(212, 175, 55, 0.7));
+/* Map hover effects */
+.map-container.hovered .map {
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
 }
 
+/* Crop points styling */
 .crop {
-  opacity: 0;
-  scale: 0;
   transform-origin: center;
+  transform: scale(0);
+  filter: drop-shadow(0 0 5px rgba(255, 255, 240, 0.8));
 }
 
+/* Vines styling */
 .vine {
   position: absolute;
-  width: 3px;
-  height: 70px;
-  background: rgba(212, 175, 55, 0.8);
-  bottom: 20%;
-  left: 40%;
+  width: 2px;
+  height: 120px;
+  background: linear-gradient(to top, #D4AF37, transparent);
   transform-origin: bottom;
+  z-index: -1;
 }
 
 .vine-2 {
-  left: 60%;
-  height: 90px;
+  height: 150px;
 }
 
+.vine-3 {
+  height: 100px;
+}
+
+/* Particle styling */
 .particle {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  background: #d4af37;
+  width: 3px;
+  height: 3px;
+  background-color: #D4AF37;
   border-radius: 50%;
-  opacity: 0.7;
-  animation: floatUp 2s infinite ease-in-out alternate;
+  opacity: 0.5;
+  pointer-events: none;
+  filter: blur(1px);
 }
 
-@keyframes floatUp {
-  from {
-      transform: translateY(0);
+/* Pulse circles */
+.pulse-circle {
+  transform-origin: center;
+  animation: pulse 4s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.1;
+    transform: scale(0.8);
   }
-  to {
-      transform: translateY(-10px);
+  100% {
+    opacity: 0.4;
+    transform: scale(1.2);
   }
 }
 
+/* Content styling */
 .content {
-  max-width: 800px;
+  max-width: 700px;
   text-align: center;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.05);
-  padding: 25px;
-  border-radius: 10px;
+  z-index: 2;
 }
 
 .title {
-  font-size: 2.8rem;
-  color: #d4af37;
-  font-family: "Playfair Display", serif;
-  margin-bottom: 30px;
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  color: #D4AF37;
+  font-weight: 300;
+  letter-spacing: 2px;
 }
 
-p {
-  font-size: 1.2rem;
+.content p {
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
   line-height: 1.8;
-  margin-bottom: 20px;
-  font-family: "Lora", serif;
+  color: #e0e0e0;
 }
 
 .highlight {
-  color: #fffff0;
-  font-weight: 600;
+  color: #D4AF37;
+  font-weight: 500;
 }
 
-@media (max-width: 768px) {
+/* Responsive adjustments */
+@media (min-width: 768px) {
+  .fields-section {
+    padding: 6rem 2rem;
+  }
+  
   .map-container {
-      width: 240px;
-      height: 240px;
-  }
-
-  .title {
-      font-size: 2.2rem;
-  }
-
-  p {
-      font-size: 1rem;
+    margin-bottom: 6rem;
   }
 }
