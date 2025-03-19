@@ -1,93 +1,112 @@
 .fields-section {
-    background-color: #1a1a1a; /* Soft black */
-    padding: 80px 20px;
-    color: #e0e0e0; /* Light gray text */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
+  background: linear-gradient(135deg, #121212, #1a1a1a);
+  padding: 100px 20px;
+  color: #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.map-container {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  margin-bottom: 50px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.glowing-map {
+  filter: drop-shadow(0px 0px 15px rgba(212, 175, 55, 0.5));
+  transition: transform 0.3s ease-in-out;
+}
+
+.glowing-map:hover {
+  transform: scale(1.05);
+  filter: drop-shadow(0px 0px 25px rgba(212, 175, 55, 0.7));
+}
+
+.crop {
+  opacity: 0;
+  scale: 0;
+  transform-origin: center;
+}
+
+.vine {
+  position: absolute;
+  width: 3px;
+  height: 70px;
+  background: rgba(212, 175, 55, 0.8);
+  bottom: 20%;
+  left: 40%;
+  transform-origin: bottom;
+}
+
+.vine-2 {
+  left: 60%;
+  height: 90px;
+}
+
+.particle {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background: #d4af37;
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: floatUp 2s infinite ease-in-out alternate;
+}
+
+@keyframes floatUp {
+  from {
+      transform: translateY(0);
   }
-  
+  to {
+      transform: translateY(-10px);
+  }
+}
+
+.content {
+  max-width: 800px;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 25px;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 2.8rem;
+  color: #d4af37;
+  font-family: "Playfair Display", serif;
+  margin-bottom: 30px;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-family: "Lora", serif;
+}
+
+.highlight {
+  color: #fffff0;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
   .map-container {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin-bottom: 40px;
+      width: 240px;
+      height: 240px;
   }
-  
-  .map {
-    width: 100%;
-    height: 100%;
-    stroke-width: 2;
-  }
-  
-  .crop {
-    opacity: 0;
-    scale: 0;
-    transform-origin: center;
-  }
-  
-  .vine {
-    position: absolute;
-    width: 2px;
-    height: 50px;
-    background: #d4af37; /* Gold vines */
-    bottom: 20%;
-    left: 40%;
-    transform-origin: bottom;
-  }
-  
-  .vine-2 {
-    left: 60%;
-    height: 70px;
-  }
-  
-  .particle {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: #d4af37; /* Gold particles */
-    border-radius: 50%;
-    opacity: 0.6;
-  }
-  
-  .content {
-    max-width: 700px;
-    text-align: center;
-  }
-  
+
   .title {
-    font-size: 2.5rem;
-    color: #d4af37; /* Gold */
-    font-family: "Playfair Display", serif;
-    margin-bottom: 30px;
+      font-size: 2.2rem;
   }
-  
+
   p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 20px;
-    font-family: "Lora", serif;
-  }
-  
-  .highlight {
-    color: #fffff0; /* Ivory */
-    font-weight: 500;
-  }
-  
-  @media (max-width: 768px) {
-    .map-container {
-      width: 200px;
-      height: 200px;
-    }
-  
-    .title {
-      font-size: 2rem;
-    }
-  
-    p {
       font-size: 1rem;
-    }
   }
+}
