@@ -2,7 +2,9 @@ import styled from "styled-components";
 import logo from "../assets/Stormmaze_gold.png";
 import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Logo = styled.img`
   height: 70px; /* Adjust size if needed */
@@ -28,7 +30,11 @@ const Nav = styled.nav`
   box-sizing: border-box;
 `;
 
-const NavItem = styled.a`
+const NavLinks = styled.div`
+  display: flex;
+`;
+
+const NavLink = styled(Link)`
   margin: 0 15px;
   text-decoration: none;
   color: rgb(255, 255, 255);
@@ -36,9 +42,6 @@ const NavItem = styled.a`
   &:hover {
     color: rgb(118, 118, 118);
   }
-`;
-const NavList = styled.div`
-  display: flex;
 `;
 
 function Navbar() {
@@ -54,12 +57,11 @@ function Navbar() {
         });
       }, []);
       
-  
     return (
       <Nav ref={navRef}>
-        <a href="/">
+        <Link to="/">
           <Logo src={logo} alt="Logo" />
-        </a>
+        </Link>
         <NavLinks>
           <NavLink to="/">{t('navbar.home')}</NavLink>
           <NavLink to="/about">{t('navbar.about')}</NavLink>
@@ -69,7 +71,6 @@ function Navbar() {
         <LanguageSwitcher />
       </Nav>
     );
-  }
+}
   
-
 export default Navbar;
