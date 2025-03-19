@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import logo from "../assets/Stormmaze_gold.png";
 import React, { useEffect, useRef } from "react";
+import LanguageSwitcher from "./LanguageSwitcher";
 import { gsap } from "gsap";
 
 
@@ -41,9 +42,11 @@ const NavList = styled.div`
   display: flex;
 `;
 
+
+
 function Navbar() {
     const navRef = useRef(null);
-    
+    const { t } = useTranslation();
   
     useEffect(() => {
         gsap.to(navRef.current, {
@@ -61,7 +64,7 @@ function Navbar() {
           <Logo src={logo} alt="Logo" />
         </a>
         <NavList>
-          <NavItem href="/">Home</NavItem>
+        <NavLink to="/">{t('navbar.home')}</NavLink>
           <NavItem href="/catalogue">Catalog</NavItem>
           <NavItem href="/about">About</NavItem>
           <NavItem href="/contact">Contact</NavItem>
