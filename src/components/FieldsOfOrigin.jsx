@@ -24,8 +24,8 @@ const FieldsOfOrigin = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 100%",
-        end: "bottom 60%",
+        start: "top 40%",
+        end: "bottom 10%",
         scrub: 1,
         markers: false,
       },
