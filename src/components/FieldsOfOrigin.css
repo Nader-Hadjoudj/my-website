@@ -77,7 +77,7 @@
   border-radius: 8px;
 }
 
-/* Connection container between maps */
+/* Enhanced connection styles */
 .connection-container {
   position: absolute;
   top: 0;
@@ -96,22 +96,17 @@
 
 .connection-line {
   stroke-linecap: round;
-  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
-  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+  transition: stroke-width 0.3s ease, filter 0.3s ease;
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+}
+
+.connection-line-shadow {
+  opacity: 0.4;
 }
 
 .flow-dot {
-  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
-}
-
-.path-dot {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background-color: #FFCC00;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
+  filter: drop-shadow(0 0 5px rgba(255, 204, 0, 0.8));
 }
 
 /* Map hover effects */
@@ -122,6 +117,27 @@
 
 .map-container.hovered .map-image {
   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+}
+
+/* Improved path dots */
+.path-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #FFCC00;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
+  opacity: 0.7;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.path-dot:nth-child(odd) {
+  animation: pulse-dot 4s infinite alternate;
+}
+
+.path-dot:nth-child(even) {
+  animation: pulse-dot 4s infinite alternate-reverse;
 }
 
 /* Crop points styling */
@@ -265,5 +281,16 @@
   }
   100% {
     transform: translateY(0px);
+  }
+}
+
+@keyframes pulse-dot {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.3;
   }
 }
