@@ -43,7 +43,7 @@ const FieldsOfOrigin = () => {
       .to(
         ".map-overlay",
         {
-          opacity: 0.15,
+          opacity: 0.2,
           duration: 1,
         },
         "-=0.5"
@@ -134,11 +134,11 @@ const FieldsOfOrigin = () => {
       ease: "sine.inOut",
     });
 
-    // Subtle pulse effect for crop circles
+    // Pulse effect for crop circles
     gsap.to(".crop", {
-      scale: 1.3,
+      scale: 1.5,
       opacity: 0.8,
-      duration: 2,
+      duration: 1.5,
       repeat: -1,
       yoyo: true,
       ease: "sine.inOut",
@@ -162,22 +162,22 @@ const FieldsOfOrigin = () => {
     
     // Highlight connection from Algeria to France
     gsap.to(".connection-line", {
-      stroke: "#4b8a96",
+      stroke: "#FFCC00",
       strokeWidth: 3,
       duration: 0.3,
     });
     
     // Animate crops in Algeria
     gsap.to(".crop.algeria", {
-      scale: 1.8,
+      scale: 2,
       opacity: 1,
       duration: 0.4,
       stagger: 0.05,
     });
     
-    // Make France subtly respond
+    // Make France pulse subtly
     gsap.to(franceMapRef.current, {
-      filter: "brightness(1.1)",
+      filter: "brightness(1.2)",
       duration: 0.3,
     });
     
@@ -198,16 +198,16 @@ const FieldsOfOrigin = () => {
     setAlgeriaHovered(false);
     
     gsap.to(algeriaMapRef.current, {
-      scale: 1,
-      duration: 0.3,
+      boxShadow: "0 0 30px rgba(45, 87, 99, 0.4)",
+      duration: 0.5,
       ease: "power1.inOut",
     });
     
     // Reset connection styling
     gsap.to(".connection-line", {
-      stroke: "#2c5d67",
-      strokeWidth: 2,
-      duration: 0.3,
+      stroke: "#D4AF37",
+      strokeWidth: 2.5,
+      duration: 0.5,
     });
     
     // Reset crop animations
@@ -248,22 +248,22 @@ const FieldsOfOrigin = () => {
     
     // Highlight connection from France to Algeria
     gsap.to(".connection-line", {
-      stroke: "#4b8a96",
+      stroke: "#FFCC00",
       strokeWidth: 3,
       duration: 0.3,
     });
     
     // Animate crops in France
     gsap.to(".crop.france", {
-      scale: 1.8,
+      scale: 2,
       opacity: 1,
       duration: 0.4,
       stagger: 0.05,
     });
     
-    // Make Algeria respond subtly
+    // Make Algeria pulse subtly
     gsap.to(algeriaMapRef.current, {
-      filter: "brightness(1.1)",
+      filter: "brightness(1.2)",
       duration: 0.3,
     });
     
@@ -285,7 +285,7 @@ const FieldsOfOrigin = () => {
     
     // Reset connection styling
     gsap.to(".connection-line", {
-      stroke: "#2c5d67",
+      stroke: "#D4AF37",
       strokeWidth: 2,
       duration: 0.3,
     });
@@ -397,16 +397,16 @@ const FieldsOfOrigin = () => {
             <path 
               className="connection-line" 
               d="M10,100 C50,80 100,120 150,100 S250,80 290,100" 
-              stroke="#2c5d67" 
+              stroke="#D4AF37" 
               strokeWidth="2" 
               fill="none"
             />
             
             {/* Flow dots that move along the path */}
-            <circle className="flow-dot" r="3" fill="#4b8a96"/>
-            <circle className="flow-dot" r="3" fill="#4b8a96"/>
-            <circle className="flow-dot" r="3" fill="#4b8a96"/>
-            <circle className="flow-dot" r="3" fill="#4b8a96"/>
+            <circle className="flow-dot" r="4" fill="#FFCC00"/>
+            <circle className="flow-dot" r="4" fill="#FFCC00"/>
+            <circle className="flow-dot" r="4" fill="#FFCC00"/>
+            <circle className="flow-dot" r="4" fill="#FFCC00"/>
           </svg>
           
           {/* Path dots */}
@@ -488,7 +488,7 @@ const FieldsOfOrigin = () => {
           <span className="highlight"> France's vibrant markets</span>, delivering premium agricultural treasures with every harvest.
         </p>
         <p ref={(el) => (textRefs.current[2] = el)}>
-          Our vision reaches beyond borders, weaving a tapestry of global flavors with a commitment to quality and
+          Our vision reaches beyond borders, weaving a tapestry of global flavors with a golden thread of quality and
           sustainability.
         </p>
         <p ref={(el) => (textRefs.current[3] = el)}>

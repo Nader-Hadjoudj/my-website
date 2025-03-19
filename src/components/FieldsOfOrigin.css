@@ -28,7 +28,7 @@
   width: 40%;
   height: 400px;
   transition: transform 0.3s ease, box-shadow 0.4s ease, filter 0.3s ease;
-  box-shadow: 0 0 20px rgba(45, 87, 99, 0.2);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
   border-radius: 8px;
   z-index: 2;
 }
@@ -39,13 +39,14 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 1.5rem;
-  color: #4b8a96;
+  color: #D4AF37;
   font-weight: 300;
   letter-spacing: 2px;
   opacity: 0.8;
 }
 
 .map-image-container {
+  filter: brightness(0.95);
   position: relative;
   width: 100%;
   height: 100%;
@@ -60,7 +61,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  filter: grayscale(20%) brightness(0.95);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
   transition: filter 0.3s ease;
 }
 
@@ -70,9 +71,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #2c5d67;
+  background-color: #D4AF37;
   opacity: 0;
-  mix-blend-mode: soft-light;
+  mix-blend-mode: overlay;
   pointer-events: none;
   border-radius: 8px;
 }
@@ -96,42 +97,42 @@
 
 .connection-line {
   stroke-linecap: round;
-  filter: drop-shadow(0 0 3px rgba(45, 87, 99, 0.3));
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
   transition: stroke 0.3s ease, stroke-width 0.3s ease;
 }
 
 .flow-dot {
-  filter: drop-shadow(0 0 2px rgba(75, 138, 150, 0.6));
+  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
 }
 
 .path-dot {
   position: absolute;
-  width: 5px;
-  height: 5px;
-  background-color: #4b8a96;
+  width: 6px;
+  height: 6px;
+  background-color: #FFCC00;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  filter: drop-shadow(0 0 2px rgba(75, 138, 150, 0.6));
+  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
 }
 
 /* Map hover effects */
 .map-container.hovered {
-  box-shadow: 0 0 30px rgba(45, 87, 99, 0.4);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
   z-index: 3;
 }
 
 .map-container.hovered .map-image {
-  filter: grayscale(0%) brightness(1.05);
+  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
 }
 
 /* Crop points styling */
 .crop {
   position: absolute;
-  background-color: rgba(158, 216, 219, 0.8);
+  background-color: #FFFFF0;
   border-radius: 50%;
   transform: scale(0);
   opacity: 0;
-  filter: drop-shadow(0 0 3px rgba(158, 216, 219, 0.4));
+  filter: drop-shadow(0 0 5px rgba(255, 255, 240, 0.8));
   transition: transform 0.3s ease, opacity 0.3s ease;
   pointer-events: none;
 }
@@ -150,7 +151,7 @@
   position: absolute;
   width: 2px;
   height: 120px;
-  background: linear-gradient(to top, #4b8a96, transparent);
+  background: linear-gradient(to top, #D4AF37, transparent);
   transform-origin: bottom;
   z-index: -1;
 }
@@ -166,7 +167,7 @@
 /* Particle styling */
 .particle {
   position: absolute;
-  background-color: rgba(75, 138, 150, 0.6);
+  background-color: #D4AF37;
   border-radius: 50%;
   opacity: 0.5;
   pointer-events: none;
@@ -185,7 +186,7 @@
 .title {
   font-size: 3rem;
   margin-bottom: 2rem;
-  color: #4b8a96;
+  color: #D4AF37;
   font-weight: 300;
   letter-spacing: 2px;
 }
@@ -198,7 +199,7 @@
 }
 
 .highlight {
-  color: #69b6c5;
+  color: #D4AF37;
   font-weight: 500;
 }
 
