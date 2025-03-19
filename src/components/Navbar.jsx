@@ -46,6 +46,13 @@ const NavItem = styled.a`
   }
 `;
 
+const LanguageContainer = styled.div`
+  position: absolute;
+  right: 20px;
+  display: flex;
+  align-items: center;
+`;
+
 function Navbar() {
     const navRef = useRef(null);
     const { t } = useTranslation();
@@ -64,14 +71,16 @@ function Navbar() {
     return (
       <Nav ref={navRef}>
         <a href="/">
-          <Logo src={logo} alt="Logo" />
+          <Logo src={logo} alt="Stormmaze" />
         </a>
         <NavLinks>
           <NavItem href="/">{t('navbar.home')}</NavItem>
           <NavItem href="/about">{t('navbar.about')}</NavItem>
           <NavItem href="/contact">{t('navbar.contact')}</NavItem>
         </NavLinks>
-        <LanguageSwitcher />
+        <LanguageContainer>
+          <LanguageSwitcher />
+        </LanguageContainer>
       </Nav>
     );
 }
