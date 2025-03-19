@@ -368,7 +368,7 @@ const FieldsOfOrigin = () => {
           <div className="map-label">Algeria</div>
           <div className="map-image-container">
             <img 
-              src="/map.png" 
+              src="/algeria.png" 
               alt="Algeria Map Outline" 
               className="map-image"
               onLoad={() => handleMapLoad('algeria')}
