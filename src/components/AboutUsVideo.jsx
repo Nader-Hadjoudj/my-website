@@ -67,32 +67,99 @@ const Subtitle = styled.h2`
   opacity: 0;
 `;
 
+// Luxurious square button design
 const DownloadButton = styled.a`
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  width: 260px;
+  height: 260px;
+  background-color: #000;
+  color: #ffd700;
+  font-size: 1.1rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #000;
-  background: linear-gradient(45deg, #ffd700, #ffcc00);
-  border: 2px solid #ffd700;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0;
+  letter-spacing: 2px;
   text-decoration: none;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  text-align: center;
+  opacity: 0;
   
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 7px 20px rgba(255, 215, 0, 0.5);
-    background: linear-gradient(45deg, #ffcc00, #ffd700);
+  &::before, &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s ease;
+  }
+  
+  &::before {
+    background-color: #ffd700;
+    transform: scale(0.95);
+  }
+  
+  &::after {
+    background-color: #000;
+    transform: scale(0.9);
+  }
+  
+  &:hover::before {
+    transform: scale(1);
+  }
+  
+  &:hover::after {
+    transform: scale(0.95);
+  }
+  
+  &:hover .btn-text {
+    background-position: right center;
   }
   
   &:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    transform: scale(0.98);
   }
+`;
+
+const ButtonInner = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+`;
+
+const ButtonText = styled.span`
+  display: block;
+  background: linear-gradient(to right, #ffd700, #ffcc00, #ffd700);
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  transition: all 0.5s ease;
+  margin-bottom: 10px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+`;
+
+const ButtonBorder = styled.div`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid #ffd700;
+  pointer-events: none;
+`;
+
+const ButtonIcon = styled.div`
+  font-size: 3rem;
+  margin-bottom: 15px;
+  color: #ffd700;
 `;
 
 const AboutUsVideo = () => {
@@ -174,7 +241,12 @@ const AboutUsVideo = () => {
           download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
-          Télécharger Notre Catalogue
+          <ButtonInner>
+            <ButtonIcon>↓</ButtonIcon>
+            <ButtonText className="btn-text">Télécharger</ButtonText>
+            <ButtonText className="btn-text">Notre Catalogue</ButtonText>
+            <ButtonBorder />
+          </ButtonInner>
         </DownloadButton>
       </Content>
     </HeroSection>

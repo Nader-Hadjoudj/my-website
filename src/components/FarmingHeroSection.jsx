@@ -67,52 +67,26 @@ const Subtitle = styled.h2`
   opacity: 0;
 `;
 
-// New square fancy button
 const DownloadButton = styled.a`
-  padding: 1.2rem;
-  width: 280px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  padding: 1rem 2.5rem;
   font-size: 1.2rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #000;
-  background: linear-gradient(135deg, #ffd700, #ffcc00);
-  border: 3px solid #000;
-  outline: 1px solid #ffd700;
-  outline-offset: -4px;
+  background: linear-gradient(45deg, #ffd700, #ffcc00);
+  border: 2px solid #ffd700;
+  border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   opacity: 0;
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-  position: relative;
-  overflow: hidden;
-  
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: all 0.4s ease;
-    transform: skewX(-20deg);
-  }
   
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
-    background: linear-gradient(135deg, #ffd700, #ffea00);
-    outline-offset: -2px;
-  }
-  
-  &:hover:before {
-    left: 100%;
+    box-shadow: 0 7px 20px rgba(255, 215, 0, 0.5);
+    background: linear-gradient(45deg, #ffcc00, #ffd700);
   }
   
   &:active {
@@ -121,7 +95,7 @@ const DownloadButton = styled.a`
   }
 `;
 
-const AboutUsVideo = () => {
+const FarmingHeroSection = () => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
@@ -186,7 +160,7 @@ const AboutUsVideo = () => {
   return (
     <HeroSection id="FarmingHeroSection">
       <VideoBackground autoPlay muted loop playsInline>
-        <source src="/videos/orange.mp4" type="video/mp4" />
+        <source src="/videos/farming-background.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </VideoBackground>
       <Overlay />
@@ -207,4 +181,4 @@ const AboutUsVideo = () => {
   );
 };
 
-export default AboutUsVideo;
+export default FarmingHeroSection;
