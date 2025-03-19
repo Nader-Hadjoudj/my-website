@@ -42,8 +42,17 @@ const NavList = styled.div`
   display: flex;
 `;
 
+const NavLinks = styled.div`
+  display: flex;
+  position: relative;
+  z-index: 1001;
+`;
+
+
+
 function Navbar() {
     const navRef = useRef(null);
+    const { t } = useTranslation();
     
   
     useEffect(() => {
