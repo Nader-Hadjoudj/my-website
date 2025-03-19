@@ -42,10 +42,25 @@ const NavList = styled.div`
   display: flex;
 `;
 
+const NavLinks = styled.div`
+   display: flex;
+ `;
+ 
+ const NavLink = styled(Link)`
+   margin: 0 15px;
+   text-decoration: none;
+   color: rgb(255, 255, 255);
+   font-weight: bold;
+   &:hover {
+     color: rgb(118, 118, 118);
+   }
+ `;
+
+
 
 function Navbar() {
     const navRef = useRef(null);
-    
+    const { t } = useTranslation();
   
     useEffect(() => {
         gsap.to(navRef.current, {
@@ -63,7 +78,10 @@ function Navbar() {
           <Logo src={logo} alt="Logo" />
         </a>
         <NavList>
-          <NavItem href="/">Home</NavItem>
+        <NavLinks>
+        <NavLink to="/">{t('navbar.home')}</NavLink>
+        </NavLinks>
+        <LanguageSwitcher />
           <NavItem href="/catalogue">Catalog</NavItem>
           <NavItem href="/about">About</NavItem>
           <NavItem href="/contact">Contact</NavItem>
