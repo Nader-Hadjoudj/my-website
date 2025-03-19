@@ -4,6 +4,7 @@ import { gsap } from "gsap";
 import Splitting from "splitting";
 import "splitting/dist/splitting.css";
 import "splitting/dist/splitting-cells.css";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = styled.div`
   position: relative;
@@ -102,7 +103,7 @@ const FarmingHeroSection = () => {
 
   useEffect(() => {
     const title = titleRef.current;
-
+    const { t } = useTranslation();
     const split = Splitting({ target: title, by: "chars" });
 
     gsap.fromTo(
@@ -165,16 +166,14 @@ const FarmingHeroSection = () => {
       </VideoBackground>
       <Overlay />
       <Content>
-        <Title ref={titleRef}>AGROFRANÇAIS</Title>
-        <Subtitle ref={subtitleRef}>
-          Importation de Produits Agricoles Premium
-        </Subtitle>
+        <Title ref={titleRef}>{t('home.video')}</Title>
+        <Subtitle ref={subtitleRef}>{t('home.button')}</Subtitle>
         <DownloadButton 
           href="files/catalogue.pdf" 
           download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
-          Télécharger Notre Catalogue
+          {t('hero.downloadButton')}
         </DownloadButton>
       </Content>
     </HeroSection>

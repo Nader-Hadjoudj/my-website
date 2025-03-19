@@ -15,6 +15,13 @@
         "paragraph2": "Our deep-rooted relationships with trusted growers and suppliers allow us to bring exceptional produce to our customers, blending tradition with innovation. With a commitment to excellence, Stormmaze is dedicated to fostering a seamless bridge between global agriculture and French cuisine.",
         "paragraph3": "We are driven by a vision to expand horizons, sourcing unique and high-quality products from diverse regions to meet the evolving tastes of our clients. Stormmaze isn't just about products; it's about building connections, celebrating flavors, and contributing to a thriving agricultural ecosystem."
     },
+    "home": {
+        "video": "Stormmaze tailors its catalog to your needs each season with the best products on the market.",
+        "button": "Download our catalog",
+        "paragraph2": "Nos relations profondes avec des cultivateurs et fournisseurs de confiance nous permettent d'offrir des produits exceptionnels à nos clients, alliant tradition et innovation. Avec un engagement envers l'excellence, Stormmaze se consacre à créer un pont harmonieux entre l'agriculture mondiale et la cuisine française.",
+        "paragraph3": "Nous sommes guidés par une vision d'expansion des horizons, en recherchant des produits uniques et de haute qualité provenant de diverses régions pour répondre aux goûts évolutifs de nos clients. Stormmaze n'est pas seulement une question de produits ; c'est aussi une question de créer des liens, de célébrer les saveurs et de contribuer à un écosystème agricole florissant."
+        
+    },
     "common": {
       "learnMore": "Learn More",
       "submit": "Submit"
