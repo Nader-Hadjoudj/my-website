@@ -11,34 +11,141 @@
   position: relative;
 }
 
-.map-container {
-  position: relative;
+/* Maps container with flexbox for side-by-side layout */
+.maps-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  max-width: 800px;
-  height: 500px;
+  max-width: 1200px;
   margin-bottom: 4rem;
-  transition: transform 0.3s ease;
+  position: relative;
 }
 
-.map {
+.map-container {
+  position: relative;
+  width: 40%;
+  height: 400px;
+  transition: transform 0.3s ease, box-shadow 0.4s ease, filter 0.3s ease;
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  border-radius: 8px;
+  z-index: 2;
+}
+
+.map-label {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.5rem;
+  color: #D4AF37;
+  font-weight: 300;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.map-image-container {
+  position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+  transition: filter 0.3s ease;
+}
+
+.map-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #D4AF37;
+  opacity: 0;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+/* Connection container between maps */
+.connection-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.connection-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.connection-line {
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+  transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.flow-dot {
+  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
+}
+
+.path-dot {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background-color: #FFCC00;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 0 3px rgba(255, 204, 0, 0.8));
 }
 
 /* Map hover effects */
-.map-container.hovered .map {
+.map-container.hovered {
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+  z-index: 3;
+}
+
+.map-container.hovered .map-image {
   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
 }
 
 /* Crop points styling */
 .crop {
-  transform-origin: center;
+  position: absolute;
+  background-color: #FFFFF0;
+  border-radius: 50%;
   transform: scale(0);
+  opacity: 0;
   filter: drop-shadow(0 0 5px rgba(255, 255, 240, 0.8));
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
 }
 
 /* Vines styling */
+.vines-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200px;
+  pointer-events: none;
+}
+
 .vine {
   position: absolute;
   width: 2px;
@@ -59,30 +166,12 @@
 /* Particle styling */
 .particle {
   position: absolute;
-  width: 3px;
-  height: 3px;
   background-color: #D4AF37;
   border-radius: 50%;
   opacity: 0.5;
   pointer-events: none;
   filter: blur(1px);
-}
-
-/* Pulse circles */
-.pulse-circle {
-  transform-origin: center;
-  animation: pulse 4s infinite alternate;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.1;
-    transform: scale(0.8);
-  }
-  100% {
-    opacity: 0.4;
-    transform: scale(1.2);
-  }
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Content styling */
@@ -90,6 +179,7 @@
   max-width: 700px;
   text-align: center;
   z-index: 2;
+  margin-top: 2rem;
 }
 
 .title {
@@ -113,12 +203,67 @@
 }
 
 /* Responsive adjustments */
-@media (min-width: 768px) {
+@media (min-width: 992px) {
   .fields-section {
     padding: 6rem 2rem;
   }
   
-  .map-container {
+  .maps-container {
     margin-bottom: 6rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .maps-container {
+    flex-direction: column;
+    margin-bottom: 3rem;
+  }
+  
+  .map-container {
+    width: 80%;
+    margin-bottom: 4rem;
+  }
+  
+  .map-container:last-child {
+    margin-bottom: 0;
+  }
+  
+  .connection-container {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .title {
+    font-size: 2.5rem;
+  }
+  
+  .map-container {
+    width: 100%;
+    height: 350px;
+  }
+}
+
+/* Animation keyframes */
+@keyframes pulse {
+  0% {
+    opacity: 0.1;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
   }
 }
