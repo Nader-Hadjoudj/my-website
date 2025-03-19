@@ -70,7 +70,6 @@ function Navbar() {
           <NavItem href="/">{t('navbar.home')}</NavItem>
           <NavItem href="/about">{t('navbar.about')}</NavItem>
           <NavItem href="/contact">{t('navbar.contact')}</NavItem>
-          <NavItem href="/catalogue">{t('navbar.catalogue')}</NavItem>
         </NavLinks>
         <LanguageSwitcher />
       </Nav>
