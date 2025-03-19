@@ -1,0 +1,93 @@
+.fields-section {
+    background-color: #1a1a1a; /* Soft black */
+    padding: 80px 20px;
+    color: #e0e0e0; /* Light gray text */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .map-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin-bottom: 40px;
+  }
+  
+  .map {
+    width: 100%;
+    height: 100%;
+    stroke-width: 2;
+  }
+  
+  .crop {
+    opacity: 0;
+    scale: 0;
+    transform-origin: center;
+  }
+  
+  .vine {
+    position: absolute;
+    width: 2px;
+    height: 50px;
+    background: #d4af37; /* Gold vines */
+    bottom: 20%;
+    left: 40%;
+    transform-origin: bottom;
+  }
+  
+  .vine-2 {
+    left: 60%;
+    height: 70px;
+  }
+  
+  .particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #d4af37; /* Gold particles */
+    border-radius: 50%;
+    opacity: 0.6;
+  }
+  
+  .content {
+    max-width: 700px;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    color: #d4af37; /* Gold */
+    font-family: "Playfair Display", serif;
+    margin-bottom: 30px;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin-bottom: 20px;
+    font-family: "Lora", serif;
+  }
+  
+  .highlight {
+    color: #fffff0; /* Ivory */
+    font-weight: 500;
+  }
+  
+  @media (max-width: 768px) {
+    .map-container {
+      width: 200px;
+      height: 200px;
+    }
+  
+    .title {
+      font-size: 2rem;
+    }
+  
+    p {
+      font-size: 1rem;
+    }
+  }

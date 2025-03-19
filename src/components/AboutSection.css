@@ -1,0 +1,46 @@
+.about-section {
+    background-color: #1a1a1a; /* Soft black */
+    padding: 60px 20px;
+    color: #e0e0e0; /* Light gray for body text */
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .about-title {
+    font-size: 2.5rem;
+    color: #d4af37; /* Gold */
+    margin-bottom: 40px;
+    font-family: "Playfair Display", serif; /* Elegant font */
+    letter-spacing: 1px;
+  }
+  
+  .about-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .about-content p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-family: "Lora", serif; /* Sophisticated body font */
+  }
+  
+  .highlight {
+    color: #fffff0; /* Ivory for key phrases */
+    font-weight: 500;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .about-title {
+      font-size: 2rem;
+    }
+  
+    .about-content p {
+      font-size: 1rem;
+    }
+  }
