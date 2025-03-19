@@ -1,15 +1,14 @@
 import styled from "styled-components";
 import logo from "../assets/Stormmaze_gold.png";
 import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
+import { gsap } from "gsap";
+
 
 const Logo = styled.img`
-  height: 70px;
+  height: 70px; /* Adjust size if needed */
   position: absolute;
-  left: 20px;
+  left: 20px; /* Keep it on the very left */
   cursor: pointer;
 `;
 
@@ -17,72 +16,60 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(0, 0, 0);
+  background: rgb(0, 0, 0); /* Ensure background is black */
   padding: 15px 30px;
-  position: fixed;
-  top: 0;
+  position: fixed; 
+  top: 0; /* Position at the top */
   left: 0;
-  width: 100%;
-  height: 60px;
-  z-index: 1000;
-  transform: translateX(100%);
-  opacity: 0;
+  width: 100vw; /* Full width */
+  height: 60px; /* Adjust height as needed */
+  z-index: 1000; /* Keep navbar above other elements */
+  transform: translateX(100%); /* Start off-screen */
+  opacity: 0; /* Initially hidden */
   box-sizing: border-box;
 `;
 
-const NavLinks = styled.div`
-  display: flex;
-  position: relative; /* Add this */
-  z-index: 1001; /* Add this - higher than Nav z-index */
-`;
-
-const NavLink = styled(Link)`
+const NavItem = styled.a`
   margin: 0 15px;
   text-decoration: none;
   color: rgb(255, 255, 255);
   font-weight: bold;
-  cursor: pointer; /* Add this */
-  user-select: none; /* Add this */
-  position: relative; /* Add this */
-  z-index: 1002; /* Add this */
-  
   &:hover {
     color: rgb(118, 118, 118);
   }
 `;
+const NavList = styled.div`
+  display: flex;
+`;
 
 function Navbar() {
     const navRef = useRef(null);
-    const { t } = useTranslation();
+    
   
     useEffect(() => {
-      if (navRef.current) {
         gsap.to(navRef.current, {
-          x: 0,
+          x: 0, // Move to normal position
           duration: 1, 
           opacity: 1,
           ease: "power2.out",
         });
-      }
-    }, []);
+      }, []);
       
-    // Add console log to debug
-    console.log("Translation test:", t('navbar.home'));
-    
+  
     return (
       <Nav ref={navRef}>
-        <Link to="/">
+        <a href="/">
           <Logo src={logo} alt="Logo" />
-        </Link>
+        </a>
         <NavLinks>
-          <NavLink to="/">{t('navbar.home')}</NavLink>
-          <NavLink to="/about">{t('navbar.about')}</NavLink>
-          <NavLink to="/contact">{t('navbar.contact')}</NavLink>
-          <NavLink to="/catalogue">{t('navbar.catalogue')}</NavLink>
+          <NavItem href="/">{t('navbar.home')}</NavItem>
+          <NavItem href="/about">{t('navbar.about')}</NavItem>
+          <NavItem href="/contact">{t('navbar.contact')}</NavItem>
+          <NavItem href="/catalogue">{t('navbar.catalogue')}</NavItem>
         </NavLinks>
-        <LanguageSwitcher />
       </Nav>
     );
-}
+  }
   
+
 export default Navbar;
