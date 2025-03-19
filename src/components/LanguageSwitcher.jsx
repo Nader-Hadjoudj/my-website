@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const SwitcherContainer = styled.div`
   display: flex;
   gap: 10px;
-`;
+  `;
 
 const LanguageButton = styled.button`
   background: ${props => props.active ? '#ffd700' : 'transparent'};

@@ -11,6 +11,7 @@ const Logo = styled.img`
   position: absolute;
   left: 20px; /* Keep it on the very left */
   cursor: pointer;
+  
 `;
 
 const Nav = styled.nav`
