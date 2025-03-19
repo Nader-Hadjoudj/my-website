@@ -67,53 +67,69 @@ const Subtitle = styled.h2`
   opacity: 0;
 `;
 
-// Luxurious square button design
+// Square button that matches the site's existing aesthetic
 const DownloadButton = styled.a`
-  position: relative;
   display: inline-block;
-  width: 260px;
-  height: 260px;
-  background-color: #000;
-  color: #ffd700;
-  font-size: 1.1rem;
-  font-weight: 700;
+  position: relative;
+  width: 220px;
+  height: 220px;
+  background-color: #000000;
+  font-size: 1.2rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  color: #ffd700;
   text-decoration: none;
-  text-align: center;
   opacity: 0;
+  overflow: hidden;
+  transition: all 0.4s ease;
   
-  &::before, &::after {
+  // Golden border
+  &:before {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
-    z-index: -1;
-    transition: all 0.4s ease;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #ffd700;
+    opacity: 0.8;
+    z-index: 1;
   }
   
-  &::before {
-    background-color: #ffd700;
-    transform: scale(0.95);
+  // Inner content wrapper
+  &:after {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border: 1px solid #ffd700;
+    opacity: 0.5;
+    z-index: 1;
+    transition: all 0.3s ease;
   }
   
-  &::after {
-    background-color: #000;
-    transform: scale(0.9);
+  &:hover {
+    background-color: #0a0a0a;
+    box-shadow: 0 0 30px 5px rgba(255, 215, 0, 0.2);
   }
   
-  &:hover::before {
-    transform: scale(1);
+  &:hover:after {
+    top: 12px;
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    opacity: 0.8;
   }
   
-  &:hover::after {
-    transform: scale(0.95);
+  &:hover .button-content {
+    transform: translateY(-5px);
   }
   
-  &:hover .btn-text {
-    background-position: right center;
+  &:hover .button-icon {
+    transform: translateY(-2px);
   }
   
   &:active {
@@ -121,7 +137,7 @@ const DownloadButton = styled.a`
   }
 `;
 
-const ButtonInner = styled.div`
+const ButtonContent = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -132,34 +148,41 @@ const ButtonInner = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
-`;
-
-const ButtonText = styled.span`
-  display: block;
-  background: linear-gradient(to right, #ffd700, #ffcc00, #ffd700);
-  background-size: 200% auto;
-  background-clip: text;
-  -webkit-background-clip: text;
-  color: transparent;
-  transition: all 0.5s ease;
-  margin-bottom: 10px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-`;
-
-const ButtonBorder = styled.div`
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  border: 1px solid #ffd700;
-  pointer-events: none;
+  z-index: 2;
+  transition: transform 0.3s ease;
 `;
 
 const ButtonIcon = styled.div`
-  font-size: 3rem;
   margin-bottom: 15px;
+  font-size: 2.5rem;
   color: #ffd700;
+  transition: transform 0.3s ease;
+`;
+
+const ButtonText = styled.div`
+  text-align: center;
+  line-height: 1.6;
+`;
+
+const ButtonShine = styled.div`
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 215, 0, 0) 0%,
+    rgba(255, 215, 0, 0.2) 50%,
+    rgba(255, 215, 0, 0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: all 0.7s ease;
+  z-index: 0;
+  
+  ${DownloadButton}:hover & {
+    left: 150%;
+  }
 `;
 
 const AboutUsVideo = () => {
@@ -241,12 +264,13 @@ const AboutUsVideo = () => {
           download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
-          <ButtonInner>
-            <ButtonIcon>↓</ButtonIcon>
-            <ButtonText className="btn-text">Télécharger</ButtonText>
-            <ButtonText className="btn-text">Notre Catalogue</ButtonText>
-            <ButtonBorder />
-          </ButtonInner>
+          <ButtonShine />
+          <ButtonContent className="button-content">
+            <ButtonIcon className="button-icon">↓</ButtonIcon>
+            <ButtonText>
+              Télécharger<br />Notre Catalogue
+            </ButtonText>
+          </ButtonContent>
         </DownloadButton>
       </Content>
     </HeroSection>
