@@ -16,7 +16,7 @@ const AboutSection = () => {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 80%", // Start animation when section is 80% in view
+        start: "top 80%", 
         toggleActions: "play none none reset",
       },
     });
@@ -32,10 +32,10 @@ const AboutSection = () => {
         opacity: 0,
         y: 30,
         duration: 0.8,
-        stagger: 0.2, // Stagger each paragraph slightly
+        stagger: 0.2,
         ease: "power2.out",
       },
-      "-=0.5" // Overlap with title animation
+      "-=0.5"
     );
   }, []);
 

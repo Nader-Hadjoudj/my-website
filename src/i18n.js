@@ -1,17 +1,17 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import translation from './src/locales/en/translation.json';
-import translation from './src/locales/fr/translation.json';
+import enTranslations from './locales/en.json';
+import frTranslations from './locales/fr.json';
 
 i18n
   .use(initReactI18next)
   .init({
     resources: {
       en: {
-        translation: translation
+        translation: enTranslations
       },
       fr: {
-        translation: translation
+        translation: frTranslations
       }
     },
     lng: 'fr', // Default language
