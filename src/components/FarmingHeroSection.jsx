@@ -100,10 +100,10 @@ const FarmingHeroSection = () => {
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
-
+  const { t } = useTranslation();
   useEffect(() => {
     const title = titleRef.current;
-    const { t } = useTranslation();
+    
     const split = Splitting({ target: title, by: "chars" });
 
     gsap.fromTo(
