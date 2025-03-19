@@ -10,10 +10,9 @@ import AboutSection from "../components/AboutSection"
 function About() {
   return (
     <div>
-      <AboutText />
-      <AboutUsVideo />
-      <FieldsOfOrigin/>
       <AboutSection/>
+      <FieldsOfOrigin/>
+      <AboutUsVideo />
     </div>
   );
 }

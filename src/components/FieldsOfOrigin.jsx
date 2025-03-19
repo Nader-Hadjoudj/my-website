@@ -155,7 +155,7 @@ const FieldsOfOrigin = () => {
     setAlgeriaHovered(true);
     
     gsap.to(algeriaMapRef.current, {
-      scale: 1.05,
+      scale: 1.01,
       duration: 0.3,
       ease: "power1.inOut",
     });
@@ -492,7 +492,6 @@ const FieldsOfOrigin = () => {
           sustainability.
         </p>
         <p ref={(el) => (textRefs.current[3] = el)}>
-          Hover over each map to explore our story—rooted in tradition, blooming with innovation, and connecting continents.
         </p>
       </div>
     </section>

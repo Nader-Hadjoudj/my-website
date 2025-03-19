@@ -113,7 +113,7 @@ const AboutUsVideo = () => {
   return (
     <HeroSection>
       <VideoBackground autoPlay muted loop playsInline>
-        <source src="/videos/farming-background.mp4" type="video/mp4" />
+        <source src="/videos/orange.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </VideoBackground>
       <Overlay />
