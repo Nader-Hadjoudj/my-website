@@ -16,16 +16,16 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgb(0, 0, 0);
+  background: rgb(0, 0, 0); /* Ensure background is black */
   padding: 15px 30px;
-  position: fixed;
-  top: 0;
+  position: fixed; 
+  top: 0; /* Position at the top */
   left: 0;
-  width: 100vw;
-  height: 60px;
-  z-index: 1000;
-  transform: translateX(100%);
-  opacity: 0;
+  width: 100vw; /* Full width */
+  height: 60px; /* Adjust height as needed */
+  z-index: 1000; /* Keep navbar above other elements */
+  transform: translateX(100%); /* Start off-screen */
+  opacity: 0; /* Initially hidden */
   box-sizing: border-box;
 `;
 
