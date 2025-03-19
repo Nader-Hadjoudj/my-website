@@ -1,24 +1,29 @@
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
+import React from "react";
+import { useTranslation } from "react-i18next";
+import styled from "styled-components";
 
 const SwitcherContainer = styled.div`
   display: flex;
-  gap: 10px;
-  `;
+  align-items: center;
+`;
 
 const LanguageButton = styled.button`
-  background: ${props => props.active ? '#ffd700' : 'transparent'};
-  color: ${props => props.active ? 'black' : '#ffd700'};
-  border: 1px solid #ffd700;
-  border-radius: 4px;
-  padding: 5px 10px;
+  background: transparent;
+  border: none;
+  color: ${props => props.active ? "#d4af37" : "#ffffff"};
   cursor: pointer;
-  transition: all 0.3s ease;
+  margin: 0 5px;
+  font-weight: ${props => props.active ? "bold" : "normal"};
+  transition: color 0.3s ease;
   
   &:hover {
-    background: ${props => props.active ? '#ffd700' : 'rgba(255, 215, 0, 0.2)'};
+    color: #d4af37;
   }
+`;
+
+const Divider = styled.span`
+  color: #ffffff;
+  margin: 0 5px;
 `;
 
 const LanguageSwitcher = () => {
@@ -31,16 +36,17 @@ const LanguageSwitcher = () => {
   return (
     <SwitcherContainer>
       <LanguageButton 
-        active={i18n.language === 'en'} 
-        onClick={() => changeLanguage('en')}
-      >
-        EN
-      </LanguageButton>
-      <LanguageButton 
         active={i18n.language === 'fr'} 
         onClick={() => changeLanguage('fr')}
       >
         FR
+      </LanguageButton>
+      <Divider>|</Divider>
+      <LanguageButton 
+        active={i18n.language === 'en'} 
+        onClick={() => changeLanguage('en')}
+      >
+        EN
       </LanguageButton>
     </SwitcherContainer>
   );

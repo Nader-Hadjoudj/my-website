@@ -1,13 +1,20 @@
 {
     "navbar": {
       "home": "Accueil",
-      "about": "À propos",
+      "about": "Histoire",
       "contact": "Contact",
       "catalogue": "Catalogue"
     },
     "animatedText": {
       "visiting": "Vous visitez stormmaze",
       "maintenance": "Site en cours de maintenance"
+    },
+    
+    "about": {
+        "title": "À Propos de Stormmaze",
+        "paragraph1": "Chez Stormmaze, nous sommes passionnés par la connexion des meilleurs produits agricoles du monde avec les marchés dynamiques de France. Spécialisés dans les importations premium d'Algérie et d'ailleurs, nous nous efforçons d'apporter qualité, authenticité et durabilité à chaque table.",
+        "paragraph2": "Nos relations profondes avec des cultivateurs et fournisseurs de confiance nous permettent d'offrir des produits exceptionnels à nos clients, alliant tradition et innovation. Avec un engagement envers l'excellence, Stormmaze se consacre à créer un pont harmonieux entre l'agriculture mondiale et la cuisine française.",
+        "paragraph3": "Nous sommes guidés par une vision d'expansion des horizons, en recherchant des produits uniques et de haute qualité provenant de diverses régions pour répondre aux goûts évolutifs de nos clients. Stormmaze n'est pas seulement une question de produits ; c'est aussi une question de créer des liens, de célébrer les saveurs et de contribuer à un écosystème agricole florissant."
     },
     "common": {
       "learnMore": "En savoir plus",

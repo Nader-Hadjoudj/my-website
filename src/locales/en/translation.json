@@ -9,6 +9,12 @@
       "visiting": "You are visiting stormmaze",
       "maintenance": "Website is under maintenance"
     },
+    "about": {
+        "title": "About Stormmaze",
+        "paragraph1": "At Stormmaze, we are passionate about connecting the world's finest agricultural products with the vibrant markets of France. Specializing in premium imports from Algeria and beyond, we pride ourselves on delivering quality, authenticity, and sustainability to every table.",
+        "paragraph2": "Our deep-rooted relationships with trusted growers and suppliers allow us to bring exceptional produce to our customers, blending tradition with innovation. With a commitment to excellence, Stormmaze is dedicated to fostering a seamless bridge between global agriculture and French cuisine.",
+        "paragraph3": "We are driven by a vision to expand horizons, sourcing unique and high-quality products from diverse regions to meet the evolving tastes of our clients. Stormmaze isn't just about products; it's about building connections, celebrating flavors, and contributing to a thriving agricultural ecosystem."
+    },
     "common": {
       "learnMore": "Learn More",
       "submit": "Submit"
