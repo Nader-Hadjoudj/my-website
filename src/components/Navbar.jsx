@@ -43,6 +43,7 @@ const NavList = styled.div`
 
 function Navbar() {
     const navRef = useRef(null);
+    const { t } = useTranslation();
   
     useEffect(() => {
         gsap.to(navRef.current, {
@@ -59,13 +60,13 @@ function Navbar() {
         <a href="/">
           <Logo src={logo} alt="Logo" />
         </a>
-        <NavList>
-          <NavItem href="/">Home</NavItem>
-          <NavItem href="/catalogue">Catalogue</NavItem>
-          <NavItem href="/about">About</NavItem>
-          <NavItem href="/contact">Contact</NavItem>
-          
-        </NavList>
+        <NavLinks>
+          <NavLink to="/">{t('navbar.home')}</NavLink>
+          <NavLink to="/about">{t('navbar.about')}</NavLink>
+          <NavLink to="/contact">{t('navbar.contact')}</NavLink>
+          <NavLink to="/catalogue">{t('navbar.catalogue')}</NavLink>
+        </NavLinks>
+        <LanguageSwitcher />
       </Nav>
     );
   }

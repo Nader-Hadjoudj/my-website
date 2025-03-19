@@ -1,0 +1,24 @@
+Component Structure
+
+Core App Structure:
+
+main.jsx: Entry point using React 18's createRoot API
+App.jsx: Main component that sets up routing with React Router
+App.css: Global styles
+
+
+Pages:
+
+Home.jsx: Homepage with animated text and product showcase
+About.jsx: About page with video and descriptive text
+Contact.jsx: (Referenced but not shown in the files)
+Catalogue.jsx: (Referenced but not shown in the files)
+
+
+Components:
+
+Navbar.jsx: Fixed navigation bar with GSAP animation on load
+Footer.jsx: Site footer with navigation links
+AppointmentBooking.jsx: Complex form with styled components and API integration
+CatalogText.jsx (actually named AnimatedText.jsx in content): Text animations using GSAP
+Various other components referenced but not shown: FarmingHeroSection, FarmingProductsShowcase, AboutUsVideo, AboutText

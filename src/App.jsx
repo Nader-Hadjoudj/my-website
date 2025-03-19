@@ -13,6 +13,11 @@ const MainContent = styled.div`
   padding-top: 90px; /* Adjust this value based on your navbar height (60px + padding) */
   min-height: calc(100vh - 60px); /* Ensures content takes up full height minus navbar */
 `;
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
 
 function App() {
   return (

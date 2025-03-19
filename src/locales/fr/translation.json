@@ -1,0 +1,16 @@
+{
+    "navbar": {
+      "home": "Accueil",
+      "about": "À propos",
+      "contact": "Contact",
+      "catalogue": "Catalogue"
+    },
+    "animatedText": {
+      "visiting": "Vous visitez stormmaze",
+      "maintenance": "Site en cours de maintenance"
+    },
+    "common": {
+      "learnMore": "En savoir plus",
+      "submit": "Soumettre"
+    }
+  }
