@@ -28,7 +28,7 @@
   width: 40%;
   height: 400px;
   transition: transform 0.3s ease, box-shadow 0.4s ease, filter 0.3s ease;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 0 5px rgba(212, 175, 55, 0.2);
   border-radius: 8px;
   z-index: 2;
 }
@@ -117,12 +117,12 @@
 
 /* Map hover effects */
 .map-container.hovered {
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.5);
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
   z-index: 3;
 }
 
 .map-container.hovered .map-image {
-  filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.6));
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.6));
 }
 
 /* Crop points styling */
