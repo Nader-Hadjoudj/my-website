@@ -54,12 +54,11 @@ const Title = styled.h1`
   font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 800;
   margin-bottom: 1.5rem;
-  color: transparent;
   background: linear-gradient(45deg, #ffd700, #ffcc00, #ffd700, #ffea00);
   -webkit-background-clip: text;
   background-clip: text;
+  color: #ffd700; /* Fallback color in case the gradient doesn't work */
   text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.3);
-  opacity: 0;
   
   @media (max-width: 768px) {
     margin-bottom: 1rem;
@@ -71,7 +70,6 @@ const Subtitle = styled.h2`
   font-weight: 600;
   color: #ffea00;
   margin-bottom: 2rem;
-  opacity: 0;
   
   @media (max-width: 768px) {
     margin-bottom: 1.5rem;
@@ -90,7 +88,6 @@ const DownloadButton = styled.a`
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  opacity: 0;
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
   display: inline-block;
@@ -115,61 +112,91 @@ const FarmingHeroSection = () => {
   const { t } = useTranslation();
   
   useEffect(() => {
-    const title = titleRef.current;
+    // Make sure elements are visible by default in case animations fail
+    if (titleRef.current) {
+      titleRef.current.style.opacity = "1";
+    }
+    if (subtitleRef.current) {
+      subtitleRef.current.style.opacity = "1";
+    }
+    if (buttonRef.current) {
+      buttonRef.current.style.opacity = "1";
+    }
     
-    const split = Splitting({ target: title, by: "chars" });
+    // Try to initialize Splitting only if the library is available
+    try {
+      if (typeof Splitting === 'function' && titleRef.current) {
+        const title = titleRef.current;
+        const split = Splitting({ target: title, by: "chars" });
 
-    gsap.fromTo(
-      split[0].chars,
-      { opacity: 0, y: 100, rotationX: -90 },
-      {
-        opacity: 1,
-        y: 0,
-        rotationX: 0,
-        stagger: 0.05,
-        duration: 1,
-        ease: "power4.out",
-        onComplete: () => {
-          gsap.to(split[0].chars, {
-            textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
+        if (split && split[0] && split[0].chars) {
+          gsap.fromTo(
+            split[0].chars,
+            { opacity: 0, y: 100, rotationX: -90 },
+            {
+              opacity: 1,
+              y: 0,
+              rotationX: 0,
+              stagger: 0.05,
+              duration: 1,
+              ease: "power4.out",
+              onComplete: () => {
+                gsap.to(split[0].chars, {
+                  textShadow: "0 0 20px rgba(255, 215, 0, 0.8)",
+                  duration: 1.5,
+                  repeat: -1,
+                  yoyo: true,
+                  ease: "sine.inOut",
+                  stagger: { each: 0.1, from: "random" },
+                });
+              },
+            }
+          );
+        }
+      }
+
+      if (subtitleRef.current) {
+        gsap.fromTo(
+          subtitleRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
             duration: 1.5,
-            repeat: -1,
-            yoyo: true,
-            ease: "sine.inOut",
-            stagger: { each: 0.1, from: "random" },
-          });
-        },
+            delay: 1,
+            ease: "back.out",
+          }
+        );
       }
-    );
+      
+      if (buttonRef.current) {
+        gsap.fromTo(
+          buttonRef.current,
+          { opacity: 0, y: 30 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.5,
+            delay: 1.5,
+            ease: "back.out(1.7)",
+          }
+        );
+      }
+    } catch (error) {
+      console.error("Animation error:", error);
+      // Make sure everything is visible if animations fail
+      if (titleRef.current) titleRef.current.style.opacity = "1";
+      if (subtitleRef.current) subtitleRef.current.style.opacity = "1";
+      if (buttonRef.current) buttonRef.current.style.opacity = "1";
+    }
 
-    gsap.fromTo(
-      subtitleRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        delay: 1.5,
-        ease: "back.out",
-      }
-    );
-    
-    gsap.fromTo(
-      buttonRef.current,
-      { opacity: 0, y: 30 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1.5,
-        delay: 2,
-        ease: "back.out(1.7)",
-      }
-    );
-
-    // Fonction de nettoyage
     return () => {
-      if (split && split[0]) {
-        Splitting.revert(title);
+      try {
+        if (titleRef.current && typeof Splitting.revert === 'function') {
+          Splitting.revert(titleRef.current);
+        }
+      } catch (error) {
+        console.error("Splitting revert error:", error);
       }
     };
   }, []);
@@ -196,4 +223,4 @@ const FarmingHeroSection = () => {
   );
 };
 
-export default FarmingHeroSection; 
+export default FarmingHeroSection;
