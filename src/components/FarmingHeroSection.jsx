@@ -40,7 +40,7 @@ const Overlay = styled.div`
 
 const Content = styled.div`
   position: relative;
-  z-index: 3;
+  z-index: 999; /* Test value */
   text-align: center;
   max-width: 80%;
   display: flex;
