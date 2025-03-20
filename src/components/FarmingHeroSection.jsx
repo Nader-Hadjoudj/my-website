@@ -42,35 +42,45 @@ const Content = styled.div`
   position: relative;
   z-index: 3;
   text-align: center;
-  max-width: 80%;
+  max-width: 90%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 1rem;
 `;
 
 const Title = styled.h1`
-  font-size: 5rem;
+  font-size: clamp(2rem, 5vw, 5rem);
   font-weight: 800;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: transparent;
   background: linear-gradient(45deg, #ffd700, #ffcc00, #ffd700, #ffea00);
   -webkit-background-clip: text;
   background-clip: text;
   text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.3);
   opacity: 0;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Subtitle = styled.h2`
-  font-size: 2rem;
+  font-size: clamp(1rem, 3vw, 2rem);
   font-weight: 600;
   color: #ffea00;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   opacity: 0;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const DownloadButton = styled.a`
-  padding: 1rem 2.5rem;
-  font-size: 1.2rem;
+  padding: clamp(0.7rem, 2vw, 1rem) clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -83,6 +93,8 @@ const DownloadButton = styled.a`
   opacity: 0;
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  display: inline-block;
+  white-space: nowrap;
   
   &:hover {
     transform: translateY(-3px);
@@ -101,6 +113,7 @@ const FarmingHeroSection = () => {
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
   const { t } = useTranslation();
+  
   useEffect(() => {
     const title = titleRef.current;
     
@@ -153,8 +166,11 @@ const FarmingHeroSection = () => {
       }
     );
 
+    // Fonction de nettoyage
     return () => {
-      Splitting.revert(title);
+      if (split && split[0]) {
+        Splitting.revert(title);
+      }
     };
   }, []);
 
@@ -180,4 +196,4 @@ const FarmingHeroSection = () => {
   );
 };
 
-export default FarmingHeroSection;
+export default FarmingHeroSection; 
