@@ -8,9 +8,9 @@ import { useTranslation } from "react-i18next";
 
 const HeroSection = styled.div`
   position: relative;
-  width: 100%;
-  min-height: 100vh; /* Changed from height: 100vh for mobile compatibility */
-  overflow: visible; /* Changed from hidden to prevent clipping */
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -46,9 +46,6 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media (max-width: 768px) {
-    max-width: 95%; /* More space on mobile */
-  }
 `;
 
 const Title = styled.h1`
@@ -60,11 +57,7 @@ const Title = styled.h1`
   -webkit-background-clip: text;
   background-clip: text;
   text-shadow: 2px 2px 8px rgba(255, 215, 0, 0.3);
-  opacity: 1; /* Set to 1 for testing; revert to 0 if animations work */
-  @media (max-width: 768px) {
-    font-size: 2.5rem; /* Smaller on mobile */
-    margin-bottom: 1.5rem;
-  }
+  opacity: 0;
 `;
 
 const Subtitle = styled.h2`
@@ -72,11 +65,7 @@ const Subtitle = styled.h2`
   font-weight: 600;
   color: #ffea00;
   margin-bottom: 3rem;
-  opacity: 1; /* Set to 1 for testing; revert to 0 if animations work */
-  @media (max-width: 768px) {
-    font-size: 1.2rem; /* Smaller on mobile */
-    margin-bottom: 2rem;
-  }
+  opacity: 0;
 `;
 
 const DownloadButton = styled.a`
@@ -91,7 +80,7 @@ const DownloadButton = styled.a`
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
-  opacity: 1; /* Set to 1 for testing; revert to 0 if animations work */
+  opacity: 0;
   text-decoration: none;
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
   
@@ -105,11 +94,6 @@ const DownloadButton = styled.a`
     transform: translateY(1px);
     box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
   }
-  
-  @media (max-width: 768px) {
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-  }
 `;
 
 const FarmingHeroSection = () => {
@@ -117,16 +101,14 @@ const FarmingHeroSection = () => {
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
   const { t } = useTranslation();
-
   useEffect(() => {
     const title = titleRef.current;
+    
     const split = Splitting({ target: title, by: "chars" });
 
-    // Adjust animation for mobile
-    const isMobile = window.innerWidth <= 768;
     gsap.fromTo(
       split[0].chars,
-      { opacity: 0, y: isMobile ? 50 : 100, rotationX: -90 },
+      { opacity: 0, y: 100, rotationX: -90 },
       {
         opacity: 1,
         y: 0,
@@ -158,7 +140,7 @@ const FarmingHeroSection = () => {
         ease: "back.out",
       }
     );
-
+    
     gsap.fromTo(
       buttonRef.current,
       { opacity: 0, y: 30 },
@@ -180,19 +162,18 @@ const FarmingHeroSection = () => {
     <HeroSection id="FarmingHeroSection">
       <VideoBackground autoPlay muted loop playsInline>
         <source src="/videos/farming-background.mp4" type="video/mp4" />
-        <source src="/videos/farming-background.webm" type="video/webm" /> {/* Added fallback */}
-        <img src="/images/farming-background.jpg" alt="Fallback" /> {/* Static fallback */}
+        Your browser does not support the video tag.
       </VideoBackground>
       <Overlay />
       <Content>
-        <Title ref={titleRef}>{t("home.video")}</Title>
-        <Subtitle ref={subtitleRef}>{t("home.subVideo")}</Subtitle>
-        <DownloadButton
-          href="files/catalogue.pdf"
-          download="AgroFrancais_Catalogue.pdf"
+        <Title ref={titleRef}>{t('home.video')}</Title>
+        <Subtitle ref={subtitleRef}>{t('home.subVideo')}</Subtitle>
+        <DownloadButton 
+          href="files/catalogue.pdf" 
+          download="AgroFrancais_Catalogue.pdf" 
           ref={buttonRef}
         >
-          {t("home.button")}
+          {t('home.button')}
         </DownloadButton>
       </Content>
     </HeroSection>
