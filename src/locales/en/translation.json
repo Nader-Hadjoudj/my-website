@@ -27,6 +27,19 @@
       "learnMore": "Learn More",
       "submit": "Submit"
     },
+
+    "showcase": {
+        "title": "Our Premium Products",
+        "filters": {
+        "all": "All Products",
+        "algeria": "Algeria"
+        },
+        "stats": {
+        "quality": "Quality",
+        "origin": "Origin",
+        "season": "Season"
+        }
+    },
     "products": {
         "greenHaricots": {
         "name": "Haricots Verts",
