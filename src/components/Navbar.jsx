@@ -5,7 +5,6 @@ import { gsap } from "gsap";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-// Original logo styling preserved
 const Logo = styled.img`
   height: 70px;
   position: absolute;
@@ -16,13 +15,13 @@ const Logo = styled.img`
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between; /* Changed to space-between for better control */
   background: rgb(0, 0, 0);
   padding: 15px 30px;
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Keeping as 100vw as instructed */
+  width: 100vw; /* Kept as 100vw per your instruction */
   height: 60px;
   z-index: 1000;
   transform: translateX(100%);
@@ -32,13 +31,11 @@ const Nav = styled.nav`
 
 const NavLinks = styled.div`
   display: flex;
-  position: relative;
-  z-index: 1001;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding-left: 80px; /* Space for logo */
-  padding-right: 20px;
+  justify-content: center; /* Keeps items centered */
+  flex-grow: 1; /* Allows NavLinks to take up available space */
+  margin-left: 100px; /* Ensures space for the logo */
+  margin-right: 20px; /* Ensures space for LanguageWrapper */
 `;
 
 const NavItem = styled.a`
@@ -58,51 +55,47 @@ const NavItem = styled.a`
   }
 `;
 
-// Language wrapper as part of navigation links
 const LanguageWrapper = styled.div`
-  margin-left: auto; /* Push to the right side */
   display: flex;
   align-items: center;
 `;
 
 function Navbar() {
-    const navRef = useRef(null);
-    const { t } = useTranslation();
-  
-    useEffect(() => {
-      // Add overflow-x: hidden to body to prevent horizontal scrolling
-      document.body.style.overflowX = "hidden";
-      
-      if (navRef.current) {
-        gsap.to(navRef.current, {
-          x: 0,
-          duration: 1, 
-          opacity: 1,
-          ease: "power2.out",
-        });
-      }
-      
-      return () => {
-        // Clean up when component unmounts
-        document.body.style.overflowX = "";
-      };
-    }, []);
-    
-    return (
-      <Nav ref={navRef}>
-        <a href="/">
-          <Logo src={logo} alt="Stormmaze" />
-        </a>
-        <NavLinks>
-          <NavItem href="/">{t('navbar.home')}</NavItem>
-          <NavItem href="/about">{t('navbar.about')}</NavItem>
-          <NavItem href="/contact">{t('navbar.contact')}</NavItem>
-          <LanguageWrapper>
-            <LanguageSwitcher />
-          </LanguageWrapper>
-        </NavLinks>
-      </Nav>
-    );
+  const navRef = useRef(null);
+  const { t } = useTranslation();
+
+  useEffect(() => {
+    document.body.style.overflowX = "hidden";
+
+    if (navRef.current) {
+      gsap.to(navRef.current, {
+        x: 0,
+        duration: 1,
+        opacity: 1,
+        ease: "power2.out",
+      });
+    }
+
+    return () => {
+      document.body.style.overflowX = "";
+    };
+  }, []);
+
+  return (
+    <Nav ref={navRef}>
+      <a href="/">
+        <Logo src={logo} alt="Stormmaze" />
+      </a>
+      <NavLinks>
+        <NavItem href="/">{t("navbar.home")}</NavItem>
+        <NavItem href="/about">{t("navbar.about")}</NavItem>
+        <NavItem href="/contact">{t("navbar.contact")}</NavItem>
+      </NavLinks>
+      <LanguageWrapper>
+        <LanguageSwitcher />
+      </LanguageWrapper>
+    </Nav>
+  );
 }
-  
+
 export default Navbar;
