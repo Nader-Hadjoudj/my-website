@@ -11,9 +11,8 @@ function Home() {
   return (
     <div>
       <StormmazeLanding />
-      
-      <FarmingHeroSection />
       <FarmingProductsShowcase />
+      <FarmingHeroSection />
     </div>
   );
 }

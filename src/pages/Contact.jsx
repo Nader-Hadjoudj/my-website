@@ -4,11 +4,12 @@ import AnimatedText from "../components/AnimatedText";
 import ContactText from "../components/ContactText";
 import AppointmentBooking from "../components/AppointmentBooking";
 import FarmingProductsShowcase from "../components/FarmingProductsShowcase";
+import ContactForm from "../components/ContactForm";
 
 function Contact() {
   return (
     <div>
-      <ContactText />
+      <ContactForm />
       <AppointmentBooking />
       <FarmingProductsShowcase />
     </div>
