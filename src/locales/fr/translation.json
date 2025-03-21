@@ -71,6 +71,7 @@
       },
       "landing": {
         "title": "Importations Agricoles Premium pour le Marché Français",
+        "subhead": "Stormmaze fournit des produits agricoles durables et de haute qualité, reliant les agriculteurs algériens aux marchés français avec excellence et intégrité.",
         "subtitle": {
           "part1": "Nous apportons les meilleurs",
           "highlight1": "produits agricoles de haute qualité",
@@ -78,33 +79,6 @@
           "highlight2": "France",
           "part3": "avec des normes et une fiabilité exceptionnelles"
         },
-        "cta": "Explorez Notre Catalogue",
-        "stats": {
-          "products": "Produits Premium",
-          "countries": "Pays d'Origine",
-          "shipments": "Expéditions Annuelles",
-          "years": "Années d'Excellence"
-        },
-        "features": {
-          "title": "Pourquoi Choisir Stormmaze",
-          "quality": {
-            "title": "Assurance Qualité Premium",
-            "description": "Nous sélectionnons et importons soigneusement uniquement des produits agricoles de la plus haute qualité qui répondent aux normes européennes strictes en matière de sécurité, de fraîcheur et de durabilité."
-          },
-          "logistics": {
-            "title": "Logistique d'Importation Fluide",
-            "description": "Notre gestion spécialisée de la chaîne d'approvisionnement garantit la livraison en temps opportun de produits frais, maintenant la qualité de la ferme au marché avec un transport à température contrôlée."
-          },
-          "global": {
-            "title": "Réseau d'Approvisionnement Mondial",
-            "description": "Nous avons établi des relations avec des fermes de confiance dans plusieurs pays pour fournir un approvisionnement constant en produits saisonniers et disponibles toute l'année au marché français."
-          }
-        },
-        "footer": {
-          "text": "Prêt à découvrir nos solutions d'importation agricole premium?",
-          "contact": "Contactez-Nous Aujourd'hui"
-        }
-      },
       "seo": {
         "keywords": "importations agricoles France, importation produits premium, fournisseurs marché français, importations légumes frais, importations fruits haute qualité, commerce agricole mondial, importations produits biologiques, importations agriculture durable, importations alimentaires spécialisées France, importations agricoles en gros"
       }
