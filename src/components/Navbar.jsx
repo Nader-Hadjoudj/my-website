@@ -8,12 +8,12 @@ import LanguageSwitcher from "./LanguageSwitcher";
 const Logo = styled.img`
   height: 70px;
   position: absolute;
-  left: 20px;
+  left: 10px; /* Reduced from 20px */
   cursor: pointer;
 
   @media (max-width: 768px) {
-    height: 50px; /* Reduce logo size on mobile */
-    left: 10px;
+    height: 40px; /* Further reduced for mobile */
+    left: 5px;
   }
 `;
 
@@ -22,11 +22,11 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   background: rgb(0, 0, 0);
-  padding: 15px 30px;
+  padding: 15px 10px; /* Reduced horizontal padding */
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw; /* Kept as 100vw per your instruction */
+  width: calc(100vw - 20px); /* Adjusted for padding (10px left + 10px right) */
   height: 60px;
   z-index: 1000;
   transform: translateX(100%);
@@ -34,7 +34,8 @@ const Nav = styled.nav`
   box-sizing: border-box;
 
   @media (max-width: 768px) {
-    padding: 10px 15px; /* Reduce padding on mobile */
+    padding: 10px 5px; /* Even less padding on mobile */
+    width: calc(100vw - 10px); /* Adjusted for mobile padding */
   }
 `;
 
@@ -43,12 +44,12 @@ const NavLinks = styled.div`
   align-items: center;
   justify-content: center;
   flex-grow: 1;
-  margin-left: 100px; /* Space for logo */
-  margin-right: 20px; /* Space for LanguageWrapper */
+  margin-left: 90px; /* Reduced from 100px */
+  margin-right: 10px;
 
   @media (max-width: 768px) {
-    margin-left: 60px; /* Reduce space for logo on mobile */
-    margin-right: 10px; /* Reduce space for LanguageWrapper */
+    margin-left: 50px; /* Reduced for smaller logo */
+    margin-right: 5px;
   }
 `;
 
@@ -64,8 +65,8 @@ const NavItem = styled.a`
   }
 
   @media (max-width: 768px) {
-    margin: 0 8px;
-    font-size: 14px;
+    margin: 0 5px; /* Reduced spacing */
+    font-size: 12px; /* Smaller text */
   }
 `;
 
@@ -74,7 +75,7 @@ const LanguageWrapper = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    margin-left: 20px; /* Ensure it has a little breathing room */
+    margin-left: 5px;
   }
 `;
 
