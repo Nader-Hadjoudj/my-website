@@ -65,8 +65,8 @@ const NavItem = styled.a`
   }
 
   @media (max-width: 768px) {
-    margin: 0 5px; /* Reduced spacing */
-    font-size: 12px; /* Smaller text */
+    margin: 0 10px; /* Reduced spacing */
+    font-size: 14px; /* Smaller text */
   }
 `;
 
