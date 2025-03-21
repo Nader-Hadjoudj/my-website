@@ -40,7 +40,7 @@ const NavLinks = styled.div`
   z-index: 1001;
   
   @media (max-width: 768px) {
-    margin: 0 80px;
+    margin: 0 70px 0 80px; /* Adjusted to give more space to the language switcher */
     justify-content: center;
   }
 `;
@@ -69,19 +69,21 @@ const LanguageContainer = styled.div`
   z-index: 1002;
   
   @media (max-width: 768px) {
-    right: 10px;
-    max-width: 75px; /* Limit width on mobile */
-    overflow: visible; /* Ensure dropdown remains visible */
+    right: 15px; /* Slightly increased to keep it more in-bounds */
+    transform: scale(0.9); /* Slightly scale down on mobile */
+    transform-origin: right center; /* Ensure it scales from the right side */
   }
 `;
 
 function Navbar() {
     const navRef = useRef(null);
+    const bodyRef = useRef(null);
     const { t } = useTranslation();
   
     useEffect(() => {
       // Add overflow-x: hidden to body to prevent horizontal scrolling
       document.body.style.overflowX = "hidden";
+      bodyRef.current = document.body;
       
       if (navRef.current) {
         gsap.to(navRef.current, {
@@ -92,9 +94,17 @@ function Navbar() {
         });
       }
       
+      // Add a small amount of padding to the right of the body on mobile
+      if (window.innerWidth <= 768) {
+        document.body.style.paddingRight = "5px";
+      }
+      
       return () => {
         // Clean up when component unmounts
-        document.body.style.overflowX = "";
+        if (bodyRef.current) {
+          bodyRef.current.style.overflowX = "";
+          bodyRef.current.style.paddingRight = "";
+        }
       };
     }, []);
     
