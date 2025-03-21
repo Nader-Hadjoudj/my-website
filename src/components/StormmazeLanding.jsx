@@ -421,7 +421,7 @@ const StormmazeLanding = () => {
         </ContentColumn>
         <ImageColumn>
           <HeroImage 
-            src="/stormmaze_gold.svg" 
+            src="/stormm.png" 
             alt="Premium agricultural products from Algeria"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
