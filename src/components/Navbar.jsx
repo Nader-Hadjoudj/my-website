@@ -74,7 +74,7 @@ const LanguageWrapper = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    margin-left: 5px; /* Ensure it has a little breathing room */
+    margin-left: 10px; /* Ensure it has a little breathing room */
   }
 `;
 
