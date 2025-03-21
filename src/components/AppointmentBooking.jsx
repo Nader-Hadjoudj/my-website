@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import styled, { keyframes } from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { gsap } from "gsap";
 
 const BASE_URL =
   import.meta.env.MODE === "development"
@@ -26,6 +27,12 @@ const scaleIn = keyframes`
   to { transform: scale(1); }
 `;
 
+// Subtle gold shimmer effect
+const shimmer = keyframes`
+  0% { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+`;
+
 // Styled components
 const PageWrapper = styled.div`
   min-height: 100vh;
@@ -45,9 +52,25 @@ const Container = styled.div`
   padding: 20px;
   background: rgb(13, 13, 13);
   border-radius: 10px;
-  box-shadow: 0 1px 8px #ffd700;
+  box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3);
   display: flex;
   flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    z-index: -1;
+    background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+    background-size: 200% 200%;
+    animation: ${shimmer} 3s linear infinite;
+    filter: blur(10px);
+  }
   
   @media (min-width: 768px) {
     flex-direction: row;
@@ -58,11 +81,13 @@ const Container = styled.div`
 const LeftColumn = styled.div`
   flex: 1;
   padding: 20px;
+  opacity: 0; // For GSAP animation
 `;
 
 const RightColumn = styled.div`
   flex: 1;
   padding: 20px;
+  opacity: 0; // For GSAP animation
 `;
 
 const Divider = styled.div`
@@ -70,6 +95,7 @@ const Divider = styled.div`
   width: 90%;
   margin: 10px auto;
   background: linear-gradient(to right, #ffd700, #ffea00);
+  opacity: 0; // For GSAP animation
   
   @media (min-width: 768px) {
     width: 2px;
@@ -109,9 +135,11 @@ const Input = styled.input`
   border-radius: 5px;
   font-size: 14px;
   margin-bottom: 10px;
+  transition: all 0.3s ease;
   &:focus {
     outline: none;
     border-color: #ffea00;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
   }
 `;
 
@@ -126,37 +154,64 @@ const StyledDatePicker = styled(DatePicker)`
   text-align: center;
   margin-bottom: 10px;
   cursor: pointer;
+  transition: all 0.3s ease;
   &:focus {
     outline: none;
     border-color: #ffea00;
+    box-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
   }
 `;
 
 const Button = styled.button`
   width: 100%;
   padding: 12px;
-  background: #007bff;
-  color: white;
-  border: none;
+  background: #222;
+  color: #ffd700;
+  border: 1px solid #ffd700;
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;
   margin-top: 10px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: 0.5s;
+    z-index: -1;
+  }
 
   &:hover {
-    background: #0056b3;
+    color: white;
+    background: #333;
+    border-color: #ffea00;
+    &:before {
+      left: 100%;
+    }
   }
   
   &:disabled {
-    background: #6c757d;
+    background: #333;
+    color: #888;
+    border-color: #555;
     cursor: not-allowed;
+    &:before {
+      display: none;
+    }
   }
 `;
 
 const Confirmation = styled.p`
   text-align: center;
-  color: green;
+  color: #ffd700;
   font-weight: bold;
   margin-top: 10px;
 `;
@@ -173,8 +228,14 @@ const TimeSlotButton = styled(Button)`
   padding: 8px 12px;
   margin: 3px;
   font-size: 14px;
-  background: ${({ selected }) => (selected ? "#ffea00" : "#007bff")};
-  color: ${({ selected }) => (selected ? "black" : "white")};
+  background: ${({ selected }) => (selected ? "#ffd700" : "#222")};
+  color: ${({ selected }) => (selected ? "black" : "#ffd700")};
+  border: 1px solid #ffd700;
+  
+  &:hover {
+    background: ${({ selected }) => (selected ? "#ffea00" : "#333")};
+    color: ${({ selected }) => (selected ? "black" : "white")};
+  }
 `;
 
 // Animation components
@@ -186,12 +247,14 @@ const AnimationContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  opacity: 0; // For GSAP animation
 `;
 
 const CalendarBase = styled.div`
   width: 100px;
   height: 120px;
-  background-color: white;
+  background-color: #222;
+  border: 1px solid #ffd700;
   border-radius: 8px;
   position: relative;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -201,12 +264,12 @@ const CalendarBase = styled.div`
 const CalendarHeader = styled.div`
   width: 100%;
   height: 30px;
-  background-color: #ff4757;
+  background-color: #ffd700;
   border-radius: 8px 8px 0 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   font-weight: bold;
   font-size: 14px;
 `;
@@ -222,13 +285,13 @@ const CalendarBody = styled.div`
 const CalendarDate = styled.div`
   font-size: 24px;
   font-weight: bold;
-  color: #333;
+  color: #ffd700;
   margin-top: 5px;
 `;
 
 const CalendarTime = styled.div`
   font-size: 14px;
-  color: #666;
+  color: #ddd;
   margin-top: 5px;
 `;
 
@@ -238,12 +301,12 @@ const CheckIcon = styled.div`
   right: -15px;
   width: 40px;
   height: 40px;
-  background-color: #28a745;
+  background-color: #ffd700;
   border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  color: black;
   font-size: 20px;
   font-weight: bold;
   animation: ${scaleIn} 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -260,7 +323,7 @@ const ErrorIcon = styled.div`
   right: -15px;
   width: 40px;
   height: 40px;
-  background-color: #dc3545;
+  background-color: #ff4757;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -285,7 +348,7 @@ const LoadingDots = styled.div`
     width: 10px;
     height: 10px;
     margin: 0 5px;
-    background-color: #007bff;
+    background-color: #ffd700;
     border-radius: 50%;
     display: inline-block;
     animation: ${pulse} 1.4s infinite ease-in-out both;
@@ -312,7 +375,62 @@ function AppointmentBooking() {
   const [loading, setLoading] = useState(false);
   const [bookingStatus, setBookingStatus] = useState("idle"); // idle, loading, success, error
 
+  // Refs for GSAP animations
+  const containerRef = useRef(null);
+  const leftColumnRef = useRef(null);
+  const rightColumnRef = useRef(null);
+  const dividerRef = useRef(null);
+  const animationContainerRef = useRef(null);
+
   const allSlots = [...Array(14)].map((_, i) => `${i + 5}:00 - ${i + 6}:00`);
+
+  // Initialize GSAP animations
+  useEffect(() => {
+    // Initial entrance animation
+    gsap.to(leftColumnRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.2
+    });
+    
+    gsap.to(rightColumnRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.4
+    });
+    
+    gsap.to(dividerRef.current, {
+      opacity: 1,
+      duration: 0.6,
+      ease: "power2.out",
+      delay: 0.3
+    });
+    
+    // Subtle container glow pulsing
+    gsap.to(containerRef.current, {
+      boxShadow: "0 0 20px #ffd700, 0 0 35px rgba(255, 215, 0, 0.4)",
+      duration: 1.5,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+  }, []);
+
+  // Animation for status changes
+  useEffect(() => {
+    if (bookingStatus !== "idle" && animationContainerRef.current) {
+      gsap.to(animationContainerRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        ease: "back.out(1.7)"
+      });
+    }
+  }, [bookingStatus]);
 
   useEffect(() => {
     const fetchAvailableSlots = async () => {
@@ -345,6 +463,15 @@ function AppointmentBooking() {
         setBookingStatus("loading");
         setConfirmation("");
         
+        // GSAP animation for button click
+        if (animationContainerRef.current) {
+          gsap.fromTo(
+            animationContainerRef.current,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.6, ease: "back.out(1.7)" }
+          );
+        }
+        
         const formattedDate = selectedDate.toISOString().split("T")[0];
         const response = await axios.post(`${BASE_URL}/api/book-appointment/`, {
           name: clientName,
@@ -370,21 +497,62 @@ function AppointmentBooking() {
           );
           setAvailableSlots(freeSlots);
           setSelectedTime("");
+          
+          // Success animation
+          gsap.to(containerRef.current, {
+            boxShadow: "0 0 30px #ffd700, 0 0 50px rgba(255, 215, 0, 0.6)",
+            duration: 0.5,
+            yoyo: true,
+            repeat: 3
+          });
         } else {
           setBookingStatus("error");
           setConfirmation("❌ Failed to book the appointment.");
+          
+          // Error animation
+          gsap.to(containerRef.current, {
+            x: [-5, 5, -5, 5, 0],
+            duration: 0.5,
+            ease: "power1.inOut"
+          });
         }
       } catch (error) {
         setBookingStatus("error");
         console.error("❌ Error booking appointment:", error.response?.data || error.message);
         setConfirmation("❌ Error booking appointment.");
+        
+        // Error animation
+        gsap.to(containerRef.current, {
+          x: [-5, 5, -5, 5, 0],
+          duration: 0.5,
+          ease: "power1.inOut"
+        });
       } finally {
         setLoading(false);
       }
     } else {
       setBookingStatus("error");
       setConfirmation("❌ Please fill all fields and select a time slot.");
+      
+      // Validation error animation
+      gsap.to(containerRef.current, {
+        x: [-3, 3, -3, 3, 0],
+        duration: 0.4,
+        ease: "power1.inOut" 
+      });
     }
+  };
+
+  // Animation for time slot selection
+  const handleTimeSlotClick = (slot) => {
+    setSelectedTime(slot);
+    
+    // GSAP animation for selection
+    gsap.fromTo(
+      ".selected-time-slot",
+      { scale: 0.95 },
+      { scale: 1, duration: 0.3, ease: "back.out(1.7)" }
+    );
   };
 
   // Format date for display
@@ -401,8 +569,8 @@ function AppointmentBooking() {
 
   return (
     <PageWrapper>
-      <Container>
-        <LeftColumn>
+      <Container ref={containerRef}>
+        <LeftColumn ref={leftColumnRef}>
           <Title>Client Information</Title>
           <Label>Name</Label>
           <Input
@@ -434,8 +602,8 @@ function AppointmentBooking() {
             disabled={loading}
           />
         </LeftColumn>
-        <Divider />
-        <RightColumn>
+        <Divider ref={dividerRef} />
+        <RightColumn ref={rightColumnRef}>
           <Title>Select Date & Time</Title>
           <Label>Select a Date:</Label>
           <StyledDatePicker
@@ -450,9 +618,10 @@ function AppointmentBooking() {
             {availableSlots.map((slot) => (
               <TimeSlotButton
                 key={slot}
-                onClick={() => setSelectedTime(slot)}
+                onClick={() => handleTimeSlotClick(slot)}
                 selected={selectedTime === slot}
                 disabled={loading}
+                className={selectedTime === slot ? "selected-time-slot" : ""}
               >
                 {slot}
               </TimeSlotButton>
@@ -463,7 +632,7 @@ function AppointmentBooking() {
           </Button>
           
           {bookingStatus !== "idle" && (
-            <AnimationContainer>
+            <AnimationContainer ref={animationContainerRef}>
               <CalendarBase>
                 <CalendarHeader>{getMonthName()}</CalendarHeader>
                 <CalendarBody>

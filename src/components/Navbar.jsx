@@ -9,7 +9,12 @@ const Logo = styled.img`
   height: 70px;
   position: absolute;
   left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   cursor: pointer;
+  z-index: 1002;
+  max-width: 70px;
+  object-fit: contain;
 `;
 
 const Nav = styled.nav`
@@ -27,13 +32,21 @@ const Nav = styled.nav`
   transform: translateX(100%); /* Start off-screen */
   opacity: 0; /* Initially hidden */
   box-sizing: border-box;
-  overflow-x: hidden; /* Prevent horizontal scrolling within navbar */
+
+  @media (max-width: 768px) {
+    padding: 15px 10px;
+  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
   position: relative;
   z-index: 1001;
+  
+  @media (max-width: 768px) {
+    margin: 0 80px;
+    justify-content: center;
+  }
 `;
 
 const NavItem = styled.a`
@@ -45,13 +58,25 @@ const NavItem = styled.a`
   &:hover {
     color: rgb(118, 118, 118);
   }
+  
+  @media (max-width: 768px) {
+    margin: 0 8px;
+    font-size: 14px;
+  }
 `;
 
 const LanguageContainer = styled.div`
   position: absolute;
   right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   align-items: center;
+  z-index: 1002;
+  
+  @media (max-width: 768px) {
+    right: 10px;
+  }
 `;
 
 function Navbar() {
@@ -59,6 +84,9 @@ function Navbar() {
     const { t } = useTranslation();
   
     useEffect(() => {
+      // Add overflow-x: hidden to body to prevent horizontal scrolling
+      document.body.style.overflowX = "hidden";
+      
       if (navRef.current) {
         gsap.to(navRef.current, {
           x: 0,
@@ -67,6 +95,11 @@ function Navbar() {
           ease: "power2.out",
         });
       }
+      
+      return () => {
+        // Clean up when component unmounts
+        document.body.style.overflowX = "";
+      };
     }, []);
     
     return (
