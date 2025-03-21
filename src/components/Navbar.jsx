@@ -5,16 +5,12 @@ import { gsap } from "gsap";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./LanguageSwitcher";
 
+// Restored to original styling
 const Logo = styled.img`
   height: 70px;
   position: absolute;
   left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   cursor: pointer;
-  z-index: 1002;
-  max-width: 70px;
-  object-fit: contain;
 `;
 
 const Nav = styled.nav`
@@ -68,14 +64,14 @@ const NavItem = styled.a`
 const LanguageContainer = styled.div`
   position: absolute;
   right: 20px;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
   align-items: center;
   z-index: 1002;
   
   @media (max-width: 768px) {
     right: 10px;
+    max-width: 75px; /* Limit width on mobile */
+    overflow: visible; /* Ensure dropdown remains visible */
   }
 `;
 
