@@ -114,10 +114,11 @@ function Navbar() {
           <NavItem href="/">{t('navbar.home')}</NavItem>
           <NavItem href="/about">{t('navbar.about')}</NavItem>
           <NavItem href="/contact">{t('navbar.contact')}</NavItem>
-        </NavLinks>
-        <LanguageContainer>
+          <LanguageContainer>
           <LanguageSwitcher />
         </LanguageContainer>
+        </NavLinks>
+        
       </Nav>
     );
 }
