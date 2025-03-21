@@ -392,7 +392,7 @@ const StormmazeLanding = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            {t('landing.subheading', 'Stormmaze delivers high-quality, sustainable agricultural products connecting Algerian farmers to French markets with excellence and integrity.')}
+            {t('landing.subhead', 'Stormmaze delivers high-quality, sustainable agricultural products connecting Algerian farmers to French markets with excellence and integrity.')}
           </Subheading>
           <ButtonContainer>
             <CTAButton
