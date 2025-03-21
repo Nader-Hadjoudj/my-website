@@ -12,8 +12,8 @@ const Logo = styled.img`
   cursor: pointer;
 
   @media (max-width: 768px) {
-    height: 50px; /* Further reduced for mobile */
-    left: 5px;
+    height: 60px; /* Further reduced for mobile */
+    left: 10px;
   }
 `;
 
