@@ -66,14 +66,48 @@
         "description": "Asperges vertes tendres et savoureuses, idéales pour le gril et la vapeur."
         }
     },
-
-
-    
-      "landing": {
-        "title": "Stormmaze Agricultural Imports",
-        "subtitle": "Premium agricultural products imported to France. Discover top-quality farming goods from Algeria and beyond with Stormmaze.",
-        "cta": "Explore Our Catalogue"
+    "landing": {
+      "title": "Premium Agricultural Imports for the French Market",
+      "subtitle": {
+        "part1": "Bringing the finest",
+        "highlight1": "high-quality agricultural products",
+        "part2": "from around the world to",
+        "highlight3": "France",
+        "part3": "with exceptional standards and reliability"
+      },
+      "cta": "Explore Our Catalogue",
+      "stats": {
+        "products": "Premium Products",
+        "countries": "Source Countries",
+        "shipments": "Annual Shipments",
+        "years": "Years of Excellence"
+      },
+      "features": {
+        "title": "Why Choose Stormmaze",
+        "quality": {
+          "title": "Premium Quality Assurance",
+          "description": "We carefully select and import only the highest quality agricultural products that meet strict European standards for safety, freshness, and sustainability."
+        },
+        "logistics": {
+          "title": "Seamless Import Logistics",
+          "description": "Our specialized supply chain management ensures timely delivery of fresh produce, maintaining quality from farm to market with temperature-controlled transportation."
+        },
+        "global": {
+          "title": "Global Sourcing Network",
+          "description": "We've built relationships with trusted farms across multiple countries to provide consistent supply of seasonal and year-round products to the French market."
+        }
+      },
+      "footer": {
+        "text": "Ready to discover our premium agricultural import solutions?",
+        "contact": "Contact Us Today"
       }
+    },
+    "seo": {
+      "keywords": "agricultural imports France, premium produce import, French market suppliers, fresh vegetable imports, high-quality fruit imports, global agricultural trade, organic produce imports, sustainable farming imports, specialty food imports France, wholesale agricultural imports"
+    }
+
+
+   
     
     
   }
