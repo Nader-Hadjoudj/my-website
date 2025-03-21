@@ -70,11 +70,8 @@
     
       },
       "landing": {
-    "welcomeTitle": "Importation Premium de Produits Agricoles",
-    "welcomeSubtitle": "L'excellence en Approvisionnement, Livrée en France",
-    "cta": "Découvrez Notre Catalogue"
-  },
-  "seo": {
-    "keywords": "agriculture, importation, France, produits frais, légumes, bio, qualité, vente en gros"
-  }
+        "title": "Importations Agricoles Stormmaze",
+        "subtitle": "Produits agricoles de première qualité importés en France. Découvrez des produits agricoles de haute qualité d'Algérie et d'ailleurs avec Stormmaze.",
+        "cta": "Explorer Notre Catalogue"
+      }
   }

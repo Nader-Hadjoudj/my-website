@@ -70,12 +70,9 @@
 
     
       "landing": {
-        "welcomeTitle": "Premium Agricultural Products Importation",
-        "welcomeSubtitle": "Sourcing Excellence, Delivered to France",
+        "title": "Stormmaze Agricultural Imports",
+        "subtitle": "Premium agricultural products imported to France. Discover top-quality farming goods from Algeria and beyond with Stormmaze.",
         "cta": "Explore Our Catalogue"
-      },
-      "seo": {
-        "keywords": "agriculture, importation, France, fresh products, vegetables, organic, quality, wholesale"
       }
     
     
