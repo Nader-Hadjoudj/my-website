@@ -10,12 +10,17 @@ const Logo = styled.img`
   position: absolute;
   left: 20px;
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    height: 50px; /* Reduce logo size on mobile */
+    left: 10px;
+  }
 `;
 
 const Nav = styled.nav`
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Changed to space-between for better control */
+  justify-content: space-between;
   background: rgb(0, 0, 0);
   padding: 15px 30px;
   position: fixed;
@@ -27,15 +32,24 @@ const Nav = styled.nav`
   transform: translateX(100%);
   opacity: 0;
   box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 10px 15px; /* Reduce padding on mobile */
+  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center; /* Keeps items centered */
-  flex-grow: 1; /* Allows NavLinks to take up available space */
-  margin-left: 100px; /* Ensures space for the logo */
-  margin-right: 20px; /* Ensures space for LanguageWrapper */
+  justify-content: center;
+  flex-grow: 1;
+  margin-left: 100px; /* Space for logo */
+  margin-right: 20px; /* Space for LanguageWrapper */
+
+  @media (max-width: 768px) {
+    margin-left: 60px; /* Reduce space for logo on mobile */
+    margin-right: 10px; /* Reduce space for LanguageWrapper */
+  }
 `;
 
 const NavItem = styled.a`
@@ -48,7 +62,7 @@ const NavItem = styled.a`
   &:hover {
     color: rgb(118, 118, 118);
   }
-  
+
   @media (max-width: 768px) {
     margin: 0 8px;
     font-size: 14px;
@@ -58,6 +72,10 @@ const NavItem = styled.a`
 const LanguageWrapper = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 768px) {
+    margin-left: 5px; /* Ensure it has a little breathing room */
+  }
 `;
 
 function Navbar() {
