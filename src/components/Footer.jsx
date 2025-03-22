@@ -66,6 +66,8 @@ function Footer() {
         <FooterLink to="/">Home</FooterLink>
         <FooterLink to="/about">About</FooterLink>
         <FooterLink to="/contact">Contact</FooterLink>
+
+        {/* Correct download links */}
         <FooterExternalLink href="/files/privacy_policy.pdf" download="privacy_policy.pdf">
           Privacy Policy
         </FooterExternalLink>
@@ -73,7 +75,7 @@ function Footer() {
           Terms of Service
         </FooterExternalLink>
       </FooterLinks>
-
+      
     {/* 
         <SocialIcons>
         <SocialIcon href="#" target="_blank">📘</SocialIcon> Facebook Placeholder
@@ -82,12 +84,12 @@ function Footer() {
         <SocialIcon href="#" target="_blank">🔗</SocialIcon> LinkedIn Placeholder
         </SocialIcons> 
     */}
-
       <FooterText>
         © 2025 stormmaze. All rights reserved.
       </FooterText>
     </FooterContainer>
   );
 }
+
 
 export default Footer;
