@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTranslation } from "react-i18next";
+import { Trans } from "react-i18next";
 import "./FieldsOfOrigin.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FieldsOfOrigin = () => {
+  const { t } = useTranslation();
   const sectionRef = useRef(null);
   const algeriaMapRef = useRef(null);
   const franceMapRef = useRef(null);
@@ -151,6 +154,7 @@ const FieldsOfOrigin = () => {
     };
   }, [mapsLoaded]);
 
+  // Rest of the animation handlers unchanged
   const handleAlgeriaHover = () => {
     setAlgeriaHovered(true);
     
@@ -365,7 +369,7 @@ const FieldsOfOrigin = () => {
           onMouseEnter={handleAlgeriaHover} 
           onMouseLeave={handleAlgeriaLeave}
         >
-          <div className="map-label">Algeria</div>
+          <div className="map-label">{t('general.algeria')}</div>
           <div className="map-image-container">
             <img 
               src="/algeria.png" 
@@ -429,7 +433,7 @@ const FieldsOfOrigin = () => {
           onMouseEnter={handleFranceHover} 
           onMouseLeave={handleFranceLeave}
         >
-          <div className="map-label">France</div>
+          <div className="map-label">{t('general.france')}</div>
           <div className="map-image-container">
             <img 
               src="/map.png" 
@@ -480,16 +484,17 @@ const FieldsOfOrigin = () => {
       
       <div className="content">
         <h2 ref={(el) => (textRefs.current[0] = el)} className="title">
-          Fields of Origin
+          {t('fieldsOfOrigin.title')}
         </h2>
         <p ref={(el) => (textRefs.current[1] = el)}>
-          At Stormmaze, we cultivate connections between 
-          <span className="highlight"> Algeria's fertile lands</span> and
-          <span className="highlight"> France's vibrant markets</span>, delivering premium agricultural treasures with every harvest.
+          <Trans i18nKey="fieldsOfOrigin.paragraph1">
+            At Stormmaze, we cultivate connections between 
+            <span className="highlight"> Algeria's fertile lands</span> and
+            <span className="highlight"> France's vibrant markets</span>, delivering premium agricultural treasures with every harvest.
+          </Trans>
         </p>
         <p ref={(el) => (textRefs.current[2] = el)}>
-          Our vision reaches beyond borders, weaving a tapestry of global flavors with a golden thread of quality and
-          sustainability.
+          {t('fieldsOfOrigin.paragraph2')}
         </p>
         <p ref={(el) => (textRefs.current[3] = el)}>
         </p>

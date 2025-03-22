@@ -82,5 +82,15 @@
       "seo": {
         "keywords": "importations agricoles France, importation produits premium, fournisseurs marché français, importations légumes frais, importations fruits haute qualité, commerce agricole mondial, importations produits biologiques, importations agriculture durable, importations alimentaires spécialisées France, importations agricoles en gros"
       }
+    },
+      "fieldsOfOrigin": {
+      "title": "Terres d'Origine",
+      "paragraph1": "Chez Stormmaze, nous cultivons des liens entre <1>les terres fertiles d'Algérie</1> et <3>les marchés dynamiques de France</3>, livrant des trésors agricoles d'excellence à chaque récolte.",
+      "paragraph2": "Notre vision dépasse les frontières, tissant une tapisserie de saveurs mondiales avec un fil d'or de qualité et de durabilité."
+    },
+    "general": {
+      "loading": "Chargement...",
+      "algeria": "Algérie",
+      "france": "France"
     }
   }
