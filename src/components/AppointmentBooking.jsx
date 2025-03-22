@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { gsap } from "gsap";
+import { useTranslation } from "react-i18next";
+import { format } from "date-fns";
 
 const BASE_URL =
   import.meta.env.MODE === "development"
@@ -364,6 +366,7 @@ const LoadingDots = styled.div`
 `;
 
 function AppointmentBooking() {
+  const { t, i18n } = useTranslation();
   const [clientName, setClientName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -440,9 +443,7 @@ function AppointmentBooking() {
           params: { date: formattedDate },
         });
         const bookedSlots = response.data.bookedSlots || [];
-        console.log("Booked slots:", bookedSlots);
         const freeSlots = allSlots.filter((slot) => !bookedSlots.includes(slot));
-        console.log("Free slots:", freeSlots);
         setAvailableSlots(freeSlots);
         if (selectedTime && !freeSlots.includes(selectedTime)) {
           setSelectedTime("");
@@ -484,9 +485,16 @@ function AppointmentBooking() {
 
         if (response.data.success) {
           setBookingStatus("success");
+          const displayDate = format(selectedDate, 'PP', { locale: i18n.language === 'fr' ? require('date-fns/locale/fr') : undefined });
+          
           setConfirmation(
-            `✅ Appointment booked for ${clientName} on ${formattedDate} at ${selectedTime}.`
+            t('appointment.success', { 
+              name: clientName, 
+              date: displayDate, 
+              time: selectedTime 
+            })
           );
+          
           const bookedSlots = (
             await axios.get(`${BASE_URL}/api/available-slots`, {
               params: { date: formattedDate },
@@ -507,7 +515,7 @@ function AppointmentBooking() {
           });
         } else {
           setBookingStatus("error");
-          setConfirmation("❌ Failed to book the appointment.");
+          setConfirmation(t('appointment.error'));
           
           // Error animation
           gsap.to(containerRef.current, {
@@ -518,8 +526,8 @@ function AppointmentBooking() {
         }
       } catch (error) {
         setBookingStatus("error");
-        console.error("❌ Error booking appointment:", error.response?.data || error.message);
-        setConfirmation("❌ Error booking appointment.");
+        console.error("Error booking appointment:", error.response?.data || error.message);
+        setConfirmation(t('appointment.error'));
         
         // Error animation
         gsap.to(containerRef.current, {
@@ -532,7 +540,7 @@ function AppointmentBooking() {
       }
     } else {
       setBookingStatus("error");
-      setConfirmation("❌ Please fill all fields and select a time slot.");
+      setConfirmation(t('appointment.validationError'));
       
       // Validation error animation
       gsap.to(containerRef.current, {
@@ -563,7 +571,9 @@ function AppointmentBooking() {
 
   // Get month name
   const getMonthName = () => {
-    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    const monthNames = i18n.language === 'fr' 
+      ? ["JAN", "FÉV", "MAR", "AVR", "MAI", "JUIN", "JUIL", "AOÛ", "SEP", "OCT", "NOV", "DÉC"]
+      : ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
     return monthNames[selectedDate.getMonth()];
   };
 
@@ -571,30 +581,30 @@ function AppointmentBooking() {
     <PageWrapper>
       <Container ref={containerRef}>
         <LeftColumn ref={leftColumnRef}>
-          <Title>Client Information</Title>
-          <Label>Name</Label>
+          <Title>{t('appointment.title')}</Title>
+          <Label>{t('appointment.name')}</Label>
           <Input
             type="text"
             value={clientName}
             onChange={(e) => setClientName(e.target.value)}
             disabled={loading}
           />
-          <Label>Email</Label>
+          <Label>{t('appointment.email')}</Label>
           <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={loading}
           />
-          <Label>Phone Number</Label>
+          <Label>{t('appointment.phone')}</Label>
           <Input
             type="tel"
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
-            placeholder="+33 1 23 45 67 89"
+            placeholder={t('appointment.phonePlaceholder')}
             disabled={loading}
           />
-          <Label>Company</Label>
+          <Label>{t('appointment.company')}</Label>
           <Input
             type="text"
             value={company}
@@ -604,16 +614,16 @@ function AppointmentBooking() {
         </LeftColumn>
         <Divider ref={dividerRef} />
         <RightColumn ref={rightColumnRef}>
-          <Title>Select Date & Time</Title>
-          <Label>Select a Date:</Label>
+          <Title>{t('appointment.dateTimeTitle')}</Title>
+          <Label>{t('appointment.selectDate')}:</Label>
           <StyledDatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
             minDate={new Date()}
-            dateFormat="dd/MM/yyyy"
+            dateFormat={i18n.language === 'fr' ? "dd/MM/yyyy" : "MM/dd/yyyy"}
             disabled={loading}
           />
-          <Label>Select a Time Slot:</Label>
+          <Label>{t('appointment.selectTime')}:</Label>
           <TimeSlotContainer>
             {availableSlots.map((slot) => (
               <TimeSlotButton
@@ -628,7 +638,7 @@ function AppointmentBooking() {
             ))}
           </TimeSlotContainer>
           <Button onClick={handleBooking} disabled={loading}>
-            {loading ? "Processing..." : "Confirm Appointment"}
+            {loading ? t('appointment.processing') : t('appointment.confirm')}
           </Button>
           
           {bookingStatus !== "idle" && (

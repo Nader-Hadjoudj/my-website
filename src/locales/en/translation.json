@@ -84,6 +84,39 @@
     "title": "Fields of Origin",
     "paragraph1": "At Stormmaze, we cultivate connections between <1>Algeria's fertile lands</1> and <3>France's vibrant markets</3>, delivering premium agricultural treasures with every harvest.",
     "paragraph2": "Our vision reaches beyond borders, weaving a tapestry of global flavors with a golden thread of quality and sustainability."
+  },
+  "appointment": {
+    "title": "Client Information",
+    "dateTimeTitle": "Select Date & Time",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "company": "Company",
+    "selectDate": "Select a Date:",
+    "selectTime": "Select a Time Slot:",
+    "confirm": "Confirm Appointment",
+    "processing": "Processing...",
+    "success": "✅ Appointment booked for {{name}} on {{date}} at {{time}}.",
+    "error": "❌ Error booking appointment.",
+    "validationError": "❌ Please fill all fields and select a time slot.",
+    "phonePlaceholder": "+33 1 23 45 67 89"
+  },
+  "contact": {
+    "title": "Contact Form",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "subject": "Subject",
+    "verificationQuestion": "Human Verification",
+    "verificationSubtext": "Please solve this simple math problem",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Error sending message",
+    "fillAllFields": "Please fill all required fields",
+    "verificationFailed": "Verification failed. Please try again.",
+    "languageToggle": "Français",
+    "required": "*"
   }
 
 

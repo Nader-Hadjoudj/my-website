@@ -92,5 +92,38 @@
       "loading": "Chargement...",
       "algeria": "Algérie",
       "france": "France"
+    },
+    "appointment": {
+      "title": "Informations Client",
+      "dateTimeTitle": "Sélectionner Date & Heure",
+      "name": "Nom",
+      "email": "Email",
+      "phone": "Numéro de Téléphone",
+      "company": "Entreprise",
+      "selectDate": "Sélectionner une Date:",
+      "selectTime": "Sélectionner un Créneau Horaire:",
+      "confirm": "Confirmer le Rendez-vous",
+      "processing": "Traitement en cours...",
+      "success": "✅ Rendez-vous réservé pour {{name}} le {{date}} à {{time}}.",
+      "error": "❌ Erreur lors de la réservation du rendez-vous.",
+      "validationError": "❌ Veuillez remplir tous les champs et sélectionner un créneau horaire.",
+      "phonePlaceholder": "+33 1 23 45 67 89"
+    },
+    "contact": {
+      "title": "Formulaire de Contact",
+      "name": "Nom",
+      "email": "Email",
+      "message": "Message",
+      "subject": "Sujet",
+      "verificationQuestion": "Vérification Humaine",
+      "verificationSubtext": "Veuillez résoudre ce problème mathématique simple",
+      "submit": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès !",
+      "error": "Erreur lors de l'envoi du message",
+      "fillAllFields": "Veuillez remplir tous les champs obligatoires",
+      "verificationFailed": "La vérification a échoué. Veuillez réessayer.",
+      "languageToggle": "English",
+      "required": "*"
     }
   }
