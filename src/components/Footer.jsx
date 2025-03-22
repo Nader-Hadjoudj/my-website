@@ -55,8 +55,8 @@ function Footer() {
         <FooterLink to="/">Home</FooterLink>
         <FooterLink to="/about">About</FooterLink>
         <FooterLink to="/contact">Contact</FooterLink>
-        <FooterLink to="/privacy-policy">Privacy Policy</FooterLink>
-        <FooterLink to="/terms">Terms of Service</FooterLink>
+        <FooterLink href="files/privacy_policy.pdf" download="privacy_policy.pdf" >Privacy Policy</FooterLink>
+        <FooterLink href="files/terms_of_services.pdf" download="terms_of_services.pdf">Terms of Service</FooterLink>
       </FooterLinks>
 
     {/* 
