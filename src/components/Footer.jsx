@@ -48,6 +48,17 @@ const SocialIcon = styled.a`
   }
 `;
 
+const FooterExternalLink = styled.a`
+  color: white;
+  text-decoration: none;
+  margin: 0 10px;
+  font-size: 14px;
+  
+  &:hover {
+    color: gray;
+  }
+`;
+
 function Footer() {
   return (
     <FooterContainer>
@@ -55,8 +66,12 @@ function Footer() {
         <FooterLink to="/">Home</FooterLink>
         <FooterLink to="/about">About</FooterLink>
         <FooterLink to="/contact">Contact</FooterLink>
-        <FooterLink href="files/privacy_policy.pdf" download="privacy_policy.pdf" >Privacy Policy</FooterLink>
-        <FooterLink href="files/terms_of_services.pdf" download="terms_of_services.pdf">Terms of Service</FooterLink>
+        <FooterExternalLink href="/files/privacy_policy.pdf" download="privacy_policy.pdf">
+          Privacy Policy
+        </FooterExternalLink>
+        <FooterExternalLink href="/files/terms_of_services.pdf" download="terms_of_services.pdf">
+          Terms of Service
+        </FooterExternalLink>
       </FooterLinks>
 
     {/* 
