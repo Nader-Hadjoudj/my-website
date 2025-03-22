@@ -1,42 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import axios from "axios";
-
-// Language translations
-const translations = {
-  en: {
-    title: "Contact Form",
-    name: "Name",
-    email: "Email",
-    message: "Message",
-    subject: "Subject",
-    verificationQuestion: "Human Verification",
-    verificationSubtext: "Please solve this simple math problem",
-    submit: "Send Message",
-    sending: "Sending...",
-    success: "Message sent successfully!",
-    error: "Error sending message",
-    fillAllFields: "Please fill all required fields",
-    verificationFailed: "Verification failed. Please try again.",
-    languageToggle: "Français"
-  },
-  fr: {
-    title: "Formulaire de Contact",
-    name: "Nom",
-    email: "Email",
-    message: "Message",
-    subject: "Sujet",
-    verificationQuestion: "Vérification Humaine",
-    verificationSubtext: "Veuillez résoudre ce problème mathématique simple",
-    submit: "Envoyer le Message",
-    sending: "Envoi en cours...",
-    success: "Message envoyé avec succès !",
-    error: "Erreur lors de l'envoi du message",
-    fillAllFields: "Veuillez remplir tous les champs obligatoires",
-    verificationFailed: "La vérification a échoué. Veuillez réessayer.",
-    languageToggle: "English"
-  }
-};
+import { useTranslation } from "react-i18next";
 
 // Animations
 const fadeIn = keyframes`
@@ -291,6 +256,7 @@ const LanguageToggle = styled.button`
 `;
 
 function ContactForm() {
+  const { t, i18n } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
@@ -305,25 +271,20 @@ function ContactForm() {
   const [verificationAnswer, setVerificationAnswer] = useState("");
   const [verificationPassed, setVerificationPassed] = useState(false);
   
-  // Language state
-  const [language, setLanguage] = useState("en");
-  const text = translations[language];
-  
   const containerRef = useRef(null);
 
-  // Generate a new math problem on component mount and when verification fails
   useEffect(() => {
     generateMathProblem();
     
-    // Initialize GSAP-like subtle container glow pulsing
     const container = containerRef.current;
     if (container) {
       let growing = true;
       const animateGlow = () => {
         if (!container) return;
         
-        const currentShadow = container.style.boxShadow || "0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3)";
-        const shadowIntensity = growing ? "0 0 20px #ffd700, 0 0 35px rgba(255, 215, 0, 0.4)" : "0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3)";
+        const shadowIntensity = growing 
+          ? "0 0 20px #ffd700, 0 0 35px rgba(255, 215, 0, 0.4)" 
+          : "0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3)";
         
         container.style.boxShadow = shadowIntensity;
         growing = !growing;
@@ -335,7 +296,6 @@ function ContactForm() {
   }, []);
 
   const generateMathProblem = () => {
-    // Generate random numbers between 1 and 10
     const newNum1 = Math.floor(Math.random() * 10) + 1;
     const newNum2 = Math.floor(Math.random() * 10) + 1;
     setNum1(newNum1);
@@ -352,7 +312,6 @@ function ContactForm() {
       setVerificationPassed(true);
       return true;
     } else {
-      // Shake the verification container on wrong answer
       const container = containerRef.current;
       if (container) {
         let position = 0;
@@ -374,7 +333,7 @@ function ContactForm() {
       }
       
       setStatus({
-        message: text.verificationFailed,
+        message: t('contact.verificationFailed'),
         isError: true
       });
       setShowStatus(true);
@@ -387,10 +346,9 @@ function ContactForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // First check if all fields are filled
     if (!name || !email || !message) {
       setStatus({
-        message: text.fillAllFields,
+        message: t('contact.fillAllFields'),
         isError: true
       });
       setShowStatus(true);
@@ -398,29 +356,26 @@ function ContactForm() {
       return;
     }
     
-    // Check human verification if not already passed
     const isVerified = verificationPassed || checkVerification();
     if (!isVerified) return;
     
     setLoading(true);
     
     try {
-      // Replace with your actual API endpoint
       const response = await axios.post("/api/send-message", {
         name,
         email,
         subject,
         message,
-        language
+        language: i18n.language
       });
       
       if (response.data.success) {
         setStatus({
-          message: text.success,
+          message: t('contact.success'),
           isError: false
         });
         
-        // Clear form
         setName("");
         setEmail("");
         setSubject("");
@@ -428,7 +383,6 @@ function ContactForm() {
         generateMathProblem();
         setVerificationPassed(false);
         
-        // Success animation - flash border
         const container = containerRef.current;
         if (container) {
           container.style.boxShadow = "0 0 30px #4cd137, 0 0 50px rgba(76, 209, 55, 0.6)";
@@ -437,16 +391,15 @@ function ContactForm() {
           }, 1000);
         }
       } else {
-        throw new Error(response.data.message || text.error);
+        throw new Error(response.data.message || t('contact.error'));
       }
     } catch (error) {
       console.error("Error sending message:", error);
       setStatus({
-        message: text.error,
+        message: t('contact.error'),
         isError: true
       });
       
-      // Error animation - shake
       const container = containerRef.current;
       if (container) {
         let position = 0;
@@ -474,20 +427,20 @@ function ContactForm() {
   };
 
   const toggleLanguage = () => {
-    setLanguage(language === "en" ? "fr" : "en");
+    i18n.changeLanguage(i18n.language === "en" ? "fr" : "en");
   };
 
   return (
     <PageWrapper>
       <Container ref={containerRef}>
         <LanguageToggle onClick={toggleLanguage}>
-          {text.languageToggle}
+          {t('contact.languageToggle')}
         </LanguageToggle>
         
-        <Title>{text.title}</Title>
+        <Title>{t('contact.title')}</Title>
         
         <form onSubmit={handleSubmit}>
-          <Label>{text.name} *</Label>
+          <Label>{t('contact.name')} {t('contact.required')}</Label>
           <Input
             type="text"
             value={name}
@@ -495,7 +448,7 @@ function ContactForm() {
             disabled={loading}
           />
           
-          <Label>{text.email} *</Label>
+          <Label>{t('contact.email')} {t('contact.required')}</Label>
           <Input
             type="email"
             value={email}
@@ -503,7 +456,7 @@ function ContactForm() {
             disabled={loading}
           />
           
-          <Label>{text.subject}</Label>
+          <Label>{t('contact.subject')}</Label>
           <Input
             type="text"
             value={subject}
@@ -511,7 +464,7 @@ function ContactForm() {
             disabled={loading}
           />
           
-          <Label>{text.message} *</Label>
+          <Label>{t('contact.message')} {t('contact.required')}</Label>
           <TextArea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -520,8 +473,8 @@ function ContactForm() {
           
           {!verificationPassed && (
             <VerificationContainer>
-              <VerificationTitle>{text.verificationQuestion}</VerificationTitle>
-              <VerificationSubtext>{text.verificationSubtext}</VerificationSubtext>
+              <VerificationTitle>{t('contact.verificationQuestion')}</VerificationTitle>
+              <VerificationSubtext>{t('contact.verificationSubtext')}</VerificationSubtext>
               
               <VerificationQuestion>
                 <MathProblem>{num1} + {num2} = </MathProblem>
@@ -538,7 +491,7 @@ function ContactForm() {
           <Button type="submit" disabled={loading}>
             {loading ? (
               <>
-                {text.sending}
+                {t('contact.sending')}
                 <LoadingDots>
                   <span></span>
                   <span></span>
@@ -546,7 +499,7 @@ function ContactForm() {
                 </LoadingDots>
               </>
             ) : (
-              text.submit
+              t('contact.submit')
             )}
           </Button>
         </form>
