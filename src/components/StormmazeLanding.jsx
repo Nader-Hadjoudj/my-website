@@ -302,6 +302,20 @@ const StormmazeLanding = () => {
   const statsRef = useRef(null);
   const featuresRef = useRef(null);
   const { t } = useTranslation();
+  const scrollToHeroSection = () => {
+    const heroSection = document.getElementById("FarmingHeroSection");
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: "smooth" });
+    } else {
+      // Automatically download 'catalogue.pdf' if the element is not found
+      const link = document.createElement('a');
+      link.href = '/files/catalogue.pdf'; // Path relative to 'public' folder
+      link.download = 'catalogue.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
 
   useEffect(() => {
     // Heading animation
@@ -406,7 +420,7 @@ const StormmazeLanding = () => {
               {t('landing.viewCatalogue', 'View Catalogue')}
             </CTAButton>
             <SecondaryButton
-              href="/contact"
+              onClick={scrollToHeroSection}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7 }}

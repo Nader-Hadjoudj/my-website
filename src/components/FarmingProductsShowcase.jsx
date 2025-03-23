@@ -363,7 +363,13 @@ const FarmingProductsShowcase = () => {
     if (heroSection) {
       heroSection.scrollIntoView({ behavior: "smooth" });
     } else {
-      window.location.href = "/catalogue";
+      // Automatically download 'catalogue.pdf' if the element is not found
+      const link = document.createElement('a');
+      link.href = '/files/catalogue.pdf'; // Path relative to 'public' folder
+      link.download = 'catalogue.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
