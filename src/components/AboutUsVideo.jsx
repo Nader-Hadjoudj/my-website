@@ -15,7 +15,7 @@ const HeroSection = styled.div`
   align-items: center;
   margin: 0;
   padding: 0;
-  margin-bottom: 10px;
+  
 `;
 
 const VideoBackground = styled.video`
@@ -83,6 +83,7 @@ const DownloadButton = styled.a`
   text-decoration: none;
   text-align: center;
   opacity: 0;
+  margin-bottom: 40px;
   
   
   &::before, &::after {
