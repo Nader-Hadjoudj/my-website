@@ -35,7 +35,7 @@ const Nav = styled.nav`
 
   @media (max-width: 768px) {
     padding: 10px 5px; /* Even less padding on mobile */
-    width: calc(95vw - 20px); /* Adjusted for mobile padding */
+    width: calc(90vw - 20px); /* Adjusted for mobile padding */
   }
 `;
 
@@ -75,7 +75,7 @@ const LanguageWrapper = styled.div`
   align-items: center;
 
   @media (max-width: 768px) {
-    margin-left: 5px;
+    margin-left: 10px;
     font-size: 12px;
   }
 `;
