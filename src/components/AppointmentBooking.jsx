@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { gsap } from "gsap";
 import { useTranslation } from "react-i18next";
 import { format } from "date-fns";
+import { fr } from "date-fns/locale";
 
 const BASE_URL =
   import.meta.env.MODE === "development"
@@ -485,8 +486,9 @@ function AppointmentBooking() {
 
         if (response.data.success) {
           setBookingStatus("success");
-          const displayDate = format(selectedDate, 'PP', { locale: i18n.language === 'fr' ? require('date-fns/locale/fr') : undefined });
-          
+          const displayDate = format(selectedDate, 'PP', { 
+            locale: i18n.language === 'fr' ? fr : undefined 
+          });
           setConfirmation(
             t('appointment.success', { 
               name: clientName, 
