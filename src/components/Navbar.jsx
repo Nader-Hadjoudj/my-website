@@ -26,7 +26,7 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
-  width: calc(95vw - 30px); /* Adjusted for padding (10px left + 10px right) */
+  width: calc(92vw - 30px); /* Adjusted for padding (10px left + 10px right) */
   height: 60px;
   z-index: 1000;
   transform: translateX(100%);
