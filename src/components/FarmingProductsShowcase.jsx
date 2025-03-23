@@ -209,7 +209,7 @@ const products = [
     descriptionKey: "products.greenHaricots.description",
     image: "/Green_Haricots.png",
     quality: "A+",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Year-round",
   },
   {
@@ -218,7 +218,7 @@ const products = [
     descriptionKey: "products.redHaricots.description",
     image: "/Red_Haricots.png",
     quality: "A",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Mar-Oct",
   },
   {
@@ -227,7 +227,7 @@ const products = [
     descriptionKey: "products.beetroot.description",
     image: "/beetroot.png",
     quality: "A+",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Year-round",
   },
   {
@@ -236,7 +236,7 @@ const products = [
     descriptionKey: "products.fennel.description",
     image: "/fennel.png",
     quality: "A",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Oct-May",
   },
   {
@@ -245,7 +245,7 @@ const products = [
     descriptionKey: "products.artichoke.description",
     image: "/artichoke.png",
     quality: "A+",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Oct-May",
   },
   {
@@ -254,7 +254,7 @@ const products = [
     descriptionKey: "products.asparagus.description",
     image: "/asparagus.png",
     quality: "A",
-    origin: "Algeria",
+    origin: "products.asparagus.algeria",
     season: "Feb-Jun",
   },
 ];

@@ -63,7 +63,8 @@
       },
       "asparagus": {
           "name": "Fresh Asparagus",
-          "description": "Tender and flavorful green asparagus, ideal for grilling and steaming."
+          "description": "Tender and flavorful green asparagus, ideal for grilling and steaming.",
+          "algeria": "Algeria"
       }
   },
 
