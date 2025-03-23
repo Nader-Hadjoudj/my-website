@@ -41,31 +41,32 @@
         }
     },
     "products": {
-        "greenHaricots": {
-        "name": "Haricots Verts",
-        "description": "Haricots verts frais et tendres, riches en fibres et vitamines."
-        },
-        "redHaricots": {
-        "name": "Haricots Rouges",
-        "description": "Haricots rouges nutritifs et savoureux, parfaits pour les soupes et ragoûts."
-        },
-        "beetroot": {
-        "name": "Betterave",
-        "description": "Betterave douce et terreuse, riche en antioxydants et nutriments essentiels."
-        },
-        "fennel": {
-        "name": "Fenouil",
-        "description": "Bulbes de fenouil croquants et aromatiques, excellents pour les salades et la cuisine."
-        },
-        "artichoke": {
-        "name": "Artichaut",
-        "description": "Artichauts délicieux et tendres, riches en fibres et antioxydants."
-        },
-        "asparagus": {
-        "name": "Asperges Fraîches",
-        "description": "Asperges vertes tendres et savoureuses, idéales pour le gril et la vapeur."
-        }
-    },
+      "greenHaricots": {
+          "name": "Green Beans",
+          "description": "Fresh, tender green beans, rich in fiber and vitamins."
+      },
+      "redHaricots": {
+          "name": "Red Beans",
+          "description": "Nutritious and tasty red beans, perfect for soups and stews."
+      },
+      "beetroot": {
+          "name": "Beetroot",
+          "description": "Sweet and earthy beetroot, rich in antioxidants and essential nutrients."
+      },
+      "fennel": {
+          "name": "Fennel",
+          "description": "Crunchy and aromatic fennel bulbs, excellent for salads and cooking."
+      },
+      "artichoke": {
+          "name": "Artichoke",
+          "description": "Delicious and tender artichokes, rich in fiber and antioxidants."
+      },
+      "asparagus": {
+          "name": "Fresh Asparagus",
+          "description": "Tender and flavorful green asparagus, ideal for grilling and steaming."
+      }
+  },
+
     "landing": {
       "title": "Premium Agricultural Imports for the French Market",
       "subhead": "Stormmaze delivers high-quality, sustainable agricultural products connecting Algerian farmers to French markets with excellence and integrity.",
