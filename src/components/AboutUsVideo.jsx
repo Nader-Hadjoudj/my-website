@@ -82,6 +82,7 @@ const DownloadButton = styled.a`
   text-decoration: none;
   text-align: center;
   opacity: 0;
+  margin-bottom: 10px;
   
   &::before, &::after {
     content: '';
