@@ -101,7 +101,6 @@
     "validationError": "❌ Please fill all fields and select a time slot.",
     "phonePlaceholder": "+33 1 23 45 67 89"
   },
-  "en": {
     "emailReveal": {
       "title": "Contact Information",
       "description": "To protect my email from spam bots, please complete the verification below to reveal my contact information.",
@@ -115,7 +114,7 @@
       "emailNote": "Feel free to contact me anytime. I'll try to respond as soon as possible.",
       "languageToggle": "Français"
     }
-  },
+  ,
   "contact": {
     "title": "Contact Form",
     "name": "Name",

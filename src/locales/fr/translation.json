@@ -126,7 +126,6 @@
       "languageToggle": "English",
       "required": "*"
     },
-    "fr": {
       "emailReveal": {
         "title": "Informations de Contact",
         "description": "Pour protéger mon email des robots spammeurs, veuillez compléter la vérification ci-dessous pour révéler mes coordonnées.",
@@ -140,5 +139,4 @@
         "emailNote": "N'hésitez pas à me contacter à tout moment. J'essaierai de répondre dès que possible.",
         "languageToggle": "English"
       }
-    }
   }

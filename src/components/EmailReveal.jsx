@@ -259,7 +259,7 @@ function EmailReveal() {
   const [showStatus, setShowStatus] = useState(false);
   
   // Your email address (this will be revealed after verification)
-  const emailAddress = "your.email@example.com"; // Replace with your actual email
+  const emailAddress = "nader@stormmaze.com"; // Replace with your actual email
   
   const containerRef = useRef(null);
 
