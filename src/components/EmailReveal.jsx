@@ -76,7 +76,7 @@ const Description = styled.p`
 `;
 
 const ImageContainer = styled.div`
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
   margin-bottom: 20px;

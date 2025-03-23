@@ -103,15 +103,15 @@
   },
     "emailReveal": {
       "title": "Contact Information",
-      "description": "To protect my email from spam bots, please complete the verification below to reveal my contact information.",
+      "description": "To protect our email from spam bots, please complete the verification below to reveal our contact information.",
       "imageAlt": "Company logo",
       "verificationQuestion": "Human Verification",
       "verificationSubtext": "Please solve this simple math problem to prove you're human:",
       "verify": "Verify & Show Email",
-      "verificationSuccess": "Verification successful! Here's my email address.",
+      "verificationSuccess": "Verification successful! Here's our email address.",
       "verificationFailed": "Incorrect answer. Please try again.",
-      "emailTitle": "My Email Address",
-      "emailNote": "Feel free to contact me anytime. I'll try to respond as soon as possible.",
+      "emailTitle": "Email Address",
+      "emailNote": "Feel free to contact us anytime. we will try to respond as soon as possible.",
       "languageToggle": "Français"
     }
   ,

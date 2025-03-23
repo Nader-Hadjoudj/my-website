@@ -10,7 +10,6 @@ import EmailReveal from "../components/EmailReveal";
 function Contact() {
   return (
     <div>
-      <ContactForm />
       <EmailReveal/>
       <AppointmentBooking />
       <FarmingProductsShowcase />

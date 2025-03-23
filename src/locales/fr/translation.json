@@ -128,15 +128,15 @@
     },
       "emailReveal": {
         "title": "Informations de Contact",
-        "description": "Pour protéger mon email des robots spammeurs, veuillez compléter la vérification ci-dessous pour révéler mes coordonnées.",
+        "description": "Pour protéger notre email des robots spammeurs, veuillez compléter la vérification ci-dessous pour révéler nos coordonnées.",
         "imageAlt": "Logo de l'entreprise",
         "verificationQuestion": "Vérification Humaine",
         "verificationSubtext": "Veuillez résoudre ce problème mathématique simple pour prouver que vous êtes humain :",
         "verify": "Vérifier & Afficher l'Email",
-        "verificationSuccess": "Vérification réussie ! Voici mon adresse email.",
+        "verificationSuccess": "Vérification réussie ! Voici notre adresse email.",
         "verificationFailed": "Réponse incorrecte. Veuillez réessayer.",
-        "emailTitle": "Mon Adresse Email",
-        "emailNote": "N'hésitez pas à me contacter à tout moment. J'essaierai de répondre dès que possible.",
+        "emailTitle": "Adresse Email",
+        "emailNote": "N'hésitez pas à nous contacter à tout moment. Nous essaierons de répondre dès que possible.",
         "languageToggle": "English"
       }
   }
