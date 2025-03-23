@@ -5,11 +5,13 @@ import ContactText from "../components/ContactText";
 import AppointmentBooking from "../components/AppointmentBooking";
 import FarmingProductsShowcase from "../components/FarmingProductsShowcase";
 import ContactForm from "../components/ContactForm";
+import EmailReveal from "../components/EmailReveal";
 
 function Contact() {
   return (
     <div>
       <ContactForm />
+      <EmailReveal/>
       <AppointmentBooking />
       <FarmingProductsShowcase />
     </div>

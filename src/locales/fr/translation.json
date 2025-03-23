@@ -125,5 +125,20 @@
       "verificationFailed": "La vérification a échoué. Veuillez réessayer.",
       "languageToggle": "English",
       "required": "*"
+    },
+    "fr": {
+      "emailReveal": {
+        "title": "Informations de Contact",
+        "description": "Pour protéger mon email des robots spammeurs, veuillez compléter la vérification ci-dessous pour révéler mes coordonnées.",
+        "imageAlt": "Logo de l'entreprise",
+        "verificationQuestion": "Vérification Humaine",
+        "verificationSubtext": "Veuillez résoudre ce problème mathématique simple pour prouver que vous êtes humain :",
+        "verify": "Vérifier & Afficher l'Email",
+        "verificationSuccess": "Vérification réussie ! Voici mon adresse email.",
+        "verificationFailed": "Réponse incorrecte. Veuillez réessayer.",
+        "emailTitle": "Mon Adresse Email",
+        "emailNote": "N'hésitez pas à me contacter à tout moment. J'essaierai de répondre dès que possible.",
+        "languageToggle": "English"
+      }
     }
   }
