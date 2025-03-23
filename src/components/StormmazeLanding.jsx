@@ -410,7 +410,7 @@ const StormmazeLanding = () => {
           </Subheading>
           <ButtonContainer>
             <CTAButton
-              href="/catalogue"
+              onClick={scrollToHeroSection}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.6 }}
@@ -420,7 +420,7 @@ const StormmazeLanding = () => {
               {t('landing.viewCatalogue', 'View Catalogue')}
             </CTAButton>
             <SecondaryButton
-              onClick={scrollToHeroSection}
+              href="/contact"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.7 }}
