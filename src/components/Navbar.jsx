@@ -35,7 +35,7 @@ const Nav = styled.nav`
 
   @media (max-width: 768px) {
     padding: 10px 5px; /* Even less padding on mobile */
-    width: calc(90vw - 20px); /* Adjusted for mobile padding */
+    width: calc(100vw - 20px); /* Adjusted for mobile padding */
   }
 `;
 
