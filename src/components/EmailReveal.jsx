@@ -22,14 +22,14 @@ const PageWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: 15px;
   box-sizing: border-box;
 `;
 
 const Container = styled.div`
   width: 100%;
-  max-width: 500px; /* Reduced from 600px */
-  padding: 25px; /* Reduced from 30px */
+  max-width: 450px; /* Further reduced from 500px */
+  padding: 20px; /* Further reduced from 25px */
   background: rgb(13, 13, 13);
   border-radius: 10px;
   box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.3);
@@ -56,35 +56,36 @@ const Container = styled.div`
 const Title = styled.h2`
   text-align: center;
   color: #ffd700;
-  font-size: 22px; /* Reduced from 24px */
+  font-size: 20px; /* Further reduced from 22px */
   font-weight: bold;
-  margin-bottom: 15px; /* Reduced from 20px */
+  margin-bottom: 12px; /* Further reduced from 15px */
 `;
 
 const Description = styled.p`
   color: #e0e0e0;
   text-align: center;
-  margin-bottom: 15px; /* Reduced from 20px */
-  line-height: 1.5; /* Reduced from 1.6 */
+  margin-bottom: 12px; /* Further reduced from 15px */
+  line-height: 1.4; /* Further reduced from 1.5 */
+  font-size: 14px; /* Added smaller font size */
 `;
 
 const ImageContainer = styled.div`
-  width: 100%; /* Changed from 50% to center the image */
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 15px; /* Reduced from 20px */
+  margin-bottom: 12px; /* Further reduced from 15px */
 `;
 
 const Image = styled.img`
-  max-width: 50%; /* Added to control image size */
+  max-width: 40%; /* Reduced from 50% */
   height: auto;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  border-radius: 8px; /* Reduced from 10px */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
 `;
 
 const VerificationContainer = styled.div`
-  margin: 10px 0; /* Reduced from 15px 0 */
-  padding: 12px; /* Reduced from 15px */
+  margin: 8px 0; /* Further reduced from 10px 0 */
+  padding: 10px; /* Further reduced from 12px */
   border: 1px solid #ffd700;
   border-radius: 5px;
   background: rgba(0, 0, 0, 0.3);
@@ -93,37 +94,37 @@ const VerificationContainer = styled.div`
 
 const VerificationTitle = styled.h3`
   color: #ffd700;
-  font-size: 16px;
-  margin-bottom: 5px;
+  font-size: 15px; /* Reduced from 16px */
+  margin-bottom: 4px; /* Reduced from 5px */
 `;
 
 const VerificationSubtext = styled.p`
   color: #ddd;
-  font-size: 14px;
-  margin-bottom: 8px; /* Reduced from 10px */
+  font-size: 13px; /* Reduced from 14px */
+  margin-bottom: 6px; /* Further reduced from 8px */
 `;
 
 const VerificationQuestion = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 8px 0; /* Reduced from 10px 0 */
+  margin: 6px 0; /* Further reduced from 8px 0 */
 `;
 
 const MathProblem = styled.span`
   color: white;
-  font-size: 16px;
-  margin-right: 10px;
+  font-size: 15px; /* Reduced from 16px */
+  margin-right: 8px; /* Reduced from 10px */
 `;
 
 const VerificationInput = styled.input`
-  width: 80px;
+  width: 70px; /* Reduced from 80px */
   text-align: center;
-  padding: 10px; /* Reduced from 12px */
+  padding: 8px; /* Further reduced from 10px */
   border: 1px solid #ffd700;
   background: black;
   color: white;
-  border-radius: 5px;
+  border-radius: 4px; /* Reduced from 5px */
   font-size: 14px;
   transition: all 0.3s ease;
   &:focus {
@@ -135,15 +136,15 @@ const VerificationInput = styled.input`
 
 const Button = styled.button`
   width: 100%;
-  padding: 12px; /* Reduced from 15px */
+  padding: 10px; /* Further reduced from 12px */
   background: #222;
   color: #ffd700;
   border: 1px solid #ffd700;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px; /* Reduced from 5px */
+  font-size: 15px; /* Reduced from 16px */
   cursor: pointer;
   transition: 0.3s;
-  margin-top: 8px; /* Reduced from 10px */
+  margin-top: 6px; /* Further reduced from 8px */
   overflow: hidden;
   position: relative;
   z-index: 1;
@@ -181,39 +182,41 @@ const Button = styled.button`
 `;
 
 const EmailContainer = styled(motion.div)`
-  margin-top: 15px; /* Reduced from 20px */
-  padding: 15px; /* Reduced from 20px */
+  margin-top: 12px; /* Further reduced from 15px */
+  padding: 12px; /* Further reduced from 15px */
   background: #1a1a1a;
   border: 1px solid #ffd700;
-  border-radius: 5px;
+  border-radius: 4px; /* Reduced from 5px */
   text-align: center;
   animation: ${fadeIn} 0.8s ease-out;
 `;
 
 const EmailTitle = styled.h3`
   color: #ffd700;
-  margin-bottom: 8px; /* Reduced from 10px */
+  font-size: 15px; /* Added smaller font size */
+  margin-bottom: 6px; /* Further reduced from 8px */
 `;
 
 const EmailAddress = styled.p`
   color: white;
-  font-size: 18px;
+  font-size: 16px; /* Reduced from 18px */
   font-weight: bold;
   letter-spacing: 1px;
 `;
 
 const EmailNote = styled.p`
   color: #bbb;
-  font-size: 14px;
-  margin-top: 8px; /* Reduced from 10px */
+  font-size: 13px; /* Reduced from 14px */
+  margin-top: 6px; /* Further reduced from 8px */
 `;
 
 const StatusMessage = styled.div`
   text-align: center;
-  padding: 8px; /* Reduced from 10px */
-  margin-top: 15px; /* Reduced from 20px */
-  border-radius: 5px;
+  padding: 6px; /* Further reduced from 8px */
+  margin-top: 12px; /* Further reduced from 15px */
+  border-radius: 4px; /* Reduced from 5px */
   animation: ${fadeIn} 0.5s ease-out;
+  font-size: 13px; /* Added smaller font size */
   
   color: ${(props) => (props.isError ? "#ff4757" : "#4cd137")};
   background: ${(props) => (props.isError ? "rgba(255, 71, 87, 0.1)" : "rgba(76, 209, 55, 0.1)")};
@@ -222,14 +225,14 @@ const StatusMessage = styled.div`
 
 const LanguageToggle = styled.button`
   position: absolute;
-  top: 10px; /* Reduced from 15px */
-  right: 10px; /* Reduced from 15px */
+  top: 8px; /* Further reduced from 10px */
+  right: 8px; /* Further reduced from 10px */
   background: transparent;
   color: #ffd700;
   border: 1px solid #ffd700;
-  border-radius: 30px;
-  padding: 4px 8px; /* Reduced from 5px 10px */
-  font-size: 12px;
+  border-radius: 20px; /* Reduced from 30px */
+  padding: 3px 6px; /* Further reduced from 4px 8px */
+  font-size: 11px; /* Reduced from 12px */
   cursor: pointer;
   transition: all 0.3s ease;
   
